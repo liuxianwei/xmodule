@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.penglecode.xmodule.newscloud.usercenter.mapper.UserMapper">
+   
+    <insert id="insertModel" keyProperty="userId" parameterType="User" statementType="PREPARED" useGeneratedKeys="true">
+        INSERT INTO nc_user(
+            user_id,
+            user_name,
+            nick_name,
+            mobile_phone,
+            user_icon_url,
+            email,
+            sex,
+            birthday,
+            create_time
+        ) VALUES (
+            #{userId, jdbcType=BIGINT},
+            #{userName, jdbcType=VARCHAR},
+            #{nickName, jdbcType=VARCHAR},
+            #{mobilePhone, jdbcType=VARCHAR},
+            #{userIconUrl, jdbcType=VARCHAR},
+            #{email, jdbcType=VARCHAR},
+            #{sex, jdbcType=CHAR},
+            #{birthday, jdbcType=VARCHAR},
+            #{createTime, jdbcType=VARCHAR}
+        )
+    </insert>
+   
+    <update id="updateModelById" parameterType="User" statementType="PREPARED">
+        UPDATE nc_user a
+           SET a.user_id = #{userId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
+               ,a.user_name = #{userName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
+               ,a.nick_name = #{nickName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
+               ,a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userIconUrl)">
+               ,a.user_icon_url = #{userIconUrl, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(email)">
+               ,a.email = #{email, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sex)">
+               ,a.sex = #{sex, jdbcType=CHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(birthday)">
+               ,a.birthday = #{birthday, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
+               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            </if>
+         WHERE a.user_id = #{userId, jdbcType=BIGINT}
+    </update>
+   
+    <update id="dynamicUpdateModelById" parameterType="User" statementType="PREPARED">
+        UPDATE nc_user a
+           SET a.user_id = #{userId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
+               ,a.user_name = #{userName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
+               ,a.nick_name = #{nickName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
+               ,a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userIconUrl)">
+               ,a.user_icon_url = #{userIconUrl, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(email)">
+               ,a.email = #{email, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sex)">
+               ,a.sex = #{sex, jdbcType=CHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(birthday)">
+               ,a.birthday = #{birthday, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(status)">
+               ,a.status = #{status, jdbcType=TINYINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(authorized)">
+               ,a.authorized = #{authorized, jdbcType=BOOLEAN}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(authIdcard)">
+               ,a.auth_idcard = #{authIdcard, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(authRealName)">
+               ,a.auth_real_name = #{authRealName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(loginTimes)">
+               ,a.login_times = #{loginTimes, jdbcType=INTEGER}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(lastLoginTime)">
+               ,a.last_login_time = #{lastLoginTime, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(follows)">
+               ,a.follows = #{follows, jdbcType=INTEGER}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followers)">
+               ,a.followers = #{followers, jdbcType=INTEGER}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
+               ,a.create_time = #{createTime, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
+               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            </if>
+         WHERE a.user_id = #{userId, jdbcType=BIGINT}
+    </update>
+   
+    <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
+        DELETE FROM nc_user WHERE user_id = #{userId, jdbcType=BIGINT}
+    </delete>
+   
+    <select id="selectModelById" parameterType="java.lang.Long" resultType="User" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.user_icon_url	userIconUrl,
+               a.email	email,
+               a.sex	sex,
+               DATE_FORMAT(a.birthday, '%Y-%m-%d')	birthday,
+               a.status	status,
+               a.authorized	authorized,
+               a.auth_idcard	authIdcard,
+               a.auth_real_name	authRealName,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.follows	follows,
+               a.followers	followers,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime
+          FROM nc_user a
+         WHERE a.user_id = #{userId, jdbcType=BIGINT}
+    </select>
+   
+    <select id="selectModelByExample" parameterType="User" resultType="User" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.user_icon_url	userIconUrl,
+               a.email	email,
+               a.sex	sex,
+               DATE_FORMAT(a.birthday, '%Y-%m-%d')	birthday,
+               a.status	status,
+               a.authorized	authorized,
+               a.auth_idcard	authIdcard,
+               a.auth_real_name	authRealName,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.follows	follows,
+               a.followers	followers,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime
+          FROM nc_user a
+         WHERE 1=1
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
+           AND a.user_name like CONCAT('%', #{userName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
+           AND a.nick_name like CONCAT('%', #{nickName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
+           AND a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sex)">
+           AND a.sex = #{sex, jdbcType=CHAR}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(birthday)">
+           AND a.birthday = #{birthday, jdbcType=VARCHAR}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(status)">
+           AND a.status = #{status, jdbcType=TINYINT}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(authorized)">
+           AND a.authorized = #{authorized, jdbcType=BOOLEAN}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(authIdcard)">
+           AND a.auth_idcard like CONCAT('%', #{authIdcard, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(authRealName)">
+           AND a.auth_real_name like CONCAT('%', #{authRealName, jdbcType=VARCHAR}, '%')
+        </if>
+
+    </select>
+   
+    <select id="selectModelListByIds" parameterType="java.util.List" resultType="User" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.user_icon_url	userIconUrl,
+               a.email	email,
+               a.sex	sex,
+               DATE_FORMAT(a.birthday, '%Y-%m-%d')	birthday,
+               a.status	status,
+               a.authorized	authorized,
+               a.auth_idcard	authIdcard,
+               a.auth_real_name	authRealName,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.follows	follows,
+               a.followers	followers,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime
+          FROM nc_user a
+         WHERE a.user_id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+         ORDER BY a.user_id ASC
+    </select>
+   
+    <select id="selectAllModelList" parameterType="java.util.Map" resultType="User" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.user_icon_url	userIconUrl,
+               a.email	email,
+               a.sex	sex,
+               DATE_FORMAT(a.birthday, '%Y-%m-%d')	birthday,
+               a.status	status,
+               a.authorized	authorized,
+               a.auth_idcard	authIdcard,
+               a.auth_real_name	authRealName,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.follows	follows,
+               a.followers	followers,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime
+          FROM nc_user a
+         WHERE 1=1
+         ORDER BY a.user_id ASC
+    </select>
+   
+    <select id="countAllModelList" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM nc_user a
+         WHERE 1=1
+    </select>
+   
+    <select id="selectModelListByExample" parameterType="java.util.Map" resultType="User" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.user_icon_url	userIconUrl,
+               a.email	email,
+               a.sex	sex,
+               DATE_FORMAT(a.birthday, '%Y-%m-%d')	birthday,
+               a.status	status,
+               a.authorized	authorized,
+               a.auth_idcard	authIdcard,
+               a.auth_real_name	authRealName,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.follows	follows,
+               a.followers	followers,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime
+          FROM nc_user a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userName)">
+           AND a.user_name like CONCAT('%', #{example.userName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.nickName)">
+           AND a.nick_name like CONCAT('%', #{example.nickName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.mobilePhone)">
+           AND a.mobile_phone = #{example.mobilePhone, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.sex)">
+           AND a.sex = #{example.sex, jdbcType=CHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.birthday)">
+           AND a.birthday = #{example.birthday, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.status)">
+           AND a.status = #{example.status, jdbcType=TINYINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.authorized)">
+           AND a.authorized = #{example.authorized, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.authIdcard)">
+           AND a.auth_idcard like CONCAT('%', #{example.authIdcard, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.authRealName)">
+           AND a.auth_real_name like CONCAT('%', #{example.authRealName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="selectModelPageListByExample" parameterType="java.util.Map" resultType="User" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.user_icon_url	userIconUrl,
+               a.email	email,
+               a.sex	sex,
+               DATE_FORMAT(a.birthday, '%Y-%m-%d')	birthday,
+               a.status	status,
+               a.authorized	authorized,
+               a.auth_idcard	authIdcard,
+               a.auth_real_name	authRealName,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.follows	follows,
+               a.followers	followers,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime
+          FROM nc_user a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userName)">
+           AND a.user_name like CONCAT('%', #{example.userName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.nickName)">
+           AND a.nick_name like CONCAT('%', #{example.nickName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.mobilePhone)">
+           AND a.mobile_phone = #{example.mobilePhone, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.sex)">
+           AND a.sex = #{example.sex, jdbcType=CHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.birthday)">
+           AND a.birthday = #{example.birthday, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.status)">
+           AND a.status = #{example.status, jdbcType=TINYINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.authorized)">
+           AND a.authorized = #{example.authorized, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.authIdcard)">
+           AND a.auth_idcard like CONCAT('%', #{example.authIdcard, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.authRealName)">
+           AND a.auth_real_name like CONCAT('%', #{example.authRealName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="countModelPageListByExample" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM nc_user a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userName)">
+           AND a.user_name like CONCAT('%', #{example.userName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.nickName)">
+           AND a.nick_name like CONCAT('%', #{example.nickName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.mobilePhone)">
+           AND a.mobile_phone = #{example.mobilePhone, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.sex)">
+           AND a.sex = #{example.sex, jdbcType=CHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.birthday)">
+           AND a.birthday = #{example.birthday, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.status)">
+           AND a.status = #{example.status, jdbcType=TINYINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.authorized)">
+           AND a.authorized = #{example.authorized, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.authIdcard)">
+           AND a.auth_idcard like CONCAT('%', #{example.authIdcard, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.authRealName)">
+           AND a.auth_real_name like CONCAT('%', #{example.authRealName, jdbcType=VARCHAR}, '%')
+        </if>
+    </select>
+    
+    
+    <select id="selectUserListByStatus" parameterType="java.util.Map" resultType="User" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.user_icon_url	userIconUrl,
+               a.email	email,
+               a.sex	sex,
+               DATE_FORMAT(a.birthday, '%Y-%m-%d')	birthday,
+               a.status	status,
+               a.authorized	authorized,
+               a.auth_idcard	authIdcard,
+               a.auth_real_name	authRealName,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.follows	follows,
+               a.followers	followers,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime
+          FROM nc_user a
+         WHERE 1=1
+        <if test="authorized != null">
+           AND a.authorized = #{authorized, jdbcType=BOOLEAN}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(statuses)">
+           AND a.status in 
+           <foreach collection="statuses" index="index" item="item" open="(" separator="," close=")">
+             #{item}
+           </foreach>
+        </if>
+         ORDER BY a.user_id ASC
+    </select>
+</mapper>

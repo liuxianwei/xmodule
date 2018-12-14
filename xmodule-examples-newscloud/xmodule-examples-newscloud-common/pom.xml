@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule-examples-newscloud</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-newscloud-common</artifactId>
+	<name>xmodule-examples-newscloud-common</name>
+	<description>NewsCloud共通模块(公共数据模型、常量、异常等)</description>
+
+	<dependencies>
+		<!-- xmodule-common-base -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-base</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+		<!-- xmodule-common-support -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-support</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+		<!-- xmodule-common-springcloud -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-springcloud</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>xmodule-examples-newscloud-common</finalName>
+	</build>
+</project>

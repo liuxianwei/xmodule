@@ -1,0 +1,145 @@
+#SpringBoot自动配置开启debug模式
+debug: false
+
+#应用日志配置
+logging:
+    config: classpath:log4j2-spring.xml
+
+#Spring上下文初始化程序
+context:
+    initializer:
+        classes: com.penglecode.xmodule.common.initializer.DefaultSpringAppPreInitializer
+
+#Servlet容器配置
+server:
+    port: 8090
+    servlet:
+        context-path: /
+        application-display-name: xmodule-examples-eureka-service-provider
+        session:
+            timeout: 1800
+        #SpringMvc控制器路径配置
+        path: /
+
+#SpringBoot应用监控模块
+management:
+    server:
+        port: ${server.port}
+    endpoints:
+        web:
+            base-path: /admin/actuator
+            exposure:
+                include: '*'
+    endpoint:
+        shutdown:
+            enabled: false
+        health:
+            show-details: always
+    health:
+        defaults:
+            enabled: false
+
+info:
+    app:
+        name: xmodule-examples-eureka-service-provider
+        description: SpringCloud基于Eureka的服务发现示例-服务提供端
+        version: 1.0.0
+        spring-cloud-version: Finchley.SR1
+        spring-boot-version: 2.0.4.RELEASE
+#SpringBoot应用的名称
+spring:
+    application:
+        name: xmodule-examples-eureka-service-provider
+    #被排除的自动配置
+    autoconfigure:
+        exclude:
+          - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+          - org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
+          - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+    
+    profiles:
+        active: dev
+
+    #Spring国际化配置
+    messages:
+        basename: config/i18/messages
+        cache-duration: -1
+        encoding: UTF-8
+    #关闭JMX监控
+    jmx:
+        enabled: false
+    #开启Web#CharacterEncodingFilter
+    http:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+    #SpringMvc上传文件配置
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 5MB
+            max-request-size: 20MB
+    #SpringMvc配置
+    mvc:
+        servlet:
+            load-on-startup: 1
+
+    security:
+        filter:
+            order: -2147483628
+        user:
+            name: admin
+            password: 123456
+            roles: ACTUATOR
+    #Druid数据源连接池配置
+    datasource:
+        druid:
+            initialSize: 10
+            minIdle: 10
+            maxActive: 250
+            maxWait: 60000
+            timeBetweenEvictionRunsMillis: 60000
+            minEvictableIdleTimeMillis: 300000
+            validationQuery: SELECT 'x'
+            testWhileIdle: true
+            testOnBorrow: false
+            testOnReturn: false
+            poolPreparedStatements: false
+            maxPoolPreparedStatementPerConnectionSize: 20
+            connectionInitSqls: set names utf8;
+            filters: stat,slf4j
+
+    mybatis:
+        configLocation: classpath:config/mybatis/mybatis-config.xml
+        mapperLocations: classpath:com/penglecode/xmodule/**/*Mapper.xml
+        typeAliasesPackage: com.penglecode.xmodule
+        mapperScanPackage: com.penglecode.xmodule
+
+#Eureka客户端配置
+eureka: 
+    instance: 
+        appGroupName: xmodule-examples-eureka
+        hostname: 172.16.18.174
+        ipAddress: 172.16.18.174
+        #使用ip替代实例名
+        preferIpAddress: true
+        #设置实例的ID为ip:port
+        instanceId: ${eureka.instance.hostname}:${server.port}
+        #心跳时间，即服务续约间隔时间(缺省为30s)
+        leaseRenewalIntervalInSeconds: 15
+        #发呆时间，即服务续约到期时间(缺省为90s, 至少大于leaseRenewalIntervalInSeconds)
+        leaseExpirationDurationInSeconds: 30
+        statusPageUrlPath: ${management.endpoints.web.base-path}/info
+        healthCheckUrlPath: ${management.endpoints.web.base-path}/health
+    client:
+        enabled: true
+        #从EurekaServer获取注册服务信息的时间间隔(默认30秒)
+        registryFetchIntervalSeconds: 15
+        #HealthCheck的时间间隔(默认30秒)
+        instanceInfoReplicationIntervalSeconds: 15
+        healthcheck:
+            enabled: true
+        serviceUrl:
+            defaultZone: http://172.16.94.32:8761/eureka/
+            #defaultZone: http://192.168.137.101:8761/eureka/,http://192.168.137.102:8761/eureka/,http://192.168.137.103:8761/eureka/

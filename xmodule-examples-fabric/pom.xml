@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-fabric</artifactId>
+	<packaging>pom</packaging>
+	<name>xmodule-examples-fabric</name>
+	<description>HyperLedger Fabric Examples</description>
+	
+	<properties>
+		<fabric-sdk-java.version>1.3.0</fabric-sdk-java.version>
+		<netty.version>4.1.27.Final</netty.version>
+		<netty-tcnative.version>2.0.12.Final</netty-tcnative.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.hyperledger.fabric-sdk-java</groupId>
+				<artifactId>fabric-sdk-java</artifactId>
+				<version>${fabric-sdk-java.version}</version>
+			</dependency>
+			
+			<!-- 
+				指定tcnative版本，以解决netty版本与tcnative版本不一致导致的问题：java.lang.AbstractMethodError at io.netty.internal.tcnative.SSL.readFromSSL
+				netty(4.1.27.Final) 与 tcnative(2.0.12.Final)适配
+			
+			<dependency>
+	            <groupId>io.netty</groupId>
+	            <artifactId>netty-tcnative-boringssl-static</artifactId>
+	            <version>${netty-tcnative.version}</version>
+	        </dependency>
+	         -->
+		</dependencies>
+	</dependencyManagement>
+	
+	<modules>
+		<module>xmodule-examples-fabric-samples</module>
+		<module>xmodule-examples-fabric-common</module>
+	</modules>
+</project>

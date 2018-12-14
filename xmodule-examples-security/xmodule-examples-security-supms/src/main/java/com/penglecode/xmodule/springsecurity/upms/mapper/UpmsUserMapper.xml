@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.penglecode.xmodule.springsecurity.upms.mapper.UpmsUserMapper">
+   
+    <insert id="insertModel" keyProperty="userId" parameterType="UpmsUser" statementType="PREPARED" useGeneratedKeys="true">
+        INSERT INTO sa_upms_user(
+            user_id,
+            user_name,
+            real_name,
+            password,
+            user_type,
+            nick_name,
+            mobile_phone,
+            email,
+            user_icon,
+            create_time,
+            create_by
+        ) VALUES (
+            #{userId, jdbcType=BIGINT},
+            #{userName, jdbcType=VARCHAR},
+            #{realName, jdbcType=VARCHAR},
+            #{password, jdbcType=VARCHAR},
+            #{userType, jdbcType=TINYINT},
+            #{nickName, jdbcType=VARCHAR},
+            #{mobilePhone, jdbcType=VARCHAR},
+            #{email, jdbcType=VARCHAR},
+            #{userIcon, jdbcType=VARCHAR},
+            #{createTime, jdbcType=VARCHAR},
+            #{createBy, jdbcType=BIGINT}
+        )
+    </insert>
+   
+    <update id="updateModelById" parameterType="UpmsUser" statementType="PREPARED">
+        UPDATE sa_upms_user a
+           SET a.user_id = #{userId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
+               ,a.user_name = #{userName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(realName)">
+               ,a.real_name = #{realName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
+               ,a.nick_name = #{nickName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
+               ,a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(email)">
+               ,a.email = #{email, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userIcon)">
+               ,a.user_icon = #{userIcon, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
+               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateBy)">
+               ,a.update_by = #{updateBy, jdbcType=BIGINT}
+            </if>
+         WHERE a.user_id = #{userId, jdbcType=BIGINT}
+    </update>
+   
+    <update id="dynamicUpdateModelById" parameterType="UpmsUser" statementType="PREPARED">
+        UPDATE sa_upms_user a
+           SET a.user_id = #{userId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
+               ,a.user_name = #{userName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(realName)">
+               ,a.real_name = #{realName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(password)">
+               ,a.password = #{password, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userType)">
+               ,a.user_type = #{userType, jdbcType=TINYINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
+               ,a.nick_name = #{nickName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
+               ,a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(email)">
+               ,a.email = #{email, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userIcon)">
+               ,a.user_icon = #{userIcon, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(status)">
+               ,a.status = #{status, jdbcType=TINYINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(lastLoginTime)">
+               ,a.last_login_time = #{lastLoginTime, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(loginTimes)">
+               ,a.login_times = #{loginTimes, jdbcType=INTEGER}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
+               ,a.create_time = #{createTime, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createBy)">
+               ,a.create_by = #{createBy, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
+               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateBy)">
+               ,a.update_by = #{updateBy, jdbcType=BIGINT}
+            </if>
+         WHERE a.user_id = #{userId, jdbcType=BIGINT}
+    </update>
+   
+    <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
+        DELETE FROM sa_upms_user WHERE user_id = #{userId, jdbcType=BIGINT}
+    </delete>
+   
+    <select id="selectModelById" parameterType="java.lang.Long" resultType="UpmsUser" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.real_name	realName,
+               a.password	password,
+               a.user_type	userType,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.email	email,
+               a.user_icon	userIcon,
+               a.status	status,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy
+          FROM sa_upms_user a
+         WHERE a.user_id = #{userId, jdbcType=BIGINT}
+    </select>
+   
+    <select id="selectModelByExample" parameterType="UpmsUser" resultType="UpmsUser" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.real_name	realName,
+               a.password	password,
+               a.user_type	userType,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.email	email,
+               a.user_icon	userIcon,
+               a.status	status,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy
+          FROM sa_upms_user a
+         WHERE 1=1
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
+           AND a.user_name like CONCAT('%', #{userName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(realName)">
+           AND a.real_name like CONCAT('%', #{realName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userType)">
+           AND a.user_type = #{userType, jdbcType=TINYINT}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
+           AND a.nick_name like CONCAT('%', #{nickName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
+           AND a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(email)">
+           AND a.email = #{email, jdbcType=VARCHAR}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(status)">
+           AND a.status = #{status, jdbcType=TINYINT}
+        </if>
+
+    </select>
+   
+    <select id="selectModelListByIds" parameterType="java.util.List" resultType="UpmsUser" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.real_name	realName,
+               a.password	password,
+               a.user_type	userType,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.email	email,
+               a.user_icon	userIcon,
+               a.status	status,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy
+          FROM sa_upms_user a
+         WHERE a.user_id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+         ORDER BY a.user_id ASC
+    </select>
+   
+    <select id="selectAllModelList" parameterType="java.util.Map" resultType="UpmsUser" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.real_name	realName,
+               a.password	password,
+               a.user_type	userType,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.email	email,
+               a.user_icon	userIcon,
+               a.status	status,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy
+          FROM sa_upms_user a
+         WHERE 1=1
+         ORDER BY a.user_id ASC
+    </select>
+   
+    <select id="countAllModelList" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM sa_upms_user a
+         WHERE 1=1
+    </select>
+   
+    <select id="selectModelListByExample" parameterType="java.util.Map" resultType="UpmsUser" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.real_name	realName,
+               a.password	password,
+               a.user_type	userType,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.email	email,
+               a.user_icon	userIcon,
+               a.status	status,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy
+          FROM sa_upms_user a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userName)">
+           AND a.user_name like CONCAT('%', #{example.userName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.realName)">
+           AND a.real_name like CONCAT('%', #{example.realName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userType)">
+           AND a.user_type = #{example.userType, jdbcType=TINYINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.nickName)">
+           AND a.nick_name like CONCAT('%', #{example.nickName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.mobilePhone)">
+           AND a.mobile_phone = #{example.mobilePhone, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.email)">
+           AND a.email = #{example.email, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.status)">
+           AND a.status = #{example.status, jdbcType=TINYINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="selectModelPageListByExample" parameterType="java.util.Map" resultType="UpmsUser" statementType="PREPARED">
+        SELECT a.user_id	userId,
+               a.user_name	userName,
+               a.real_name	realName,
+               a.password	password,
+               a.user_type	userType,
+               a.nick_name	nickName,
+               a.mobile_phone	mobilePhone,
+               a.email	email,
+               a.user_icon	userIcon,
+               a.status	status,
+               DATE_FORMAT(a.last_login_time, '%Y-%m-%d %T')	lastLoginTime,
+               a.login_times	loginTimes,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy
+          FROM sa_upms_user a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userName)">
+           AND a.user_name like CONCAT('%', #{example.userName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.realName)">
+           AND a.real_name like CONCAT('%', #{example.realName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userType)">
+           AND a.user_type = #{example.userType, jdbcType=TINYINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.nickName)">
+           AND a.nick_name like CONCAT('%', #{example.nickName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.mobilePhone)">
+           AND a.mobile_phone = #{example.mobilePhone, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.email)">
+           AND a.email = #{example.email, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.status)">
+           AND a.status = #{example.status, jdbcType=TINYINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="countModelPageListByExample" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM sa_upms_user a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userName)">
+           AND a.user_name like CONCAT('%', #{example.userName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.realName)">
+           AND a.real_name like CONCAT('%', #{example.realName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userType)">
+           AND a.user_type = #{example.userType, jdbcType=TINYINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.nickName)">
+           AND a.nick_name like CONCAT('%', #{example.nickName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.mobilePhone)">
+           AND a.mobile_phone = #{example.mobilePhone, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.email)">
+           AND a.email = #{example.email, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.status)">
+           AND a.status = #{example.status, jdbcType=TINYINT}
+        </if>
+    </select>
+    
+    
+    <select id="selectUserRoleListByUserId" parameterType="java.lang.Long" resultType="UpmsRole" statementType="PREPARED">
+        SELECT a.role_id	roleId,
+               a.role_name	roleName,
+               a.role_code	roleCode,
+               a.role_type	roleType,
+               a.description	description,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
+               DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy
+          FROM sa_upms_role a, sa_upms_user_role b
+         WHERE a.role_id = b.role_id
+           AND b.user_id = #{userId, jdbcType=BIGINT}
+         ORDER BY a.role_id ASC
+    </select>
+    
+    <insert id="insertUserRoles" parameterType="java.util.Map" statementType="PREPARED">
+		REPLACE INTO upms_user_role(user_id, role_id, create_by, create_time)
+		SELECT #{userId, jdbcType=BIGINT},
+			   a.role_id,
+			   #{createBy, jdbcType=BIGINT},
+			   #{createTime, jdbcType=VARCHAR}
+		  FROM sa_upms_role a
+		 WHERE a.role_id in 
+		<foreach item="item" index="index" collection="roleIdList" open="(" separator="," close=")">
+			#{item, jdbcType=BIGINT}
+        </foreach>
+	</insert>
+	
+	<delete id="deleteUserAllRoles" parameterType="java.lang.Long" statementType="PREPARED">
+		DELETE a FROM sa_upms_user_role a
+		 WHERE a.user_id = #{userId, jdbcType=BIGINT}
+	</delete>
+	
+	<delete id="deleteUserRoles" parameterType="java.util.Map" statementType="PREPARED">
+		DELETE a FROM sa_upms_user_role a
+		 WHERE a.user_id = #{userId, jdbcType=BIGINT}
+		   AND a.role_id in
+		<foreach item="item" index="index" collection="roleIdList" open="(" separator="," close=")">
+			#{item, jdbcType=BIGINT}
+        </foreach>
+	</delete>
+	
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.penglecode.xmodule.newscloud.usercenter.mapper.UserFollowerMapper">
+   
+    <insert id="insertModel" keyProperty="id" parameterType="UserFollower" statementType="PREPARED" useGeneratedKeys="true">
+        INSERT INTO nc_user_follower(
+            id,
+            user_id,
+            follower_user_id,
+            follow_time
+        ) VALUES (
+            #{id, jdbcType=BIGINT},
+            #{userId, jdbcType=BIGINT},
+            #{followerUserId, jdbcType=BIGINT},
+            #{followTime, jdbcType=VARCHAR}
+        )
+    </insert>
+   
+    <update id="updateModelById" parameterType="UserFollower" statementType="PREPARED">
+        UPDATE nc_user_follower a
+           SET a.id = #{id, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userId)">
+               ,a.user_id = #{userId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followerUserId)">
+               ,a.follower_user_id = #{followerUserId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followTime)">
+               ,a.follow_time = #{followTime, jdbcType=VARCHAR}
+            </if>
+         WHERE a.id = #{id, jdbcType=BIGINT}
+    </update>
+   
+    <update id="dynamicUpdateModelById" parameterType="UserFollower" statementType="PREPARED">
+        UPDATE nc_user_follower a
+           SET a.id = #{id, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userId)">
+               ,a.user_id = #{userId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followerUserId)">
+               ,a.follower_user_id = #{followerUserId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followTime)">
+               ,a.follow_time = #{followTime, jdbcType=VARCHAR}
+            </if>
+         WHERE a.id = #{id, jdbcType=BIGINT}
+    </update>
+   
+    <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
+        DELETE FROM nc_user_follower WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+   
+    <select id="selectModelById" parameterType="java.lang.Long" resultType="UserFollower" statementType="PREPARED">
+        SELECT a.id	id,
+               a.user_id	userId,
+               a.follower_user_id	followerUserId,
+               DATE_FORMAT(a.follow_time, '%Y-%m-%d %T')	followTime
+          FROM nc_user_follower a
+         WHERE a.id = #{id, jdbcType=BIGINT}
+    </select>
+   
+    <select id="selectModelByExample" parameterType="UserFollower" resultType="UserFollower" statementType="PREPARED">
+        SELECT a.id	id,
+               a.user_id	userId,
+               a.follower_user_id	followerUserId,
+               DATE_FORMAT(a.follow_time, '%Y-%m-%d %T')	followTime
+          FROM nc_user_follower a
+         WHERE 1=1
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userId)">
+           AND a.user_id = #{userId, jdbcType=BIGINT}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followerUserId)">
+           AND a.follower_user_id = #{followerUserId, jdbcType=BIGINT}
+        </if>
+
+    </select>
+   
+    <select id="selectModelListByIds" parameterType="java.util.List" resultType="UserFollower" statementType="PREPARED">
+        SELECT a.id	id,
+               a.user_id	userId,
+               a.follower_user_id	followerUserId,
+               DATE_FORMAT(a.follow_time, '%Y-%m-%d %T')	followTime
+          FROM nc_user_follower a
+         WHERE a.id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+         ORDER BY a.id ASC
+    </select>
+   
+    <select id="selectAllModelList" parameterType="java.util.Map" resultType="UserFollower" statementType="PREPARED">
+        SELECT a.id	id,
+               a.user_id	userId,
+               a.follower_user_id	followerUserId,
+               DATE_FORMAT(a.follow_time, '%Y-%m-%d %T')	followTime
+          FROM nc_user_follower a
+         WHERE 1=1
+         ORDER BY a.id ASC
+    </select>
+   
+    <select id="countAllModelList" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM nc_user_follower a
+         WHERE 1=1
+    </select>
+   
+    <select id="selectModelListByExample" parameterType="java.util.Map" resultType="UserFollower" statementType="PREPARED">
+        SELECT a.id	id,
+               a.user_id	userId,
+               a.follower_user_id	followerUserId,
+               DATE_FORMAT(a.follow_time, '%Y-%m-%d %T')	followTime
+          FROM nc_user_follower a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userId)">
+           AND a.user_id = #{example.userId, jdbcType=BIGINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.followerUserId)">
+           AND a.follower_user_id = #{example.followerUserId, jdbcType=BIGINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="selectModelPageListByExample" parameterType="java.util.Map" resultType="UserFollower" statementType="PREPARED">
+        SELECT a.id	id,
+               a.user_id	userId,
+               a.follower_user_id	followerUserId,
+               DATE_FORMAT(a.follow_time, '%Y-%m-%d %T')	followTime
+          FROM nc_user_follower a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userId)">
+           AND a.user_id = #{example.userId, jdbcType=BIGINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.followerUserId)">
+           AND a.follower_user_id = #{example.followerUserId, jdbcType=BIGINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="countModelPageListByExample" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM nc_user_follower a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.userId)">
+           AND a.user_id = #{example.userId, jdbcType=BIGINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.followerUserId)">
+           AND a.follower_user_id = #{example.followerUserId, jdbcType=BIGINT}
+        </if>
+    </select>
+    
+    
+    <delete id="deleteUserFollower" parameterType="java.util.Map" statementType="PREPARED">
+        DELETE FROM nc_user_follower WHERE user_id = #{userId, jdbcType=BIGINT} AND follower_user_id = #{followerUserId, jdbcType=BIGINT}
+    </delete>
+</mapper>

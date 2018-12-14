@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-common-springsecurity</artifactId>
+	<name>xmodule-common-springsecurity</name>
+	<description>基于SpringSecurity的应用安全共通模块，其中包括一系列自定义的功能组件</description>
+
+	<dependencies>
+		<!-- xmodule-common-base -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-base</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+		<!-- xmodule-common-support -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-support</artifactId>
+			<version>${xmodule.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.zookeeper</groupId>
+					<artifactId>zookeeper</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.curator</groupId>
+					<artifactId>curator-recipes</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- spring-boot-starter-security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>xmodule-common-springsecurity</finalName>
+	</build>
+</project>

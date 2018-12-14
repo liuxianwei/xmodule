@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-common-springcloud</artifactId>
+	<name>xmodule-common-springcloud</name>
+	<description>公共的SpringCloud支持模块</description>
+
+	<dependencies>
+		<!-- xmodule-common-base -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-base</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+		<!-- xmodule-common-support -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-support</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+		
+		<!-- spring-cloud-starter-config -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+
+		<!-- spring-cloud-starter-netflix-eureka-client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+
+		<!-- spring-cloud-starter-openfeign -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		
+		<!-- feign-httpclient -->
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-httpclient</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>xmodule-common-springcloud</finalName>
+	</build>
+</project>

@@ -1,0 +1,11 @@
+#SpringBoot应用的名称
+spring:
+    application:
+        name: newscloud-newscenter-service
+    #SpringCloud配置
+    cloud:
+        refresh:
+            enabled: false
+        config:
+            #关闭配置中心发现
+            enabled: false

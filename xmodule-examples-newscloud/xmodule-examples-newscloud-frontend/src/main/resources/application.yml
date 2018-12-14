@@ -1,0 +1,154 @@
+#SpringBoot自动配置开启debug模式
+debug: false
+
+#应用日志配置
+logging:
+    config: classpath:log4j2-spring.xml
+
+#Spring上下文初始化程序
+context:
+    initializer:
+        classes: com.penglecode.xmodule.common.initializer.DefaultSpringAppPreInitializer
+
+#Servlet容器配置
+server:
+    port: 18180
+    servlet:
+        context-path: /
+        application-display-name: newscloud-frontend
+        session:
+            timeout: 1800
+        #SpringMvc控制器路径配置
+        path: /
+
+#SpringBoot应用监控模块
+management:
+    server:
+        port: ${server.port}
+    endpoints:
+        web:
+            base-path: /admin/actuator
+            exposure:
+                include: '*'
+    endpoint:
+        shutdown:
+            enabled: false
+        health:
+            show-details: always
+    health:
+        defaults:
+            enabled: false
+
+info:
+    app:
+        name: newscloud-frontend
+        description: SpringCloud服务提供端示例项目：NewsCloud的前端
+        version: 1.0.0
+        spring-cloud-version: Finchley.SR1
+        spring-boot-version: 2.0.4.RELEASE
+        
+#SpringBoot应用的名称
+spring:
+    application:
+        name: newscloud-frontend
+    #被排除的自动配置
+    autoconfigure:
+        exclude:
+          - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+          - org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
+          - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+    
+    profiles:
+        active: dev
+
+    #Spring国际化配置
+    messages:
+        basename: config/i18/messages
+        cache-duration: -1
+        encoding: UTF-8
+    #关闭JMX监控
+    jmx:
+        enabled: false
+    #开启Web#CharacterEncodingFilter
+    http:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+    #SpringMvc上传文件配置
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 5MB
+            max-request-size: 20MB
+    #SpringMvc配置
+    mvc:
+        servlet:
+            load-on-startup: 1
+
+    security:
+        filter:
+            order: -2147483628
+        user:
+            name: admin
+            password: 123456
+            roles: ACTUATOR
+
+    cloud:
+        #应用配置信息
+        appconfig:
+            current-app-name: newscloud-frontend
+            global-web-server-url: http://127.0.0.1
+            global-file-server-url: http://127.0.0.1/static
+            global-file-server-root: d:/nginxfiles/static
+            
+            user-appconfig:
+                app-name: newscloud-usercenter-service
+                app-desc: NewsCloud的用户中心
+                web-server-url: http://127.0.0.1/user
+                web-context-path: /user
+                api-server-url: http://127.0.0.1:18181/user-api
+                api-context-path: /user-api
+                
+            news-appconfig:
+                app-name: newscloud-newscenter-service
+                app-desc: NewsCloud的新闻中心
+                web-server-url: http://127.0.0.1/news
+                web-context-path: /news
+                api-server-url: http://127.0.0.1:18281/news-api
+                api-context-path: /news-api
+#Eureka客户端配置
+eureka: 
+    client:
+        enabled: true
+        #是否启用获取服务注册信息
+        fetchRegistry: true
+        #是否向服务注册中心注册自己
+        registerWithEureka: false
+        #从EurekaServer获取注册服务信息的时间间隔(默认30秒)
+        registryFetchIntervalSeconds: 15
+        healthcheck:
+            enabled: false
+        serviceUrl:
+            defaultZone: http://172.16.94.32:8761/eureka/
+            #defaultZone: http://192.168.137.101:8761/eureka/,http://192.168.137.102:8761/eureka/,http://192.168.137.103:8761/eureka/
+            
+#Feign(HttpClient)客户端配置
+feign:
+    client:
+        config:
+            default:
+                request-interceptors:
+                  - com.penglecode.xmodule.common.cloud.feign.ObjectRequestParamRequestInterceptor
+            
+    httpclient:
+        enabled: true
+        max-connections: 200
+        connection-timeout: 15000
+    hystrix:
+        enabled: false
+
+#Ribbon(负载均衡)配置
+ribbon:
+    ReadTimeout: 30000
+    ConnectTimeout: 15000

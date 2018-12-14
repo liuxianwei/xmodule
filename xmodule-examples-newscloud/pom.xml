@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-newscloud</artifactId>
+	<packaging>pom</packaging>
+	<name>xmodule-examples-newscloud</name>
+	<description>基于新闻类主题的一个SpringCloud微服务示例</description>
+
+	<build>
+		<finalName>xmodule-examples-newscloud</finalName>
+	</build>
+
+	<modules>
+		<module>xmodule-examples-newscloud-usercenter-service</module>
+		<module>xmodule-examples-newscloud-newscenter-service</module>
+		<module>xmodule-examples-newscloud-common</module>
+		<module>xmodule-examples-newscloud-usercenter-api</module>
+		<module>xmodule-examples-newscloud-newscenter-api</module>
+		<module>xmodule-examples-newscloud-frontend</module>
+		<module>xmodule-examples-newscloud-agw-zuul</module>
+	</modules>
+
+</project>

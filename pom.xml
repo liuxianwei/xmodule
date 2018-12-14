@@ -1,0 +1,329 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.penglecode</groupId>
+	<artifactId>xmodule</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<name>xmodule</name>
+	<description>基于SpringBoot2.x的系列项目</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.4.RELEASE</version>
+	</parent>
+
+	<properties>
+		<xmodule.version>1.0.0</xmodule.version>
+
+		<springboot.version>2.0.4.RELEASE</springboot.version>
+		<mybatis-spring-boot-starter.version>1.3.2</mybatis-spring-boot-starter.version>
+		<mybatis.version>3.4.6</mybatis.version>
+		<mybatis-spring.version>1.3.2</mybatis-spring.version>
+		<mybatis-generator.version>1.3.6</mybatis-generator.version>
+		<shiro.version>1.4.0</shiro.version>
+		<thumbnailator.version>0.4.8</thumbnailator.version>
+		<org-json.version>20180813</org-json.version>
+		<commons-lang3.version>3.7</commons-lang3.version>
+		<commons-io.version>2.6</commons-io.version>
+		<commons-fileupload.version>1.3.3</commons-fileupload.version>
+		<commons-collections.version>4.2</commons-collections.version>
+		<protostuff.version>1.1.3</protostuff.version>
+		<httpclient.version>4.5.5</httpclient.version>
+		<netty.version>4.1.27.Final</netty.version>
+		<zookeeper.version>3.4.10</zookeeper.version>
+		<curator.version>4.0.0</curator.version>
+		<jersey.version>2.27</jersey.version>
+		<jax-rs.version>2.1</jax-rs.version>
+		<validation-api.version>2.0.1.Final</validation-api.version>
+		<druid.version>1.1.10</druid.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- spring-cloud-dependencies -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Finchley.SR1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		
+			<!-- spring-boot-starter-web -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-logging</artifactId>
+					</exclusion>
+				</exclusions>
+				<version>${springboot.version}</version>
+			</dependency>
+
+			<!-- spring-boot-starter-jersey -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-jersey</artifactId>
+				<version>${springboot.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.glassfish.jersey.ext</groupId>
+						<artifactId>jersey-spring3</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-logging</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-validation</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			
+			<!-- mybatis-spring-boot-starter -->
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>${mybatis-spring-boot-starter.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-jdbc</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${mybatis-spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-core</artifactId>
+				<version>${mybatis-generator.version}</version>
+			</dependency>
+
+			<!-- thumbnailator -->
+			<dependency>
+			    <groupId>net.coobird</groupId>
+			    <artifactId>thumbnailator</artifactId>
+			    <version>${thumbnailator.version}</version>
+			</dependency>
+			
+			<!-- org.json -->
+			<dependency>
+			    <groupId>org.json</groupId>
+			    <artifactId>json</artifactId>
+			    <version>${org-json.version}</version>
+			</dependency>
+
+			<!-- apache commons -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${commons-fileupload.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>${commons-collections.version}</version>
+			</dependency>
+
+			<!-- protostuff -->
+			<dependency>
+				<groupId>com.dyuproject.protostuff</groupId>
+				<artifactId>protostuff-core</artifactId>
+				<version>${protostuff.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.dyuproject.protostuff</groupId>
+				<artifactId>protostuff-api</artifactId>
+				<version>${protostuff.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.dyuproject.protostuff</groupId>
+				<artifactId>protostuff-runtime</artifactId>
+				<version>${protostuff.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.dyuproject.protostuff</groupId>
+				<artifactId>protostuff-collectionschema</artifactId>
+				<version>${protostuff.version}</version>
+			</dependency>
+
+			<!-- httpclient -->
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>${httpclient.version}</version>
+			</dependency>
+
+			<!-- shiro -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-web</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-ehcache</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+
+			<!-- jax-rs api -->
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>${jax-rs.version}</version>
+			</dependency>
+			
+			<!-- validation-api -->
+			<dependency>
+			    <groupId>javax.validation</groupId>
+			    <artifactId>validation-api</artifactId>
+			    <version>${validation-api.version}</version>
+			</dependency>
+
+			<!-- jersey-spring4 -->
+			<dependency>
+				<groupId>org.glassfish.jersey.ext</groupId>
+				<artifactId>jersey-spring4</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+
+			<!-- zookeeper -->
+			<dependency>
+			    <groupId>org.apache.zookeeper</groupId>
+			    <artifactId>zookeeper</artifactId>
+			    <version>${zookeeper.version}</version>
+			    <exclusions>
+			    	<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-log4j12</artifactId>
+					</exclusion>
+			    	<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+			    </exclusions>
+			</dependency>
+			
+			<!-- curator-framework -->
+			<dependency>
+			    <groupId>org.apache.curator</groupId>
+			    <artifactId>curator-framework</artifactId>
+			    <version>${curator.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.curator</groupId>
+			    <artifactId>curator-recipes</artifactId>
+			    <version>${curator.version}</version>
+			</dependency>
+
+			<!-- DataSource Pool -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<finalName>xmodule</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+				<plugin>
+		            <groupId>org.apache.maven.plugins</groupId>
+		            <artifactId>maven-compiler-plugin</artifactId>
+		            <configuration>
+		                <source>${java.version}</source>
+		                <target>${java.version}</target>
+		                <compilerId>eclipse</compilerId>
+		            </configuration>
+		            <dependencies>
+		                <dependency>
+		                    <groupId>org.codehaus.plexus</groupId>
+		                    <artifactId>plexus-compiler-eclipse</artifactId>
+		                    <version>2.8.5</version>
+		                </dependency>
+		            </dependencies>
+		        </plugin>
+			</plugins>
+		</pluginManagement>
+		<resources>
+			<!-- 编译之后包含xml -->
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<!-- 编译之后包含xml和properties -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+	</build>
+	<modules>
+		<module>xmodule-common-base</module>
+		<module>xmodule-common-support</module>
+		<module>xmodule-common-shiro</module>
+		<module>xmodule-examples-springmvc</module>
+		<module>xmodule-examples-jersey</module>
+		<module>xmodule-examples-eureka</module>
+		<module>xmodule-examples-newscloud</module>
+		<module>xmodule-common-springcloud</module>
+		<module>xmodule-examples-security</module>
+		<module>xmodule-common-springsecurity</module>
+		<module>xmodule-examples-ui</module>
+		<module>xmodule-examples-fabric</module>
+	</modules>
+</project>

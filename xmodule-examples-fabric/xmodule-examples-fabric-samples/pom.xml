@@ -1,0 +1,119 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule-examples-fabric</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-fabric-samples</artifactId>
+	<name>xmodule-examples-fabric-samples</name>
+	<description>HyperLedger Fabric自带样例实践</description>
+
+	<dependencies>
+		<!-- xmodule-common-base -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-base</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+		<!-- xmodule-common-support -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-support</artifactId>
+			<version>${xmodule.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.jersey.ext</groupId>
+					<artifactId>jersey-spring4</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.glassfish.jersey.media</groupId>
+					<artifactId>jersey-media-json-jackson</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.glassfish.jersey.media</groupId>
+					<artifactId>jersey-media-multipart</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.zookeeper</groupId>
+					<artifactId>zookeeper</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.curator</groupId>
+					<artifactId>curator-recipes</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- xmodule-examples-fabric-common -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-examples-fabric-common</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+		<!-- spring-boot-starter-actuator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- spring-boot-starter-security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- spring-boot-starter-test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.vaadin.external.google</groupId>
+					<artifactId>android-json</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- mysql driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- j2ee web spec -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>xmodule-examples-fabric-samples</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

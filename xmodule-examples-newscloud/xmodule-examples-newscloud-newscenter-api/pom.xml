@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule-examples-newscloud</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-newscloud-newscenter-api</artifactId>
+	<name>xmodule-examples-newscloud-newscenter-api</name>
+	<description>SpringCloud微服务示例项目：NewsCloud的新闻中心接口API</description>
+
+	<dependencies>
+		<!-- xmodule-common-base -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-base</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+		<!-- xmodule-examples-newscloud-common -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-examples-newscloud-common</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+		<!-- -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- spring-cloud-openfeign-core -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-openfeign-core</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>xmodule-examples-newscloud-newscenter-api</finalName>
+	</build>
+</project>
