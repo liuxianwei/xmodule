@@ -10,7 +10,7 @@ import org.springframework.security.web.util.UrlUtils;
 import org.springframework.util.Assert;
 
 import com.penglecode.xmodule.common.util.StringUtils;
-import com.penglecode.xmodule.common.util.WebUtils;
+import com.penglecode.xmodule.common.util.URIUtils;
 import com.penglecode.xmodule.common.web.security.consts.SecurityApplicationConstants;
 
 /**
@@ -33,13 +33,13 @@ public class SecurityAccessDecideRequest extends HttpServletRequestWrapper {
 		super(request);
 		Assert.isTrue(isSecurityAccessibleRequest(request), "The wrapping request is not security accessible request!");
 		this.clientAccessUrl = resolveClientAccessUrl(request);
-		this.clientAccessUri = WebUtils.createURI(this.clientAccessUrl);
+		this.clientAccessUri = URIUtils.createURI(this.clientAccessUrl);
 	}
 	
 	protected String resolveClientAccessUrl(HttpServletRequest request) {
 		String clientAccessUrl = request.getParameter(SecurityApplicationConstants.CLIENT_ACCESS_URL_PARAM_NAME);
 		clientAccessUrl = StringUtils.defaultIfEmpty(clientAccessUrl, request.getHeader("referer"));
-		URI uri = WebUtils.createURI(clientAccessUrl);
+		URI uri = URIUtils.createURI(clientAccessUrl);
 		if(!StringUtils.isEmpty(uri.getQuery())) {
 			return uri.getPath() + "?" + uri.getQuery();
 		} else {
