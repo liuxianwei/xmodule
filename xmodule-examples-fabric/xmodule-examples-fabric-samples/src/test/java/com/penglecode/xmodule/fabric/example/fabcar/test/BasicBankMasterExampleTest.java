@@ -1,8 +1,17 @@
 package com.penglecode.xmodule.fabric.example.fabcar.test;
 
+import static org.hyperledger.fabric.sdk.BlockInfo.EnvelopeType.TRANSACTION_ENVELOPE;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.hyperledger.fabric.sdk.BlockInfo;
+import org.hyperledger.fabric.sdk.BlockInfo.EnvelopeInfo;
+import org.hyperledger.fabric.sdk.BlockInfo.TransactionEnvelopeInfo;
+import org.hyperledger.fabric.sdk.BlockInfo.TransactionEnvelopeInfo.TransactionActionInfo;
+import org.hyperledger.fabric.sdk.Channel;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.penglecode.xmodule.common.fabric.ChaincodeService;
+import com.penglecode.xmodule.common.fabric.FabricChannel;
 import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.util.JsonUtils;
 import com.penglecode.xmodule.fabric.example.boot.FabricExampleApplication;
@@ -30,6 +40,9 @@ public class BasicBankMasterExampleTest {
 
 	@Autowired
 	private ChaincodeService chaincodeService;
+	
+	@Autowired
+	private FabricChannel fabricChannel;
 	
 	@BeforeClass
 	public static void beforeClass() {
@@ -74,9 +87,19 @@ public class BasicBankMasterExampleTest {
 	 */
 	@Test
 	public void getAccountBalance() throws Exception {
-		//String accountNo = "6225487335899570";
-		String accountNo = "6225867744627441";
+		String accountNo = "6225487335899570";
+		//String accountNo = "6225867744627441";
 		Result<String> result = chaincodeService.executeQuery("getAccountBalance", new String[] {accountNo});
+		System.out.println("【getAccountBalance】>>> result = " + result);
+	}
+	
+	/**
+	 * 查询所有账户列表
+	 * @throws Exception
+	 */
+	@Test
+	public void getAllAccounts() throws Exception {
+		Result<String> result = chaincodeService.executeQuery("getAllAccounts", new String[] {""});
 		System.out.println("【getAccountBalance】>>> result = " + result);
 	}
 	
@@ -133,6 +156,33 @@ public class BasicBankMasterExampleTest {
 		
 		result = chaincodeService.executeQuery("getAccountBalance", new String[] {accountB});
 		System.out.println("【getAccountBalance】>>> accountB = " + accountB + " result = " + result);
+	}
+	
+	@Test
+	public void queryBlockByTransactionID() throws Exception {
+		Channel channel = fabricChannel.getChannel();
+		String transactionId = "b8b507e3f487cd9d83df469104100a082a877cca79079f71c8f8fe7f405271e7";
+		BlockInfo blockInfo = channel.queryBlockByTransactionID(transactionId);
+		int envelopeCount = blockInfo.getEnvelopeCount();
+		if(envelopeCount > 0) {
+			for (EnvelopeInfo envelopeInfo : blockInfo.getEnvelopeInfos()) {
+				System.out.println(">>> envelopeType = " + envelopeInfo.getType());
+				if (envelopeInfo.getType() == TRANSACTION_ENVELOPE) {
+					TransactionEnvelopeInfo transactionEnvelopeInfo = (TransactionEnvelopeInfo) envelopeInfo;
+					for(TransactionActionInfo transactionActionInfo : transactionEnvelopeInfo.getTransactionActionInfos()) {
+						List<String> args = new ArrayList<String>();
+						int argLength = transactionActionInfo.getChaincodeInputArgsCount();
+						for(int i = 0; i < argLength; i++) {
+							byte[] argBytes = transactionActionInfo.getChaincodeInputArgs(i);
+							args.add(new String(argBytes, "UTF-8"));
+						}
+						System.out.println(String.format(">>> chaincodeId = %s, args = %s", transactionActionInfo.getChaincodeIDName(), args));
+					}
+				}
+			}
+		}
+		System.out.println(blockInfo);
+		
 	}
 	
 }

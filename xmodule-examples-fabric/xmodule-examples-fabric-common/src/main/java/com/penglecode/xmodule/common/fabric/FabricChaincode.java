@@ -16,11 +16,6 @@ import com.penglecode.xmodule.common.util.StringUtils;
 public class FabricChaincode {
 
 	/**
-	 * 当前将要访问的智能合约所属频道名称,例如：mychannel
-	 */
-	private final String channelName;
-	
-	/**
 	 * 智能合约名称,例如：mycc
 	 */
 	private final String chaincodeName;
@@ -55,15 +50,13 @@ public class FabricChaincode {
 	 */
 	private String chaincodeLocalPath;
 	
-	public FabricChaincode(String channelName, String chaincodeName) {
-		this(channelName, chaincodeName, null, null, null);
+	public FabricChaincode(String chaincodeName) {
+		this(chaincodeName, null, null, null);
 	}
 
-	public FabricChaincode(String channelName, String chaincodeName, String chaincodePath, Type chaincodeLanguage, String chaincodeVersion) {
+	public FabricChaincode(String chaincodeName, String chaincodePath, Type chaincodeLanguage, String chaincodeVersion) {
 		super();
-		Assert.hasText(channelName, "Property 'channelName' must be required!");
 		Assert.hasText(chaincodeName, "Property 'chaincodeName' must be required!");
-		this.channelName = channelName;
 		this.chaincodeName = chaincodeName;
 		this.chaincodePath = chaincodePath;
 		this.chaincodeLanguage = ObjectUtils.defaultIfNull(chaincodeLanguage, Type.GO_LANG);
@@ -76,10 +69,6 @@ public class FabricChaincode {
 			chaincodeIDBuilder.setPath(chaincodePath);
 		}
 		this.chaincodeID = chaincodeIDBuilder.build();
-	}
-
-	public String getChannelName() {
-		return channelName;
 	}
 
 	public String getChaincodeName() {

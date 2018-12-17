@@ -9,6 +9,7 @@ import com.penglecode.xmodule.common.boot.config.AbstractSpringConfiguration;
 import com.penglecode.xmodule.common.fabric.ChaincodeService;
 import com.penglecode.xmodule.common.fabric.DefaultChaincodeService;
 import com.penglecode.xmodule.common.fabric.FabricChaincode;
+import com.penglecode.xmodule.common.fabric.FabricChannel;
 import com.penglecode.xmodule.common.fabric.FabricConfiguration;
 import com.penglecode.xmodule.common.fabric.FabricOrganization;
 
@@ -50,12 +51,17 @@ public class E2eExample1Configuration extends AbstractSpringConfiguration {
 	@Bean(name="fabricChaincode")
 	public FabricChaincode fabricChaincode() {
 		//参数值来自/fabric/examples/e2e_cli/scripts/script.sh#installChaincode()
-		return new FabricChaincode("mychannel", "mycc", null, Type.GO_LANG, null);
+		return new FabricChaincode("mycc", null, Type.GO_LANG, null);
+	}
+	
+	@Bean(name="fabricChannel")
+	public FabricChannel fabricChannel() {
+		return new FabricChannel(fabricConfiguration(), fabricOrganization(), "mychannel");
 	}
 	
 	@Bean(name="chaincodeService")
 	public ChaincodeService chaincodeService() {
-		return new DefaultChaincodeService(fabricConfiguration(), fabricOrganization(), fabricChaincode());
+		return new DefaultChaincodeService(fabricChannel(), fabricChaincode());
 	}
 	
 }

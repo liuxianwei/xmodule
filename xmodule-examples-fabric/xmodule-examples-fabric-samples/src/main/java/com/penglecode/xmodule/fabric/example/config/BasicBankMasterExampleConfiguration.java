@@ -9,6 +9,7 @@ import com.penglecode.xmodule.common.boot.config.AbstractSpringConfiguration;
 import com.penglecode.xmodule.common.fabric.ChaincodeService;
 import com.penglecode.xmodule.common.fabric.DefaultChaincodeService;
 import com.penglecode.xmodule.common.fabric.FabricChaincode;
+import com.penglecode.xmodule.common.fabric.FabricChannel;
 import com.penglecode.xmodule.common.fabric.FabricConfiguration;
 import com.penglecode.xmodule.common.fabric.FabricOrganization;
 
@@ -49,12 +50,17 @@ public class BasicBankMasterExampleConfiguration extends AbstractSpringConfigura
 	
 	@Bean(name="fabricChaincode")
 	public FabricChaincode fabricChaincode() {
-		return new FabricChaincode("bankchannel", "bankmaster", "github.com/bankmaster/java", Type.JAVA, "1.0");
+		return new FabricChaincode("bankmaster", "github.com/bankmaster/java", Type.JAVA, "1.0");
+	}
+	
+	@Bean(name="fabricChannel")
+	public FabricChannel fabricChannel() {
+		return new FabricChannel(fabricConfiguration(), fabricOrganization(), "bankchannel");
 	}
 	
 	@Bean(name="chaincodeService")
 	public ChaincodeService chaincodeService() {
-		return new DefaultChaincodeService(fabricConfiguration(), fabricOrganization(), fabricChaincode());
+		return new DefaultChaincodeService(fabricChannel(), fabricChaincode());
 	}
 	
 }
