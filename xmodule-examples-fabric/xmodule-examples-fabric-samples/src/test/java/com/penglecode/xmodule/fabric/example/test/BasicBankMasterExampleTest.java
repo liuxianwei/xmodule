@@ -1,4 +1,4 @@
-package com.penglecode.xmodule.fabric.example.fabcar.test;
+package com.penglecode.xmodule.fabric.example.test;
 
 import static org.hyperledger.fabric.sdk.BlockInfo.EnvelopeType.TRANSACTION_ENVELOPE;
 

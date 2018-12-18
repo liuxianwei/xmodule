@@ -1,4 +1,4 @@
-package com.penglecode.xmodule.fabric.example.fabcar.test;
+package com.penglecode.xmodule.fabric.example.test;
 
 import java.util.List;
 import java.util.Map;
