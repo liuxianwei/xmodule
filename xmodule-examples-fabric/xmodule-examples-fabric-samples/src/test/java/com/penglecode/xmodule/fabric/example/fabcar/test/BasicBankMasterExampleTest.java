@@ -62,7 +62,7 @@ public class BasicBankMasterExampleTest {
 		account.put("accountBalance", 1000);
 		Result<String> result = chaincodeService.executeUpdate("createAccount", new String[] {JsonUtils.object2Json(account)});
 		System.out.println("【createAccount】>>> result = " + result);
-		//【createAccount】>>> result = Result [success=true, code=200, message=null, data={"accountNo":"6225867744627441","realName":"彭鹏","idCardNo":"342425198805281442","mobilePhone":"13812345678","createdTime":"2018-12-07 02:31:29","accountBalance":1000.0}]
+		//【createAccount】>>> result = Result [success=true, code=200, message=null, data={"accountNo":"6225708970469414","realName":"彭鹏","idCardNo":"342425198805281442","mobilePhone":"13812345678","createdTime":"2018-12-07 02:31:29","accountBalance":1000.0}]
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class BasicBankMasterExampleTest {
 		account.put("accountBalance", 1000);
 		Result<String> result = chaincodeService.executeUpdate("createAccount", new String[] {JsonUtils.object2Json(account)});
 		System.out.println("【createAccount】>>> result = " + result);
-		//【createAccount】>>> result = Result [success=true, code=200, message=null, data={"accountNo":"6225487335899570","realName":"马伟","idCardNo":"320800198805281442","mobilePhone":"13812345678","createdTime":"2018-12-07 02:39:37","accountBalance":1000.0}]
+		//【createAccount】>>> result = Result [success=true, code=200, message=null, data={"accountNo":"6225149443666547","realName":"马伟","idCardNo":"320800198805281442","mobilePhone":"13812345678","createdTime":"2018-12-07 02:39:37","accountBalance":1000.0}]
 	}
 	
 	/**
@@ -87,8 +87,8 @@ public class BasicBankMasterExampleTest {
 	 */
 	@Test
 	public void getAccountBalance() throws Exception {
-		String accountNo = "6225487335899570";
-		//String accountNo = "6225867744627441";
+		//String accountNo = "6225149443666547";
+		String accountNo = "6225708970469414";
 		Result<String> result = chaincodeService.executeQuery("getAccountBalance", new String[] {accountNo});
 		System.out.println("【getAccountBalance】>>> result = " + result);
 	}
@@ -109,8 +109,8 @@ public class BasicBankMasterExampleTest {
 	 */
 	@Test
 	public void depositMoney() throws Exception {
-		String accountNo = "6225867744627441";
-		String amount = "500";
+		String accountNo = "6225708970469414";
+		String amount = "700";
 		Result<String> result = chaincodeService.executeUpdate("depositMoney", new String[] {accountNo, amount});
 		System.out.println("【depositMoney】>>> result = " + result);
 	}
@@ -121,7 +121,7 @@ public class BasicBankMasterExampleTest {
 	 */
 	@Test
 	public void drawalMoney() throws Exception {
-		String accountNo = "6225867744627441";
+		String accountNo = "6225708970469414";
 		String amount = "500";
 		Result<String> result = chaincodeService.executeUpdate("drawalMoney", new String[] {accountNo, amount});
 		System.out.println("【drawalMoney】>>> result = " + result);
@@ -134,8 +134,8 @@ public class BasicBankMasterExampleTest {
 	@Test
 	public void transferAccount() throws Exception {
 		Result<String> result = null;
-		String accountA = "6225867744627441";
-		String accountB = "6225487335899570";
+		String accountA = "6225149443666547";
+		String accountB = "6225708970469414";
 		String amount = "200";
 		
 		result = chaincodeService.executeQuery("getAccountBalance", new String[] {accountA});
@@ -156,6 +156,14 @@ public class BasicBankMasterExampleTest {
 		
 		result = chaincodeService.executeQuery("getAccountBalance", new String[] {accountB});
 		System.out.println("【getAccountBalance】>>> accountB = " + accountB + " result = " + result);
+	}
+	
+	@Test
+	public void getAccountTransactionRecords() throws Exception {
+		String accountNo = "6225708970469414";
+		String limit = "10";
+		Result<String> result = chaincodeService.executeQuery("getAccountTransactionRecords", new String[] {accountNo, limit});
+		System.out.println("【getAccountTransactionRecords】>>> result = " + result);
 	}
 	
 	@Test
