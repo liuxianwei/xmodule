@@ -2,7 +2,10 @@ package com.penglecode.xmodule.fabric.example.test;
 
 import static org.hyperledger.fabric.sdk.BlockInfo.EnvelopeType.TRANSACTION_ENVELOPE;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,12 +23,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.penglecode.xmodule.common.fabric.ChaincodeService;
 import com.penglecode.xmodule.common.fabric.FabricChannel;
 import com.penglecode.xmodule.common.support.Result;
+import com.penglecode.xmodule.common.util.DateTimeUtils;
 import com.penglecode.xmodule.common.util.JsonUtils;
 import com.penglecode.xmodule.fabric.example.boot.FabricExampleApplication;
 import com.penglecode.xmodule.fabric.example.config.BasicBankMasterExampleConfiguration;
+import com.penglecode.xmodule.fabric.example.util.BankMasterUtils;
 
 /**
  * bankmaster示例的智能合约：
@@ -38,6 +44,10 @@ import com.penglecode.xmodule.fabric.example.config.BasicBankMasterExampleConfig
 @SpringBootTest(webEnvironment=WebEnvironment.NONE, classes={FabricExampleApplication.class})
 public class BasicBankMasterExampleTest {
 
+private static final String BANK_ACCOUNT_NO_PREFIX = "6225";
+	
+	private static final Charset CHARSET = StandardCharsets.UTF_8;
+	
 	@Autowired
 	private ChaincodeService chaincodeService;
 	
@@ -56,13 +66,15 @@ public class BasicBankMasterExampleTest {
 	@Test
 	public void createAccount1() throws Exception {
 		Map<String,Object> account = new HashMap<String,Object>();
+		account.put("accountNo", BankMasterUtils.genBankCardNo(BANK_ACCOUNT_NO_PREFIX));
 		account.put("realName", "彭鹏");
 		account.put("idCardNo", "342425198805281442");
 		account.put("mobilePhone", "13812345678");
 		account.put("accountBalance", 1000);
+		account.put("createdTime", DateTimeUtils.formatNow());
 		Result<String> result = chaincodeService.executeUpdate("createAccount", new String[] {JsonUtils.object2Json(account)});
 		System.out.println("【createAccount】>>> result = " + result);
-		//【createAccount】>>> result = Result [success=true, code=200, message=null, data={"accountNo":"6225708970469414","realName":"彭鹏","idCardNo":"342425198805281442","mobilePhone":"13812345678","createdTime":"2018-12-07 02:31:29","accountBalance":1000.0}]
+		//【createAccount】>>> result = Result [success=true, code=200, message=null, data={"accountNo":"6225657075228284","realName":"彭鹏","idCardNo":"342425198805281442","mobilePhone":"13812345678","createdTime":"2018-12-07 02:31:29","accountBalance":1000.0}]
 	}
 	
 	/**
@@ -72,13 +84,15 @@ public class BasicBankMasterExampleTest {
 	@Test
 	public void createAccount2() throws Exception {
 		Map<String,Object> account = new HashMap<String,Object>();
+		account.put("accountNo", BankMasterUtils.genBankCardNo(BANK_ACCOUNT_NO_PREFIX));
 		account.put("realName", "马伟");
-		account.put("idCardNo", "320800198805281442");
-		account.put("mobilePhone", "13812345678");
+		account.put("idCardNo", "320800198805281122");
+		account.put("mobilePhone", "13812345679");
 		account.put("accountBalance", 1000);
+		account.put("createdTime", DateTimeUtils.formatNow());
 		Result<String> result = chaincodeService.executeUpdate("createAccount", new String[] {JsonUtils.object2Json(account)});
 		System.out.println("【createAccount】>>> result = " + result);
-		//【createAccount】>>> result = Result [success=true, code=200, message=null, data={"accountNo":"6225149443666547","realName":"马伟","idCardNo":"320800198805281442","mobilePhone":"13812345678","createdTime":"2018-12-07 02:39:37","accountBalance":1000.0}]
+		//【createAccount】>>> result = Result [success=true, code=200, message=null, data={"accountNo":"6225450966475043","realName":"马伟","idCardNo":"320800198805281442","mobilePhone":"13812345678","createdTime":"2018-12-07 02:39:37","accountBalance":1000.0}]
 	}
 	
 	/**
@@ -87,8 +101,8 @@ public class BasicBankMasterExampleTest {
 	 */
 	@Test
 	public void getAccountBalance() throws Exception {
-		//String accountNo = "6225149443666547";
-		String accountNo = "6225708970469414";
+		//String accountNo = "6225450966475043";
+		String accountNo = "6225657075228284";
 		Result<String> result = chaincodeService.executeQuery("getAccountBalance", new String[] {accountNo});
 		System.out.println("【getAccountBalance】>>> result = " + result);
 	}
@@ -109,9 +123,10 @@ public class BasicBankMasterExampleTest {
 	 */
 	@Test
 	public void depositMoney() throws Exception {
-		String accountNo = "6225708970469414";
+		Map<String,byte[]> transients = Collections.singletonMap("transactionTime", DateTimeUtils.formatNow().getBytes(CHARSET));
+		String accountNo = "6225657075228284";
 		String amount = "700";
-		Result<String> result = chaincodeService.executeUpdate("depositMoney", new String[] {accountNo, amount});
+		Result<String> result = chaincodeService.executeUpdate("depositMoney", new String[] {accountNo, amount}, transients);
 		System.out.println("【depositMoney】>>> result = " + result);
 	}
 	
@@ -121,9 +136,10 @@ public class BasicBankMasterExampleTest {
 	 */
 	@Test
 	public void drawalMoney() throws Exception {
-		String accountNo = "6225708970469414";
+		Map<String,byte[]> transients = Collections.singletonMap("transactionTime", DateTimeUtils.formatNow().getBytes(CHARSET));
+		String accountNo = "6225657075228284";
 		String amount = "500";
-		Result<String> result = chaincodeService.executeUpdate("drawalMoney", new String[] {accountNo, amount});
+		Result<String> result = chaincodeService.executeUpdate("drawalMoney", new String[] {accountNo, amount}, transients);
 		System.out.println("【drawalMoney】>>> result = " + result);
 	}
 	
@@ -133,9 +149,10 @@ public class BasicBankMasterExampleTest {
 	 */
 	@Test
 	public void transferAccount() throws Exception {
+		Map<String,byte[]> transients = Collections.singletonMap("transactionTime", DateTimeUtils.formatNow().getBytes(CHARSET));
 		Result<String> result = null;
-		String accountA = "6225149443666547";
-		String accountB = "6225708970469414";
+		String accountA = "6225450966475043";
+		String accountB = "6225657075228284";
 		String amount = "200";
 		
 		result = chaincodeService.executeQuery("getAccountBalance", new String[] {accountA});
@@ -146,7 +163,7 @@ public class BasicBankMasterExampleTest {
 		
 		System.out.println("--------------------------------------转账前----------------------------------------");
 		
-		result = chaincodeService.executeUpdate("transferAccount", new String[] {accountA, accountB, amount});
+		result = chaincodeService.executeUpdate("transferAccount", new String[] {accountA, accountB, amount}, transients);
 		System.out.println("【transferAccount】>>> result = " + result);
 		
 		System.out.println("--------------------------------------转账后----------------------------------------");
@@ -160,10 +177,16 @@ public class BasicBankMasterExampleTest {
 	
 	@Test
 	public void getAccountTransactionRecords() throws Exception {
-		String accountNo = "6225708970469414";
+		String accountNo = "6225657075228284";
 		String limit = "10";
 		Result<String> result = chaincodeService.executeQuery("getAccountTransactionRecords", new String[] {accountNo, limit});
 		System.out.println("【getAccountTransactionRecords】>>> result = " + result);
+		if(result.isSuccess()) {
+			List<Map<String,Object>> records = JsonUtils.json2Object(result.getData(), new TypeReference<List<Map<String,Object>>>(){});
+			for(Object record : records) {
+				System.out.println(record);
+			}
+		}
 	}
 	
 	@Test
@@ -190,7 +213,6 @@ public class BasicBankMasterExampleTest {
 			}
 		}
 		System.out.println(blockInfo);
-		
 	}
 	
 }

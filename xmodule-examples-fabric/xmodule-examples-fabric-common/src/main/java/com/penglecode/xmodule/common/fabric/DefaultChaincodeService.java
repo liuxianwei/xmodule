@@ -61,8 +61,8 @@ public class DefaultChaincodeService implements ChaincodeService, InitializingBe
 	}
 
 	@Override
-	public Result<String> executeQuery(String fcn, String[] args, Map<String,byte[]> transientData) throws Exception {
-		return execute(fcn, args, transientData, ChaincodeFunctionAccessType.QUERY, false);
+	public Result<String> executeQuery(String fcn, String[] args, Map<String,byte[]> transients) throws Exception {
+		return execute(fcn, args, transients, ChaincodeFunctionAccessType.QUERY, false);
 	}
 	
 	@Override
@@ -76,16 +76,16 @@ public class DefaultChaincodeService implements ChaincodeService, InitializingBe
 	}
 	
 	@Override
-	public Result<String> executeUpdate(String fcn, String[] args, Map<String, byte[]> transientData) throws Exception {
-		return execute(fcn, args, transientData, ChaincodeFunctionAccessType.UPDATE, false);
+	public Result<String> executeUpdate(String fcn, String[] args, Map<String, byte[]> transients) throws Exception {
+		return execute(fcn, args, transients, ChaincodeFunctionAccessType.UPDATE, false);
 	}
 	
 	@Override
-	public Result<String> executeUpdateAsync(String fcn, String[] args, Map<String, byte[]> transientData) throws Exception {
-		return execute(fcn, args, transientData, ChaincodeFunctionAccessType.UPDATE, true);
+	public Result<String> executeUpdateAsync(String fcn, String[] args, Map<String, byte[]> transients) throws Exception {
+		return execute(fcn, args, transients, ChaincodeFunctionAccessType.UPDATE, true);
 	}
 
-	protected Result<String> execute(String fcn, String[] args, Map<String,byte[]> transientData, ChaincodeFunctionAccessType funcType, boolean asyncUpdate) throws Exception {
+	protected Result<String> execute(String fcn, String[] args, Map<String,byte[]> transients, ChaincodeFunctionAccessType funcType, boolean asyncUpdate) throws Exception {
 		LOGGER.info("【chaincode】>>> Prepare to invoke chaincode({}) now, fcn = {}, args = {} ", fabricChaincode.getChaincodeName(), fcn, Arrays.toString(args));
 		Channel channel = fabricChannel.getChannel();
 		TransactionProposalRequest transactionProposalRequest = fabricChannel.getHfClient().newTransactionProposalRequest();
@@ -95,8 +95,8 @@ public class DefaultChaincodeService implements ChaincodeService, InitializingBe
 		if(args != null) {
 			transactionProposalRequest.setArgs(args);
 		}
-		if(!CollectionUtils.isEmpty(transientData)) {
-			transactionProposalRequest.setTransientMap(transientData);
+		if(!CollectionUtils.isEmpty(transients)) {
+			transactionProposalRequest.setTransientMap(transients);
 		}
 		transactionProposalRequest.setProposalWaitTime(fabricChaincode.getProposalWaitTime());
 		
