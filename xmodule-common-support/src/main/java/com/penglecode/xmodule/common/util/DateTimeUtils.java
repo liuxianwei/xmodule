@@ -66,7 +66,7 @@ public class DateTimeUtils {
 	}
 	
 	/**
-	 * <p>将@{code java.util.Date}以指定的日期格式格式化为字符串</p>
+	 * <p>将@{code java.time.LocalDateTime}以指定的日期格式格式化为字符串</p>
 	 * 
 	 * @param date
 	 * @param pattern
