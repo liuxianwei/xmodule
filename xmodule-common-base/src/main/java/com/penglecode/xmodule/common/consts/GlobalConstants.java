@@ -1,8 +1,12 @@
 package com.penglecode.xmodule.common.consts;
 
+import static com.penglecode.xmodule.common.consts.Constants.valueOf;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import com.penglecode.xmodule.common.support.MvvmAppConfig;
 
 /**
  * 全局共通常量
@@ -83,5 +87,15 @@ public class GlobalConstants {
 	 * upms登录用户在会话中的key
 	 */
 	public static final String UPMS_LOGIN_USER_SESSION_KEY = "upmsLoginUser";
+	
+	/**
+	 * 默认的应用ID
+	 */
+	public static final Long DEFAULT_APPLICATION_ID = 1L;
+	
+	/**
+	 * 全局应用配置(包括应用的name, url, contextpath等)
+	 */
+	public static final MvvmAppConfig MVVM_APP_CONFIG = valueOf(new MvvmAppConfig());
 	
 }

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.penglecode.xmodule.upms.mapper.UpmsUserAccessLogMapper">
+   
+    <insert id="insertModel" keyProperty="logId" parameterType="UpmsUserAccessLog" statementType="PREPARED" useGeneratedKeys="true">
+        INSERT INTO upms_user_access_log(
+            log_id,
+            log_title,
+            app_module,
+            request_uri,
+            http_method,
+            mvc_method,
+            request_header,
+            request_content_type,
+            request_content,
+            access_user_id,
+            access_time,
+            client_ip_addr,
+            server_ip_addr,
+            process_time,
+            logging_completed,
+            async_request,
+            response_content_type,
+            app_id,
+            create_time,
+            response_content
+        ) VALUES (
+            #{logId, jdbcType=BIGINT},
+            #{logTitle, jdbcType=VARCHAR},
+            #{appModule, jdbcType=VARCHAR},
+            #{requestUri, jdbcType=VARCHAR},
+            #{httpMethod, jdbcType=VARCHAR},
+            #{mvcMethod, jdbcType=VARCHAR},
+            #{requestHeader, jdbcType=VARCHAR},
+            #{requestContentType, jdbcType=VARCHAR},
+            #{requestContent, jdbcType=VARCHAR},
+            #{accessUserId, jdbcType=BIGINT},
+            #{accessTime, jdbcType=VARCHAR},
+            #{clientIpAddr, jdbcType=VARCHAR},
+            #{serverIpAddr, jdbcType=VARCHAR},
+            #{processTime, jdbcType=BIGINT},
+            #{loggingCompleted, jdbcType=BOOLEAN},
+            #{asyncRequest, jdbcType=BOOLEAN},
+            #{responseContentType, jdbcType=VARCHAR},
+            #{appId, jdbcType=BIGINT},
+            #{createTime, jdbcType=VARCHAR},
+            #{responseContent, jdbcType=LONGVARCHAR}
+        )
+    </insert>
+   
+    <update id="updateModelById" parameterType="UpmsUserAccessLog" statementType="PREPARED">
+        UPDATE upms_user_access_log a
+           SET a.log_id = #{logId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(logTitle)">
+               ,a.log_title = #{logTitle, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appModule)">
+               ,a.app_module = #{appModule, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestUri)">
+               ,a.request_uri = #{requestUri, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(httpMethod)">
+               ,a.http_method = #{httpMethod, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mvcMethod)">
+               ,a.mvc_method = #{mvcMethod, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestHeader)">
+               ,a.request_header = #{requestHeader, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestContentType)">
+               ,a.request_content_type = #{requestContentType, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestContent)">
+               ,a.request_content = #{requestContent, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(accessUserId)">
+               ,a.access_user_id = #{accessUserId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(accessTime)">
+               ,a.access_time = #{accessTime, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(clientIpAddr)">
+               ,a.client_ip_addr = #{clientIpAddr, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(serverIpAddr)">
+               ,a.server_ip_addr = #{serverIpAddr, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(processTime)">
+               ,a.process_time = #{processTime, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(loggingCompleted)">
+               ,a.logging_completed = #{loggingCompleted, jdbcType=BOOLEAN}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(asyncRequest)">
+               ,a.async_request = #{asyncRequest, jdbcType=BOOLEAN}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(responseContentType)">
+               ,a.response_content_type = #{responseContentType, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appId)">
+               ,a.app_id = #{appId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(responseContent)">
+               ,a.response_content = #{responseContent, jdbcType=LONGVARCHAR}
+            </if>
+         WHERE a.log_id = #{logId, jdbcType=BIGINT}
+    </update>
+   
+    <update id="dynamicUpdateModelById" parameterType="UpmsUserAccessLog" statementType="PREPARED">
+        UPDATE upms_user_access_log a
+           SET a.log_id = #{logId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(logTitle)">
+               ,a.log_title = #{logTitle, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appModule)">
+               ,a.app_module = #{appModule, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestUri)">
+               ,a.request_uri = #{requestUri, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(httpMethod)">
+               ,a.http_method = #{httpMethod, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mvcMethod)">
+               ,a.mvc_method = #{mvcMethod, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestHeader)">
+               ,a.request_header = #{requestHeader, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestContentType)">
+               ,a.request_content_type = #{requestContentType, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestContent)">
+               ,a.request_content = #{requestContent, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(accessUserId)">
+               ,a.access_user_id = #{accessUserId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(accessTime)">
+               ,a.access_time = #{accessTime, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(clientIpAddr)">
+               ,a.client_ip_addr = #{clientIpAddr, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(serverIpAddr)">
+               ,a.server_ip_addr = #{serverIpAddr, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(processTime)">
+               ,a.process_time = #{processTime, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(loggingCompleted)">
+               ,a.logging_completed = #{loggingCompleted, jdbcType=BOOLEAN}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(asyncRequest)">
+               ,a.async_request = #{asyncRequest, jdbcType=BOOLEAN}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(responseContentType)">
+               ,a.response_content_type = #{responseContentType, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appId)">
+               ,a.app_id = #{appId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
+               ,a.create_time = #{createTime, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(responseContent)">
+               ,a.response_content = #{responseContent, jdbcType=LONGVARCHAR}
+            </if>
+         WHERE a.log_id = #{logId, jdbcType=BIGINT}
+    </update>
+   
+    <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
+        DELETE FROM upms_user_access_log WHERE log_id = #{logId, jdbcType=BIGINT}
+    </delete>
+   
+    <select id="selectModelById" parameterType="java.lang.Long" resultType="UpmsUserAccessLog" statementType="PREPARED">
+        SELECT a.log_id	logId,
+               a.log_title	logTitle,
+               a.app_module	appModule,
+               a.request_uri	requestUri,
+               a.http_method	httpMethod,
+               a.mvc_method	mvcMethod,
+               a.request_header	requestHeader,
+               a.request_content_type	requestContentType,
+               a.request_content	requestContent,
+               a.access_user_id	accessUserId,
+               DATE_FORMAT(a.access_time, '%Y-%m-%d %T')	accessTime,
+               a.client_ip_addr	clientIpAddr,
+               a.server_ip_addr	serverIpAddr,
+               a.process_time	processTime,
+               a.logging_completed	loggingCompleted,
+               a.async_request	asyncRequest,
+               a.response_content_type	responseContentType,
+               a.app_id	appId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.response_content	responseContent
+          FROM upms_user_access_log a
+         WHERE a.log_id = #{logId, jdbcType=BIGINT}
+    </select>
+   
+    <select id="selectModelByExample" parameterType="UpmsUserAccessLog" resultType="UpmsUserAccessLog" statementType="PREPARED">
+        SELECT a.log_id	logId,
+               a.log_title	logTitle,
+               a.app_module	appModule,
+               a.request_uri	requestUri,
+               a.http_method	httpMethod,
+               a.mvc_method	mvcMethod,
+               a.request_header	requestHeader,
+               a.request_content_type	requestContentType,
+               a.request_content	requestContent,
+               a.access_user_id	accessUserId,
+               DATE_FORMAT(a.access_time, '%Y-%m-%d %T')	accessTime,
+               a.client_ip_addr	clientIpAddr,
+               a.server_ip_addr	serverIpAddr,
+               a.process_time	processTime,
+               a.logging_completed	loggingCompleted,
+               a.async_request	asyncRequest,
+               a.response_content_type	responseContentType,
+               a.app_id	appId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.response_content	responseContent
+          FROM upms_user_access_log a
+         WHERE 1=1
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(logTitle)">
+           AND a.log_title like CONCAT('%', #{logTitle, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appModule)">
+           AND a.app_module = #{appModule, jdbcType=VARCHAR}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestUri)">
+           AND a.request_uri = #{requestUri, jdbcType=VARCHAR}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(httpMethod)">
+           AND a.http_method = #{httpMethod, jdbcType=VARCHAR}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(accessUserId)">
+           AND a.access_user_id = #{accessUserId, jdbcType=BIGINT}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(loggingCompleted)">
+           AND a.logging_completed = #{loggingCompleted, jdbcType=BOOLEAN}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(asyncRequest)">
+           AND a.async_request = #{asyncRequest, jdbcType=BOOLEAN}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appId)">
+           AND a.app_id = #{appId, jdbcType=BIGINT}
+        </if>
+
+    </select>
+   
+    <select id="selectModelListByIds" parameterType="java.util.List" resultType="UpmsUserAccessLog" statementType="PREPARED">
+        SELECT a.log_id	logId,
+               a.log_title	logTitle,
+               a.app_module	appModule,
+               a.request_uri	requestUri,
+               a.http_method	httpMethod,
+               a.mvc_method	mvcMethod,
+               a.request_header	requestHeader,
+               a.request_content_type	requestContentType,
+               a.request_content	requestContent,
+               a.access_user_id	accessUserId,
+               DATE_FORMAT(a.access_time, '%Y-%m-%d %T')	accessTime,
+               a.client_ip_addr	clientIpAddr,
+               a.server_ip_addr	serverIpAddr,
+               a.process_time	processTime,
+               a.logging_completed	loggingCompleted,
+               a.async_request	asyncRequest,
+               a.response_content_type	responseContentType,
+               a.app_id	appId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.response_content	responseContent
+          FROM upms_user_access_log a
+         WHERE a.log_id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+         ORDER BY a.log_id ASC
+    </select>
+   
+    <select id="selectAllModelList" parameterType="java.util.Map" resultType="UpmsUserAccessLog" statementType="PREPARED">
+        SELECT a.log_id	logId,
+               a.log_title	logTitle,
+               a.app_module	appModule,
+               a.request_uri	requestUri,
+               a.http_method	httpMethod,
+               a.mvc_method	mvcMethod,
+               a.request_header	requestHeader,
+               a.request_content_type	requestContentType,
+               a.request_content	requestContent,
+               a.access_user_id	accessUserId,
+               DATE_FORMAT(a.access_time, '%Y-%m-%d %T')	accessTime,
+               a.client_ip_addr	clientIpAddr,
+               a.server_ip_addr	serverIpAddr,
+               a.process_time	processTime,
+               a.logging_completed	loggingCompleted,
+               a.async_request	asyncRequest,
+               a.response_content_type	responseContentType,
+               a.app_id	appId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.response_content	responseContent
+          FROM upms_user_access_log a
+         WHERE 1=1
+         ORDER BY a.log_id ASC
+    </select>
+   
+    <select id="countAllModelList" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM upms_user_access_log a
+         WHERE 1=1
+    </select>
+   
+    <select id="selectModelListByExample" parameterType="java.util.Map" resultType="UpmsUserAccessLog" statementType="PREPARED">
+        SELECT a.log_id	logId,
+               a.log_title	logTitle,
+               a.app_module	appModule,
+               a.request_uri	requestUri,
+               a.http_method	httpMethod,
+               a.mvc_method	mvcMethod,
+               a.request_header	requestHeader,
+               a.request_content_type	requestContentType,
+               a.request_content	requestContent,
+               a.access_user_id	accessUserId,
+               DATE_FORMAT(a.access_time, '%Y-%m-%d %T')	accessTime,
+               a.client_ip_addr	clientIpAddr,
+               a.server_ip_addr	serverIpAddr,
+               a.process_time	processTime,
+               a.logging_completed	loggingCompleted,
+               a.async_request	asyncRequest,
+               a.response_content_type	responseContentType,
+               a.app_id	appId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.response_content	responseContent
+          FROM upms_user_access_log a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.logTitle)">
+           AND a.log_title like CONCAT('%', #{example.logTitle, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appModule)">
+           AND a.app_module = #{example.appModule, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.requestUri)">
+           AND a.request_uri = #{example.requestUri, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.httpMethod)">
+           AND a.http_method = #{example.httpMethod, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.accessUserId)">
+           AND a.access_user_id = #{example.accessUserId, jdbcType=BIGINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.loggingCompleted)">
+           AND a.logging_completed = #{example.loggingCompleted, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.asyncRequest)">
+           AND a.async_request = #{example.asyncRequest, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appId)">
+           AND a.app_id = #{example.appId, jdbcType=BIGINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="selectModelPageListByExample" parameterType="java.util.Map" resultType="UpmsUserAccessLog" statementType="PREPARED">
+        SELECT a.log_id	logId,
+               a.log_title	logTitle,
+               a.app_module	appModule,
+               a.request_uri	requestUri,
+               a.http_method	httpMethod,
+               a.mvc_method	mvcMethod,
+               a.request_header	requestHeader,
+               a.request_content_type	requestContentType,
+               a.request_content	requestContent,
+               a.access_user_id	accessUserId,
+               DATE_FORMAT(a.access_time, '%Y-%m-%d %T')	accessTime,
+               a.client_ip_addr	clientIpAddr,
+               a.server_ip_addr	serverIpAddr,
+               a.process_time	processTime,
+               a.logging_completed	loggingCompleted,
+               a.async_request	asyncRequest,
+               a.response_content_type	responseContentType,
+               a.app_id	appId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.response_content	responseContent
+          FROM upms_user_access_log a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.logTitle)">
+           AND a.log_title like CONCAT('%', #{example.logTitle, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appModule)">
+           AND a.app_module = #{example.appModule, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.requestUri)">
+           AND a.request_uri = #{example.requestUri, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.httpMethod)">
+           AND a.http_method = #{example.httpMethod, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.accessUserId)">
+           AND a.access_user_id = #{example.accessUserId, jdbcType=BIGINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.loggingCompleted)">
+           AND a.logging_completed = #{example.loggingCompleted, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.asyncRequest)">
+           AND a.async_request = #{example.asyncRequest, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appId)">
+           AND a.app_id = #{example.appId, jdbcType=BIGINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="countModelPageListByExample" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM upms_user_access_log a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.logTitle)">
+           AND a.log_title like CONCAT('%', #{example.logTitle, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appModule)">
+           AND a.app_module = #{example.appModule, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.requestUri)">
+           AND a.request_uri = #{example.requestUri, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.httpMethod)">
+           AND a.http_method = #{example.httpMethod, jdbcType=VARCHAR}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.accessUserId)">
+           AND a.access_user_id = #{example.accessUserId, jdbcType=BIGINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.loggingCompleted)">
+           AND a.logging_completed = #{example.loggingCompleted, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.asyncRequest)">
+           AND a.async_request = #{example.asyncRequest, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appId)">
+           AND a.app_id = #{example.appId, jdbcType=BIGINT}
+        </if>
+    </select>
+</mapper>

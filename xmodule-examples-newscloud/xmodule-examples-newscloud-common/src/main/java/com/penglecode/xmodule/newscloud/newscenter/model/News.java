@@ -8,7 +8,7 @@ import com.penglecode.xmodule.common.support.BaseModel;
  * @author PengPeng
  * @date	2018-10-08 11:27:11
  */
-public class News implements BaseModel {
+public class News implements BaseModel<News> {
      
     private static final long serialVersionUID = 1L;
 

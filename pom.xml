@@ -325,5 +325,8 @@
 		<module>xmodule-common-springsecurity</module>
 		<module>xmodule-examples-ui</module>
 		<module>xmodule-examples-fabric</module>
+		<module>xmodule-examples-java</module>
+		<module>xmodule-upms</module>
+		<module>xmodule-examples-springboot</module>
 	</modules>
 </project>

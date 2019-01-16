@@ -15,7 +15,7 @@ import com.penglecode.xmodule.common.support.Sort;
  * @author 	pengpeng
  * @date	2018年2月9日 下午3:43:08
  */
-public interface BaseMybatisMapper<T extends BaseModel> {
+public interface BaseMybatisMapper<T extends BaseModel<T>> {
 
 	public int insertModel(T model);
 	

@@ -8,7 +8,7 @@ import com.penglecode.xmodule.common.support.BaseModel;
  * @author PengPeng
  * @date	2018-10-22 17:35:43
  */
-public class UpmsUser implements BaseModel {
+public class UpmsUser implements BaseModel<UpmsUser> {
      
     private static final long serialVersionUID = 1L;
 

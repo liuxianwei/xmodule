@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.penglecode.xmodule.common.consts.ApplicationConstants;
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.support.BusinessAssert;
 import com.penglecode.xmodule.common.support.Page;
@@ -45,7 +44,7 @@ public class UserApiServiceImpl extends HttpAPIResourceSupport implements UserAp
             }
         }
         if (!StringUtils.isEmpty(model.getUserIconUrl())) {
-        	model.setUserIconUrl(ApplicationConstants.GLOBAL_APP_CONFIG.getGlobalFileServerUrl() + model.getUserIconUrl());
+        	model.setUserIconUrl(GlobalConstants.MVVM_APP_CONFIG.getGlobalFileServerUrl() + model.getUserIconUrl());
         }
 	};
 	

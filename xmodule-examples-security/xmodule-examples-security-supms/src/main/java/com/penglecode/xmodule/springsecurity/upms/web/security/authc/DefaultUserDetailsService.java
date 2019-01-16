@@ -31,10 +31,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
 		
 		List<UpmsRole> userRoleList = upmsUserService.getUserRoleListByUserId(upmsUser.getUserId());
 		if(!CollectionUtils.isEmpty(userRoleList)) {
-			List<String> roleCodes = userRoleList.stream().map(role -> {
-				return role.getRoleCode();
-			}).collect(Collectors.toList());
-			loginUser.setRoleCodes(roleCodes);
+			loginUser.setRoleCodes(userRoleList.stream().map(UpmsRole::getRoleCode).collect(Collectors.toList()));
 		}
 		return loginUser;
 	}

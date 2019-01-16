@@ -2,7 +2,7 @@ package com.penglecode.xmodule.common.web.security.support;
 
 import com.penglecode.xmodule.common.support.BaseModel;
 
-public class RoleResource implements BaseModel {
+public class RoleResource implements BaseModel<RoleResource> {
 
 	private static final long serialVersionUID = 1L;
 

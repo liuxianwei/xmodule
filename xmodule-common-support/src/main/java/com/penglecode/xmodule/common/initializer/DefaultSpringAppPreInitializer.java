@@ -11,7 +11,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.ServletContextResourcePatternResolver;
 
 import com.penglecode.xmodule.common.consts.ApplicationConstants;
-import com.penglecode.xmodule.common.consts.SpringManagedConstants;
+import com.penglecode.xmodule.common.consts.SpringEnvConstantPool;
 import com.penglecode.xmodule.common.util.FileUtils;
 import com.penglecode.xmodule.common.util.SpringUtils;
 
@@ -37,7 +37,7 @@ public class DefaultSpringAppPreInitializer extends AbstractSpringAppInitializer
 	public void initialize(ConfigurableApplicationContext applicationContext) {
 		LOGGER.info(">>> Spring 应用启动初始化程序! applicationContext = {}", applicationContext);
 		ApplicationContext rootApplicationContext = applicationContext.getParent() != null ? applicationContext.getParent() : applicationContext;
-		SpringManagedConstants.setEnvironment(rootApplicationContext.getEnvironment());
+		SpringEnvConstantPool.setEnvironment(rootApplicationContext.getEnvironment());
 		SpringUtils.setApplicationContext(rootApplicationContext);
 		setFinalFieldValue(ApplicationConstants.class, "APPLICATION_CONTEXT", rootApplicationContext);
 		if(applicationContext instanceof WebApplicationContext) { //容器环境下运行Spring ApplicationContext上下文

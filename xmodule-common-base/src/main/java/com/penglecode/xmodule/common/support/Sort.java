@@ -94,7 +94,7 @@ public class Sort implements DtoModel {
 		}
 		
 		/**
-		 * Used by SpringMVC - @RequestParam and JAX-RS @QueryParam
+		 * Used by SpringMVC @RequestParam and JAX-RS @QueryParam
 		 * @param order
 		 * @return
 		 */

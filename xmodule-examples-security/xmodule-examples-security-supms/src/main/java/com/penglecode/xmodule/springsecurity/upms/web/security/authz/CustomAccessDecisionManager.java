@@ -14,8 +14,8 @@ import com.penglecode.xmodule.common.util.CollectionUtils;
 public class CustomAccessDecisionManager implements AccessDecisionManager {
 
 	/* 
-     * 该方法决定该权限是否有权限访问该资源，其实object就是一个资源的地址，authentication是当前用户的
-     * 对应权限，如果没登陆就为游客，登陆了就是该用户对应的权限
+     * 该方法决定该身份证明(authentication)是否有权限访问该资源，其实object就是一个资源的地址，authentication是当前用户的
+     * 对应身份证明，如果没登录就为游客，登录了就是该用户对应的权限
      */
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)

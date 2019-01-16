@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.exception.ApplicationRuntimeException;
-import com.penglecode.xmodule.common.support.MvvmWebAppConfigProperties;
+import com.penglecode.xmodule.common.support.MvvmAppConfig;
 import com.penglecode.xmodule.common.util.FileUtils;
 import com.penglecode.xmodule.common.util.ResourceUtils;
 import com.penglecode.xmodule.common.web.security.config.SecurityConfigProperties;
@@ -29,7 +29,7 @@ public class UpmsSecurityAccessDecideController extends HttpAPIResourceSupport {
 	private SecurityConfigProperties securityConfigProperties;
 	
 	@Autowired
-	private MvvmWebAppConfigProperties mvvmWebAppConfigProperties;
+	private MvvmAppConfig mvvmWebAppConfigProperties;
 	
 	/**
 	 * 客户端访问权限判断请求被允许

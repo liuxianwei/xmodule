@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.penglecode.xmodule.common.consts.ApplicationConstants;
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.support.BusinessAssert;
 import com.penglecode.xmodule.common.support.Page;
@@ -46,7 +45,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
             }
         }
         if (!StringUtils.isEmpty(model.getUserIcon())) {
-        	model.setUserIconUrl(ApplicationConstants.GLOBAL_APP_CONFIG.getGlobalFileServerUrl() + model.getUserIcon());
+        	model.setUserIconUrl(GlobalConstants.MVVM_APP_CONFIG.getGlobalFileServerUrl() + model.getUserIcon());
         }
 	};
 	

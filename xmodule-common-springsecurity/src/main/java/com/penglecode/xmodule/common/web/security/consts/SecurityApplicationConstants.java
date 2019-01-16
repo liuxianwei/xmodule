@@ -1,14 +1,12 @@
 package com.penglecode.xmodule.common.web.security.consts;
 
-import com.penglecode.xmodule.common.consts.SpringManagedConstants;
-
 /**
  * Spring-Security应用程序常量
  * 
  * @author 	pengpeng
  * @date	2018年10月26日 下午1:02:36
  */
-public class SecurityApplicationConstants extends SpringManagedConstants {
+public class SecurityApplicationConstants {
 
 	/**
 	 * 保存在request属性中的SavedRequestUrl的key

@@ -34,7 +34,6 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.penglecode.xmodule.common.consts.ApplicationConstants;
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.support.Messages;
 import com.penglecode.xmodule.common.support.NamedThreadFactory;
@@ -46,11 +45,11 @@ import com.penglecode.xmodule.common.util.JsonUtils;
 import com.penglecode.xmodule.common.util.NetUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
 import com.penglecode.xmodule.common.web.support.HttpAccessLog;
+import com.penglecode.xmodule.common.web.support.HttpAccessLog.HttpRequestParameter;
 import com.penglecode.xmodule.common.web.support.HttpAccessLogContext;
 import com.penglecode.xmodule.common.web.support.HttpAccessLogDAO;
 import com.penglecode.xmodule.common.web.support.HttpAccessLogging;
 import com.penglecode.xmodule.common.web.support.MvcResourceMethodMapping;
-import com.penglecode.xmodule.common.web.support.HttpAccessLog.HttpRequestParameter;
 
 /**
  * Http访问日志记录之Servlet输入输出流过滤器,解决：
@@ -191,7 +190,7 @@ public abstract class AbstractHttpAccessLoggingFilter extends OncePerRequestFilt
 		httpAccessLog.setAccessEndMillis(null);
 		httpAccessLog.setProcessTime(null);
 		httpAccessLog.setAsynRequest(HttpServletUtils.isAjaxRequest(request));
-		httpAccessLog.setAppId(ApplicationConstants.CURRENT_APPLICATION_ID);
+		httpAccessLog.setAppId(GlobalConstants.MVVM_APP_CONFIG.getAppId());
 		if(isLoggingRequestHeader()){
 			httpAccessLog.setRequestHeader(extractRequestHeader(request, context));
 		}

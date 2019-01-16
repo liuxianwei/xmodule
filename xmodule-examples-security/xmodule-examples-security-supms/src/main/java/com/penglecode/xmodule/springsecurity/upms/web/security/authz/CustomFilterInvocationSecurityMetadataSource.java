@@ -23,7 +23,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import com.penglecode.xmodule.common.support.MvvmWebAppConfigProperties;
+import com.penglecode.xmodule.common.support.MvvmAppConfig;
 import com.penglecode.xmodule.common.util.CollectionUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
 import com.penglecode.xmodule.common.web.security.service.RoleResourceService;
@@ -42,7 +42,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 	private String supremeRole = "SUPERME";
 	
 	@Autowired
-	private MvvmWebAppConfigProperties mvvmWebAppConfigProperties;
+	private MvvmAppConfig mvvmWebAppConfigProperties;
 	
 	@Autowired
 	private RoleResourceService roleResourceService;
@@ -123,7 +123,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 	
 	protected RequestMatcher getRequestMatcher(String url, String httpMethod) {
 		url = mvvmWebAppConfigProperties.getAppWebContextPath() + url;
-		if(httpMethod == null && HttpMethod.resolve(httpMethod) == null) {
+		if(httpMethod == null || HttpMethod.resolve(httpMethod) == null) {
 			httpMethod = null;
 		}
         return new AntPathRequestMatcher(url, httpMethod);
