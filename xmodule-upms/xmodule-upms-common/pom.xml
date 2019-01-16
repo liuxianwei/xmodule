@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule-upms</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-upms-common</artifactId>
+	<name>xmodule-upms-common</name>
+	<description>统一用户权限管理系统 - 共通模块</description>
+
+	<dependencies>
+		<!-- xmodule-common-base -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-base</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+		<!-- xmodule-common-support -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-support</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+		<!-- xmodule-common-springsecurity -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-springsecurity</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+		<!-- xmodule-upms-base -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-upms-base</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>xmodule-upms-common</finalName>
+	</build>
+</project>

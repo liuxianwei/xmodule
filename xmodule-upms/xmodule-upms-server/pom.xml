@@ -23,16 +23,6 @@
 			<groupId>com.penglecode</groupId>
 			<artifactId>xmodule-common-support</artifactId>
 			<version>${xmodule.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.zookeeper</groupId>
-					<artifactId>zookeeper</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.curator</groupId>
-					<artifactId>curator-recipes</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<!-- xmodule-common-springsecurity -->
@@ -46,6 +36,13 @@
 		<dependency>
 			<groupId>com.penglecode</groupId>
 			<artifactId>xmodule-upms-base</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+		
+		<!-- xmodule-upms-common -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-upms-common</artifactId>
 			<version>${xmodule.version}</version>
 		</dependency>
 

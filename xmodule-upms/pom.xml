@@ -12,5 +12,6 @@
   <modules>
   	<module>xmodule-upms-server</module>
   	<module>xmodule-upms-base</module>
+  	<module>xmodule-upms-common</module>
   </modules>
 </project>

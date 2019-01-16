@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 
 import com.penglecode.xmodule.common.exception.ApplicationException;
-import com.penglecode.xmodule.common.util.SpringMvcUtils;
+import com.penglecode.xmodule.common.util.SpringWebMvcUtils;
 /**
  * 全局异常处理器
  * 
@@ -59,7 +59,7 @@ public abstract class AbstractGlobalHandlerExceptionResolver extends AbstractHan
 	 * @return
 	 */
 	protected boolean isAsyncRequest(HttpServletRequest request, HttpServletResponse response, Object handler){
-		return SpringMvcUtils.isAsyncRequest(request, handler);
+		return SpringWebMvcUtils.isAsyncRequest(request, handler);
 	}
 	
 	/**
