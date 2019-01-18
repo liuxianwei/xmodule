@@ -39,6 +39,13 @@ public class Sort implements DtoModel {
 		this.orders = orders;
 	}
 	
+	public Order first() {
+		if(orders != null && orders.size() > 0) {
+			return orders.get(0);
+		}
+		return null;
+	}
+	
 	public static class Order {
 		
 		public static final String DIRECTION_ASC = "asc";

@@ -42,8 +42,8 @@ public class UpmsAppController extends HttpAPIResourceSupport {
 	 */
 	@GetMapping(value="/list", produces=APPLICATION_JSON)
 	public Result<List<UpmsApp>> getAppList(UpmsApp condition, Sort sort) {
-		List<UpmsApp> appList = upmsAppService.getAppList(condition, sort);
-		return Result.success().message("OK").data(appList).build();
+		List<UpmsApp> dataList = upmsAppService.getAppList(condition, sort);
+		return Result.success().message("OK").data(dataList).build();
 	}
 	
 	/**
@@ -53,8 +53,8 @@ public class UpmsAppController extends HttpAPIResourceSupport {
 	 */
 	@GetMapping(value="/all", produces=APPLICATION_JSON)
 	public Result<List<UpmsApp>> getAllAppList(Boolean enabled) {
-		List<UpmsApp> appList = upmsAppService.getAllAppList(enabled);
-		return Result.success().message("OK").data(appList).build();
+		List<UpmsApp> dataList = upmsAppService.getAllAppList(enabled);
+		return Result.success().message("OK").data(dataList).build();
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class UpmsAppController extends HttpAPIResourceSupport {
 	 * @return
 	 */
 	@GetMapping(value="/uuid/random", produces=APPLICATION_JSON)
-	public Object randomUUID() {
+	public Result<String> randomUUID() {
 		return Result.success().message("OK").data(UUIDUtils.uuid()).build();
 	}
 	
