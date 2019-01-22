@@ -1,5 +1,7 @@
 package com.penglecode.xmodule.upms.model;
 
+import java.util.List;
+
 import com.penglecode.xmodule.common.support.BaseModel;
 import com.penglecode.xmodule.upms.consts.em.UpmsResourceActionTypeEnum;
 import com.penglecode.xmodule.upms.consts.em.UpmsResourceTypeEnum;
@@ -10,7 +12,7 @@ import com.penglecode.xmodule.upms.consts.em.UpmsResourceTypeEnum;
  * @author PengPeng
  * @date	2019-01-15 10:31:24
  */
-public class UpmsResource implements BaseModel<UpmsResource> {
+public class UpmsResource implements BaseModel<UpmsResource>, Comparable<UpmsResource> {
      
     private static final long serialVersionUID = 1L;
 
@@ -67,9 +69,15 @@ public class UpmsResource implements BaseModel<UpmsResource> {
     
     //以下属于辅助字段
     
+    private String parentResourceName;
+    
     private String resourceTypeName;
     
     private String actionTypeName;
+    
+    private Integer resourceLevel;
+    
+    private String treeNodePath;
     
     private boolean inuse;
     
@@ -78,6 +86,8 @@ public class UpmsResource implements BaseModel<UpmsResource> {
     private Integer appResourceCount;
     
     private String appWebContextPath;
+    
+    private List<UpmsResource> subResourceList;
 
     public Long getResourceId() {
         return resourceId;
@@ -215,6 +225,14 @@ public class UpmsResource implements BaseModel<UpmsResource> {
         this.updateBy = updateBy;
     }
 
+	public String getParentResourceName() {
+		return parentResourceName;
+	}
+
+	public void setParentResourceName(String parentResourceName) {
+		this.parentResourceName = parentResourceName;
+	}
+
 	public String getResourceTypeName() {
 		return resourceTypeName;
 	}
@@ -229,6 +247,22 @@ public class UpmsResource implements BaseModel<UpmsResource> {
 
 	public void setActionTypeName(String actionTypeName) {
 		this.actionTypeName = actionTypeName;
+	}
+
+	public Integer getResourceLevel() {
+		return resourceLevel;
+	}
+
+	public void setResourceLevel(Integer resourceLevel) {
+		this.resourceLevel = resourceLevel;
+	}
+
+	public String getTreeNodePath() {
+		return treeNodePath;
+	}
+
+	public void setTreeNodePath(String treeNodePath) {
+		this.treeNodePath = treeNodePath;
 	}
 
 	public boolean isInuse() {
@@ -263,6 +297,14 @@ public class UpmsResource implements BaseModel<UpmsResource> {
 		this.appWebContextPath = appWebContextPath;
 	}
 
+	public List<UpmsResource> getSubResourceList() {
+		return subResourceList;
+	}
+
+	public void setSubResourceList(List<UpmsResource> subResourceList) {
+		this.subResourceList = subResourceList;
+	}
+
 	@Override
 	public UpmsResource decode() {
 		if(resourceType != null){
@@ -278,6 +320,19 @@ public class UpmsResource implements BaseModel<UpmsResource> {
 			}
 		}
 		return this;
+	}
+
+	public int compareTo(UpmsResource o) {
+		if(o == null){
+			return -1;
+		}
+		if(this.siblingsIndex == null){
+			return 1;
+		}
+		if(o.siblingsIndex == null){
+			return -1;
+		}
+		return this.siblingsIndex - o.siblingsIndex;
 	}
 	
 }

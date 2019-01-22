@@ -1,12 +1,21 @@
 package com.penglecode.xmodule.common.util;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.exception.ApplicationRuntimeException;
 
 /**
@@ -86,6 +95,43 @@ public class URIUtils {
 		} catch (URISyntaxException e) {
 			throw new ApplicationRuntimeException(e);
 		}
+	}
+	
+	/**
+	 * 创建URI
+	 * @param url
+	 * @param queryParams
+	 * @return
+	 */
+	public static URI createURI(String url, Map<String,Object> queryParams) {
+		return UriComponentsBuilder.fromHttpUrl(url).build(queryParams);
+	}
+	
+	/**
+	 * 提取指定url后面的query参数
+	 * @param url
+	 * @return
+	 */
+	public static MultiValueMap<String,String> getQueryParams(String url) {
+		MultiValueMap<String,String> paramMap = UriComponentsBuilder.fromHttpUrl(url).build().getQueryParams();
+		MultiValueMap<String,String> queryParams = new LinkedMultiValueMap<>();
+		if(paramMap != null) {
+			queryParams.putAll(paramMap);
+		}
+		for(Map.Entry<String,List<String>> entry : queryParams.entrySet()) {
+			List<String> values = entry.getValue();
+			if(!CollectionUtils.isEmpty(values)) {
+				values = values.stream().map(v -> {
+					try {
+						return URLDecoder.decode(v, GlobalConstants.DEFAULT_CHARSET);
+					} catch (UnsupportedEncodingException e) {
+						return v;
+					}
+				}).collect(Collectors.toList());
+			}
+			entry.setValue(values);
+		}
+		return queryParams;
 	}
 	
 }

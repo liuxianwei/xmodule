@@ -58,6 +58,17 @@ public class UpmsAppController extends HttpAPIResourceSupport {
 	}
 	
 	/**
+	 * 根据ID获取应用信息
+	 * @param appId
+	 * @return
+	 */
+	@GetMapping(value="/{appId}", produces=APPLICATION_JSON)
+	public Result<UpmsApp> getAppById(@PathVariable("appId") Long appId) {
+		UpmsApp app = upmsAppService.getAppById(appId);
+		return Result.success().message("OK").data(app).build();
+	}
+	
+	/**
 	 * 创建应用
 	 * @param app
 	 * @return

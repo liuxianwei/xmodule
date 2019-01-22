@@ -29,6 +29,13 @@ public interface UpmsAppService {
 	public List<UpmsApp> getAllAppList(Boolean enabled);
 
 	/**
+	 * 根据ID获取应用信息
+	 * @param appId
+	 * @return
+	 */
+	public UpmsApp getAppById(Long appId);
+	
+	/**
 	 * 创建应用
 	 * @param app
 	 */

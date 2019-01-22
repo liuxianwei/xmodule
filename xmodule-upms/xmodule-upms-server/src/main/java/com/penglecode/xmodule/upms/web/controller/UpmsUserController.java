@@ -59,6 +59,28 @@ public class UpmsUserController extends HttpAPIResourceSupport {
 	}
 	
 	/**
+	 * 根据用户ID获取用户信息
+	 * @param userId
+	 * @return
+	 */
+	@GetMapping(value="/{userId}", produces=APPLICATION_JSON)
+	public Result<UpmsUser> getUserById(@PathVariable("userId") Long userId) {
+		UpmsUser user = upmsUserService.getUserById(userId);
+		return Result.success().message("OK").data(user).build();
+	}
+	
+	/**
+	 * 根据用户名获取用户信息
+	 * @param userName
+	 * @return
+	 */
+	@GetMapping(value="/name/{userName}", produces=APPLICATION_JSON)
+	public Result<UpmsUser> getUserByUserName(@PathVariable("userName") String userName) {
+		UpmsUser user = upmsUserService.getUserByUserName(userName);
+		return Result.success().message("OK").data(user).build();
+	}
+	
+	/**
 	 * 创建用户
 	 * @param user
 	 * @return
@@ -121,8 +143,8 @@ public class UpmsUserController extends HttpAPIResourceSupport {
 	 * @param condition
 	 * @return
 	 */
-	@GetMapping(value="/{userId}/roles", produces=APPLICATION_JSON)
-	public Result<List<UpmsRole>> getUserRoles(@PathVariable("userId") Long userId, Long appId, UpmsRole condition) {
+	@GetMapping(value="/roles/{appId}/{userId}", produces=APPLICATION_JSON)
+	public Result<List<UpmsRole>> getUserRoles(@PathVariable("userId") Long userId, @PathVariable("appId") Long appId, UpmsRole condition) {
 		List<UpmsRole> dataList = upmsUserService.getUserRoleList(userId, appId, condition);
 		return Result.success().message("OK").data(dataList).build();
 	}

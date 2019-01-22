@@ -28,4 +28,9 @@ public class SecurityApplicationConstants {
 	 */
 	public static final String SECURITY_ACCESS_DECIDE_REQUEST_KEY = "securityAccessDecideRequest";
 	
+	/**
+	 * 当前客户端访问的应用ID的属性KEY
+	 */
+	public static final String CURRENT_CLIENT_ACCESS_APP_ID_KEY = "currentClientAccessAppId";
+	
 }

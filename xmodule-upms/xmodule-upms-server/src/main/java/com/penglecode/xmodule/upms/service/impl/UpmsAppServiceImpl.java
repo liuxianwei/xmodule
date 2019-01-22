@@ -57,6 +57,11 @@ public class UpmsAppServiceImpl implements UpmsAppService {
 	}
 
 	@Override
+	public UpmsApp getAppById(Long appId) {
+		return ModelDecodeUtils.decodeModel(upmsAppMapper.selectModelById(appId));
+	}
+
+	@Override
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 	public void createApp(UpmsApp app) {
 		ValidationAssert.notNull(app, "参数不能为空!");
