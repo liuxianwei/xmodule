@@ -64,4 +64,14 @@ public class CollectionUtils {
 		}
 	}
 	
+	/**
+	 * <p>如果collection为null/empty则返回defaultValue否则原值返回</p>
+	 * @param collection
+	 * @param defaultValue
+	 * @return
+	 */
+	public static <T> Collection<T> defaultIfEmpty(Collection<T> collection, Collection<T> defaultValue) {
+		return isEmpty(collection) ? defaultValue : collection;
+	}
+	
 }

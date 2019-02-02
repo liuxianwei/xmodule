@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.penglecode.xmodule.common.support.CustomObjectMapper;
 
 public class JsonUtils {
@@ -184,6 +186,9 @@ public class JsonUtils {
 		//允许wrap/unwrap
 		objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
 		objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
+		
+		objectMapper.registerModule(new Jdk8Module());
+		objectMapper.registerModule(new JavaTimeModule());
 		return objectMapper;
 	}
 	

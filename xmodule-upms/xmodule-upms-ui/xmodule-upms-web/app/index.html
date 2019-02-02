@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>应用管理</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta http-equiv="Pragma" content="no-cache">
+		<script type="text/javascript" src="/flexedgex-upms/shiro/accessible"></script>
+		<link rel="shortcut icon" href="../static/images/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="../static/element-ui/theme-chalk/element.min.css">
+		<link rel="stylesheet" type="text/css" href="../static/element-ui/theme-chalk/element.custom.css">
+		<link rel="stylesheet" type="text/css" href="../static/css/commons.css">
+	</head>
+<body>
+	<div id="app" class="el-page">
+		<el-scrollbar wrap-class="el-page-scrollbar" :wrap-style="pageScrollbarStyles">
+			<transition name="el-fade15">
+				<div v-show="pageVisible" class="el-page-inner el-hidden">
+					<div class="el-page-content">
+						<admin-container :topnav-menu-active="topnavMenuActive" :topnav-menu-list="topnavMenuList" :aside-menu-active="asideMenuActive" :aside-menu-list="asideMenuList" :login-user="loginUser">
+							<div>
+								<el-breadcrumb class="el-breadcrumb-admin" separator="/">
+									<i class="el-icon-fa-home"></i>
+								  	<el-breadcrumb-item>首页</el-breadcrumb-item>
+								  	<el-breadcrumb-item>应用管理</el-breadcrumb-item>
+								</el-breadcrumb>
+								<div>
+									<div class="el-search-form">
+										<el-form ref="appQueryForm" :model="appQueryForm">
+											<el-row :gutter="20">
+												<el-col :span="5" :offset="2">
+													<el-form-item prop="appName">
+														<el-input v-model="appQueryForm.appName" :maxlength="20" placeholder="应用名称"></el-input>
+													</el-form-item>
+												</el-col>
+												<el-col :span="5">
+													<el-form-item prop="enabled">
+														<el-select class="el-block" v-model="appQueryForm.enabled" placeholder="应用状态">
+										  					<el-option label="启用" :value="true"></el-option>
+							 								<el-option label="禁用" :value="false"></el-option>
+										  				</el-select>
+												    </el-form-item>
+										      	</el-col>
+										      	<el-col :span="5">
+													<el-form-item prop="appType">
+														<el-select class="el-block" v-model="appQueryForm.appType" placeholder="应用类型">
+										  					<el-option label="核心应用" :value="0"></el-option>
+							 								<el-option label="普通应用" :value="1"></el-option>
+										  				</el-select>
+												    </el-form-item>
+										      	</el-col>
+										      	<el-col :span="5">
+										      		<el-form-item class="el-align-center">
+										      			<el-button @click="resetAppQueryForm" icon="el-icon-fa-undo">重 置</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
+										      			<el-button type="primary" @click="queryAppList(1000)" icon="el-icon-fa-search">查 询</el-button>
+										      		</el-form-item>
+										      	</el-col>
+											</el-row>
+										</el-form>
+									</div>
+									<div class="el-search-toolbar">
+										<el-button type="primary" size="small" icon="el-icon-fa-plus-circle" @click="openAppEditDialog('add')">新增应用</el-button>
+									</div>
+									<div class="el-search-list">
+										<el-table id="appTable" v-loading="appQueryLoading" element-loading-text="拼命加载中..." element-loading-custom-class="el-loading-mask-opacity" :class="{loading: appQueryLoading}" :data="appList" :default-sort="appQuerySort" @sort-change="onAppQuerySortChange" style="width:100%;" class="el-table-app el-table-primary el-table-sortable el-table-overflow-x-hidden" empty-text="暂无数据">
+											<el-table-column label="序号" type="index" width="50"></el-table-column>
+											<el-table-column label="应用ID" prop="appId" width="90" sortable="custom"></el-table-column>
+											<el-table-column label="应用名称" prop="appName" width="200" align="center" sortable="custom"></el-table-column>
+											<el-table-column label="应用KEY" prop="appKey" width="120" align="center"></el-table-column>
+											<el-table-column label="应用密钥" prop="appSecret" width="120" align="center"></el-table-column>
+											<el-table-column label="应用描述" prop="description" align="center"></el-table-column>
+											<el-table-column label="应用类型" prop="appType" width="100" align="center" sortable="custom">
+												<template scope="scope">
+													<el-tag size="small" :type="getAppTypeTagType(scope.row.appType)">{{scope.row.appTypeName}}</el-tag>
+												</template>
+											</el-table-column>
+											<el-table-column label="应用状态" prop="enabled" width="100" align="center" sortable="custom">
+												<template scope="scope">
+													<el-switch v-model="scope.row.enabled" active-color="#42A35A" inactive-color="#f05050" :active-value="true" :inactive-value="false" @click.native="changeAppStatus($event, scope.row)"></el-switch>
+												</template>
+											</el-table-column>
+											<el-table-column label="创建时间" prop="createTime" width="100" align="center" sortable="custom"></el-table-column>
+											<el-table-column label="操作" width="140" align="center">
+												<template scope="scope">
+													<el-dropdown class="el-dropdown-small" trigger="click" split-button type="primary" @click="openAppViewDialog('view', scope.row)" @command="handleAppCommand(arguments[0], scope.row)">
+													  	查看详情
+													  	<el-dropdown-menu slot="dropdown">
+													    	<el-dropdown-item command="view">查看详情</el-dropdown-item>
+													    	<el-dropdown-item command="edit">修改应用</el-dropdown-item>
+													    	<el-dropdown-item command="delete" divided>删除应用</el-dropdown-item>
+													  	</el-dropdown-menu>
+													</el-dropdown>
+												</template>
+											</el-table-column>
+										</el-table>
+									</div>
+								</div>
+								
+								<!-- 新增/修改Dialog -->
+								<el-dialog :visible.sync="appEditDialogVisible" class="el-dialog-center" width="80%" @close="closeAppEditDialog">
+									<span class="el-dialog__title" slot="title"><i class="el-icon-fa-th-large"></i> {{appEditDialogTitle}}</span>
+									<div>
+										<el-form ref="appEditForm" :model="appEditForm" :rules="appEditRules" label-width="180px">
+											<el-row>
+												<el-col :span="24">
+													<el-form-item label="应用名称" prop="appName">
+														<el-col :span="12">
+															<el-input v-model="appEditForm.appName" :maxlength="20"></el-input>
+														</el-col>
+														<el-col :span="12">
+												      		<p class="el-form-item-tips"></p>
+												      	</el-col>
+													</el-form-item>
+												</el-col>
+												<el-col :span="24">
+													<el-form-item label="应用KEY" prop="appKey">
+														<el-col :span="9">
+															<el-input v-model="appEditForm.appKey" :maxlength="32"></el-input>
+														</el-col>
+														<el-col :span="3" class="el-align-right">
+															<el-button icon="el-icon-fa-random" @click="randomGenerateByUUID('appKey')">随机生成</el-button>
+														</el-col>
+														<el-col :span="12">
+												      		<p class="el-form-item-tips">9~32个字母或数字组成.(不填系统将自动生成)</p>
+												      	</el-col>
+													</el-form-item>
+												</el-col>
+											</el-row>
+											<el-row>
+												<el-col :span="24">
+													<el-form-item label="应用密钥" prop="appSecret">
+														<el-col :span="9">
+															<el-input v-model="appEditForm.appSecret" :maxlength="32"></el-input>
+														</el-col>
+														<el-col :span="3" class="el-align-right">
+															<el-button icon="el-icon-fa-random" @click="randomGenerateByUUID('appSecret')">随机生成</el-button>
+														</el-col>
+														<el-col :span="12">
+												      		<p class="el-form-item-tips">9~32个字母或数字组成.(不填系统将自动生成)</p>
+												      	</el-col>
+													</el-form-item>
+												</el-col>
+											</el-row>
+											<el-row v-if="currentActionType == 'add'">
+												<el-col :span="24">
+													<el-form-item label="应用前台ContextPath" prop="appWebContextPath">
+														<el-col :span="12">
+															<el-input v-model="appEditForm.appWebContextPath" :maxlength="100"></el-input>
+														</el-col>
+														<el-col :span="12">
+												      		<p class="el-form-item-tips">例如：/myapp-web</p>
+												      	</el-col>
+													</el-form-item>
+												</el-col>
+												<el-col :span="24">
+													<el-form-item label="应用后台ContextPath" prop="appApiContextPath">
+														<el-col :span="12">
+															<el-input v-model="appEditForm.appApiContextPath" :maxlength="100"></el-input>
+														</el-col>
+														<el-col :span="12">
+												      		<p class="el-form-item-tips">例如：/myapp-api</p>
+												      	</el-col>
+													</el-form-item>
+												</el-col>
+											</el-row>
+											<el-col :span="24">
+												<el-form-item label="应用描述" prop="description">
+													<el-col :span="12">
+														<el-input type="textarea" v-model="appEditForm.description" :maxlength="512" :rows="3"></el-input>
+													</el-col>
+													<el-col :span="12">
+											      		<p class="el-form-item-tips"></p>
+											      	</el-col>
+												</el-form-item>
+											</el-col>
+										</el-form>
+									</div>
+									<div slot="footer">
+										<el-button icon="el-icon-fa-ban" @click="closeAppEditDialog">取 消</el-button>
+									    <el-button type="primary" icon="el-icon-fa-save" @click="saveApp" :loading="submiting">确 定</el-button>
+									</div>
+								</el-dialog>
+								
+								<!-- 查看详情Dialog -->
+								<el-dialog :visible.sync="appViewDialogVisible" class="el-dialog-center" width="80%" @close="closeAppViewDialog">
+									<span class="el-dialog__title" slot="title"><i class="el-icon-fa-th-large"></i> 查看应用详情</span>
+						    		<div>
+						    			<el-row>
+											<el-col :span="5" class="el-form-item-label">应用ID：</el-col>
+											<el-col :span="7" class="el-form-item-content">{{appViewForm.appId}}</el-col>
+											<el-col :span="5" class="el-form-item-label">应用名称：</el-col>
+											<el-col :span="7" class="el-form-item-content">{{appViewForm.appName}}</el-col>
+										</el-row>
+										<el-row>
+											<el-col :span="5" class="el-form-item-label">应用KEY：</el-col>
+											<el-col :span="7" class="el-form-item-content">{{appViewForm.appKey}}</el-col>
+											<el-col :span="5" class="el-form-item-label">应用密钥：</el-col>
+											<el-col :span="7" class="el-form-item-content">{{appViewForm.appSecret}}</el-col>
+										</el-row>
+										<el-row>
+											<el-col :span="5" class="el-form-item-label">应用前台ContextPath：</el-col>
+											<el-col :span="7" class="el-form-item-content">{{appViewForm.appWebContextPath}}</el-col>
+											<el-col :span="5" class="el-form-item-label">应用后台ContextPath：</el-col>
+											<el-col :span="7" class="el-form-item-content">{{appViewForm.appApiContextPath}}</el-col>
+										</el-row>
+										<el-row>
+											<el-col :span="5" class="el-form-item-label">应用类型：</el-col>
+											<el-col :span="7" class="el-form-item-content">
+												<el-tag size="small" :type="getAppTypeTagType(appViewForm.appType)">{{appViewForm.appTypeName}}</el-tag>
+											</el-col>
+											<el-col :span="5" class="el-form-item-label">应用状态：</el-col>
+											<el-col :span="7" class="el-form-item-content">
+												<el-tag size="small" :type="getStatusTagType(appViewForm.enabled)">{{UPMS_APP_STATUS[appViewForm.enabled]}}</el-tag>
+											</el-col>
+										</el-row>
+										<el-row>
+											<el-col :span="5" class="el-form-item-label">应用描述：</el-col>
+											<el-col :span="7" class="el-form-item-content">{{appViewForm.description}}</el-col>
+											<el-col :span="5" class="el-form-item-label">创建时间：</el-col>
+											<el-col :span="7" class="el-form-item-content">{{appViewForm.createTime}}</el-col>
+										</el-row>
+						    		</div>
+						    	</el-dialog>
+							</div>
+						</admin-container>
+					</div>
+				</div>
+			</transition>
+		</el-scrollbar>
+	</div>
+	<script type="text/javascript" src="../static/js/polyfill.min.js"></script>
+	<script type="text/javascript" src="../static/js/vue.min.js"></script>
+	<script type="text/javascript" src="../static/js/vue.pageloading.js"></script>
+	<script type="text/javascript" src="../static/js/vue-router.min.js"></script>
+	<script type="text/javascript" src="../static/js/axios.min.js"></script>
+	<script type="text/javascript" src="../static/element-ui/element.min.js"></script>
+	<script type="text/javascript" src="../static/element-ui/element.extensional.js"></script>
+	<script type="text/javascript" src="../static/scripts/commons.js"></script>
+	<script type="text/javascript" src="../static/scripts/app/index.js"></script>
+</body>
+</html>

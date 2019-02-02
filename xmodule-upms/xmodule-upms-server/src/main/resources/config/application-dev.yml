@@ -9,3 +9,13 @@ spring:
             username: root
             password: 123456
             url: jdbc:mysql://127.0.0.1:3306/xmodule-upms?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    
+    redis:
+        #业务数据缓存使用的Redis配置
+        data:
+            host: 127.0.0.1
+            port: 6379
+        #SpringSecurity使用的Redis配置
+        security:
+            host: 127.0.0.1
+            port: 6379

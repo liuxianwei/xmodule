@@ -22,7 +22,7 @@ public class ClassScanningUtils {
 	
 	/**
 	 * <p>根据多个包名搜索class
-	 * 例如: ScanClassUtils.scanPakcages("javacommon.**.*");</p>
+	 * 例如: ClassScanningUtils.scanPakcages("javacommon.**.*");</p>
 	 * 
 	 * @param basePackages 各个包名使用逗号分隔,各个包名可以有通配符
 	 * @return 类名的集合

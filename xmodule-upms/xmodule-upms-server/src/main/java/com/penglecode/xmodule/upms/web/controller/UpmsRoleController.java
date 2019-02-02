@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.MapUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,8 +52,10 @@ public class UpmsRoleController extends HttpAPIResourceSupport {
 	
 	private TreeNodeConverter<UpmsResource,Map<String,Object>> resourceTreeNodeConverter = new UpmsResourceSimpleTreeNodeConverter();
 	
+	@Autowired
 	private UpmsRoleService upmsRoleService;
 	
+	@Autowired
 	private UpmsResourceService upmsResourceService;
 	
 	/**

@@ -65,8 +65,10 @@ public class CustomObjectMapper extends ObjectMapper {
 	}
 
 	protected void autoconfigureFeatures(Object value) {
-        JavaType javaType = _typeFactory.constructType(value.getClass());
-        autoconfigureFeatures(javaType);
+		if(value != null) {
+			JavaType javaType = _typeFactory.constructType(value.getClass());
+	        autoconfigureFeatures(javaType);
+		}
     }
 	
 	protected void autoconfigureFeatures(JavaType javaType) {

@@ -1,0 +1,225 @@
+@CHARSET "UTF-8";
+.el-panel-meeting, .el-panel-weeklyreport, .el-panel-project, .el-panel-worksheet {
+	display: block;
+	position: relative;
+	box-sizing: border-box;
+	margin-top: 25px;
+	height: 256px;
+}
+.el-panel-meeting {
+	margin-left: 25px;
+}
+.el-panel-weeklyreport {
+	margin-left: 25px;
+}
+.el-panel-project {
+	margin-left: 25px;
+}
+.el-panel-worksheet {
+	margin-left: 25px;
+}
+.el-panel .el-panel-header {
+	background-color: #75526b;
+	color: #fff;
+	font-weight: bold;
+}
+.el-panel .item-list {
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.el-panel .item-list li a {
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	color: #8a8a8a;
+	text-decoration: none;
+	-webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.el-panel .item-list li a:hover {
+	color: #1f2f3d;
+}
+.el-panel .item-list li a label, .el-panel .item-list li a span {
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.el-panel .item-list li a label {
+	width: 100%;
+	padding: 0 120px 0 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.el-panel .item-list li a span {
+	position: absolute;
+	right: 0;
+	width: 100px;
+}
+.el-panel-user, .el-panel-weather {
+	box-sizing: border-box;
+	margin: 25px;
+}
+.el-panel-weather {
+	margin-top: 0;
+}
+.el-panel-user-header {
+	color: #fff;
+	font-size: 14px;
+	text-align: center;
+	background-color: #75526b;
+}
+.el-panel-weather-header {
+	color: #fff;
+	text-align: center;
+	position: relative;
+	background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-bottom-color: transparent;
+}
+.el-panel-weather-header.nanjing {
+	background-image: url(../images/city-nanjing.jpg);
+}
+.el-panel-user-header > div {
+	display: block;
+	padding: 10px 0 0 0;
+}
+.el-panel-user-header > div > img {
+	display: block;
+	border: 3px solid #fff;
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	margin: 0 auto;
+}
+.el-panel-user-header h3, .el-panel-weather-header h3 {
+	display: block;
+	position: relative;
+	margin: 0;
+	font-size: 16px;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+}
+.el-panel-weather-header h3 {
+	text-align: left;
+	text-indent: 20px;
+}
+.el-panel-weather-header [class^="el-icon-"] {
+	background-color: transparent;
+    border-radius: 50%;
+    display: block;
+    font-size: 16px;
+    height: 28px;
+    line-height: 28px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 28px;
+    z-index: 999;
+    cursor: pointer;
+}
+.el-panel-weather-header [class^="el-icon-"]:hover {
+	background-color: rgba(0, 0, 0, 0.15);
+}
+.el-panel-weather-header .weather {
+	display: block;
+	height: 65px;
+	line-height: 65px;
+	vertical-align: bottom;
+	padding-right: 35px;
+	text-align: right;
+}
+.el-panel-weather-header .weather > .wi, .el-panel-weather-header .weather > span {
+	display: inline-block;
+	font-size: 26px;
+}
+.el-panel-weather-header .weather > .wi {
+	font-size: 48px;
+}
+.el-panel-user-body, .el-panel-weather-body {
+	padding-bottom: 10px;
+}
+.el-panel-user-body ul, .el-panel-weather-body ul {
+	display: block;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.el-panel-user-body ul li, .el-panel-weather-body ul li {
+	display: block;
+	position: relative;
+	height: 50px;
+}
+.el-panel-user-body ul li [class^="el-icon-"], .el-panel-weather-body ul li .wi {
+	display: block;
+	position: absolute;
+	height: 50px;
+	line-height: 50px;
+	width: 50px;
+	text-align: center;
+	font-size: 20px;
+	color: #75526b;
+}
+.el-panel-user-body ul li .el-icon-fa-tablet {
+	font-size: 26px;
+}
+.el-panel-user-body ul li div, .el-panel-weather-body ul li div {
+	display: block;
+	padding-left: 50px;
+}
+.el-panel-user-body ul li div h3, .el-panel-weather-body ul li div h3 {
+	display: inline-block;
+	width: 95%;
+	margin: 0;
+	height: 30px;
+	line-height: 30px;
+	font-size: 16px;
+	font-weight: normal;
+	box-sizing: border-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: #444;
+	vertical-align: bottom;
+}
+.el-panel-weather-body ul li div h3 {
+	font-size: 15px;
+}
+.el-panel-user-body ul li div label, .el-panel-weather-body ul li div label {
+	display: inline-block;
+	width: 95%;
+	height: 20px;
+	line-height: 10px;
+	box-sizing: border-box;
+	font-size: 12px;
+	color: #757575;
+	border-bottom: 1px solid rgba(0,0,0,.12);
+	vertical-align: top;
+}
+.el-panel-user-body ul li:last-child div label, .el-panel-weather-body ul li:last-child div label {
+	border-bottom: 0 none;
+}
+.pms-viewreport-table {
+	position: relative;
+	table-layout: auto;
+	width: 100%;
+	border: 0;
+	border-collapse: collapse;
+}
+.pms-viewreport-table > tbody > tr:hover {
+	background-color: #efefef;
+}
+.pms-viewreport-table > tbody > tr > td.item-thisworks, .pms-viewreport-table > tbody > tr > td.item-nextplans {
+	width: 90%;
+}
+.pms-viewreport-table > tbody > tr > td.item-createby {
+	text-align: center;
+}

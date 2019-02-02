@@ -18,8 +18,6 @@ server:
         application-display-name: xmodule-examples-springmvc
         session:
             timeout: 1800
-        #SpringMvc控制器路径配置
-        path: /
 
 #SpringBoot应用监控模块
 management:
@@ -54,6 +52,7 @@ spring:
         exclude:
           - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
           - org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
+          - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
           - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
         
     profiles:
@@ -83,7 +82,8 @@ spring:
     mvc:
         servlet:
             load-on-startup: 1
-
+            #SpringMvc控制器路径配置
+            path: /
     security:
         filter:
             order: -2147483628

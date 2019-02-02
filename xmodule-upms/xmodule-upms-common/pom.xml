@@ -38,6 +38,12 @@
 			<artifactId>xmodule-upms-base</artifactId>
 			<version>${xmodule.version}</version>
 		</dependency>
+		
+		<!-- spring-session-data-redis -->
+		<dependency>
+		   <groupId>org.springframework.session</groupId>
+		   <artifactId>spring-session-data-redis</artifactId>
+		</dependency>
 
 	</dependencies>
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -20,6 +21,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -51,6 +53,13 @@ public class DefaultSpringWebMvcConfiguration extends AbstractSpringConfiguratio
 		this.httpMessageConvertersProvider = httpMessageConvertersProvider;
 	}
 
+	@Bean
+	public RequestContextFilter requestContextFilter() {
+		OrderedRequestContextFilter filter = new OrderedRequestContextFilter();
+		filter.setOrder(getEnvironment().getProperty("spring.mvc.requestcontext.filter.order", Integer.class, FilterRegistrationOrder.ORDER_REQUEST_CONTEXT_FILTER));
+		return filter;
+	}
+	
 	@Bean
 	public InternalResourceViewResolver jspViewResolver() {
 		InternalResourceViewResolver jspViewResolver = new InternalResourceViewResolver();

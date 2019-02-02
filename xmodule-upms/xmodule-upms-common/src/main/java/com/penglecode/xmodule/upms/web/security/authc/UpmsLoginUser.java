@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +26,15 @@ public class UpmsLoginUser extends UpmsUser implements UserDetails {
 	
 	private List<String> roleCodes;
     
-    @Override
+    public UpmsLoginUser() {
+		super();
+	}
+    
+    public UpmsLoginUser(UpmsUser user) {
+    	BeanUtils.copyProperties(user, this);
+	}
+
+	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
     	Collection<GrantedAuthority> authorities = null;
 		if(roleCodes != null && !roleCodes.isEmpty()) {

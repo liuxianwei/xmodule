@@ -9,6 +9,8 @@ logging:
 context:
     initializer:
         classes: com.penglecode.xmodule.common.initializer.DefaultSpringAppPreInitializer
+    listener:
+        classes: com.penglecode.xmodule.common.listener.SpringEventListenerRegistryListener
 
 #Servlet容器配置
 server:
@@ -18,8 +20,6 @@ server:
         application-display-name: xmodule-upms-server
         session:
             timeout: 1800
-        #SpringMvc控制器路径配置
-        path: /
 
 #SpringBoot应用监控模块
 management:
@@ -54,6 +54,9 @@ spring:
         exclude:
           - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
           - org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
+          - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+          #- org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+          #- org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
           - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
         
     profiles:
@@ -83,10 +86,9 @@ spring:
     mvc:
         servlet:
             load-on-startup: 1
-
+            #SpringMvc控制器路径配置
+            path: /
     security:
-        filter:
-            order: -2147483628
         user:
             name: admin
             password: 123456
@@ -120,6 +122,18 @@ spring:
         typeAliasesPackage: com.penglecode.xmodule
         mapperScanPackage: com.penglecode.xmodule
         
+    #Redis共通配置
+    redis:
+        common:
+            timeout: 6000
+            lettuce:
+                shutdownTimeout: 2000
+                pool:
+                    maxIdle: 8
+                    minIdle: 0
+                    maxActive: 8
+                    maxWait: 30000
+                
     cloud:
         #MVVM应用配置信息
         mvvmAppConfig:
@@ -132,3 +146,7 @@ spring:
             appWebContextPath: /upms-server
             appApiServerUrl: http://127.0.0.1/upms-server-api
             appApiContextPath: /upms-server-api
+
+upms:
+    session:
+        test: true

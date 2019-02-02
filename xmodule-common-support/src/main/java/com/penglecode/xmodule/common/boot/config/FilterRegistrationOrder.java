@@ -1,13 +1,11 @@
 package com.penglecode.xmodule.common.boot.config;
 
+import org.springframework.boot.web.servlet.filter.OrderedFilter;
 import org.springframework.core.Ordered;
 
 public class FilterRegistrationOrder {
 
-	/**
-	 * spring自带的CharsetEncodingFilter的注册顺序
-	 */
-	public static final int ORDER_CHARSET_ENCODING_FILTER = Ordered.HIGHEST_PRECEDENCE;
+	public static final int ORDER_REQUEST_CONTEXT_FILTER = OrderedFilter.REQUEST_WRAPPER_FILTER_MAX_ORDER - 1005;
 	
 	/**
 	 * 客户端请求预处理过滤器的注册顺序

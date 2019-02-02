@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import org.springframework.util.Assert;
 
 /**
- * 基于joda-time框架的日期时间处理工具类
+ * 基于JDK8时间框架的日期时间处理工具类
  * 
  * @author	  	pengpeng
  * @date	  	2014年7月19日 下午4:45:17
