@@ -15,6 +15,5 @@
 		<module>xmodule-examples-security-simple2</module>
 		<module>xmodule-examples-security-simple3</module>
 		<module>xmodule-examples-security-supms</module>
-		<module>xmodule-examples-security-gupms</module>
 	</modules>
 </project>
