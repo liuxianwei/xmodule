@@ -301,7 +301,7 @@
 				<includes>
 					<include>**/*.xml</include>
 				</includes>
-				<filtering>false</filtering>
+				<filtering>true</filtering>
 			</resource>
 			<!-- 编译之后包含xml和properties -->
 			<resource>
@@ -309,14 +309,14 @@
 				<includes>
 					<include>**/*</include>
 				</includes>
-				<filtering>false</filtering>
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 	</build>
 	<modules>
 		<module>xmodule-common-base</module>
 		<module>xmodule-common-support</module>
-		<module>xmodule-common-shiro</module>
+		<!-- <module>xmodule-common-shiro</module> -->
 		<module>xmodule-examples-springmvc</module>
 		<module>xmodule-examples-jersey</module>
 		<module>xmodule-examples-eureka</module>
