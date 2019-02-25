@@ -1,6 +1,7 @@
 package com.penglecode.xmodule.common.util;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -143,7 +144,7 @@ public class ClassUtils {
 	 * @throws ClassNotFoundException
 	 * @throws LinkageError
 	 */
-	public static Class<?> forName(String name) throws ClassNotFoundException, LinkageError {
+	public static Class<?> forName(String name) {
 		return forName(name, getDefaultClassLoader());
 	}
 	
@@ -168,7 +169,7 @@ public class ClassUtils {
 	 * @throws ClassNotFoundException
 	 * @throws LinkageError
 	 */
-	public static Class<?> forName(String name, ClassLoader classLoader) throws ClassNotFoundException, LinkageError {
+	public static Class<?> forName(String name, ClassLoader classLoader) {
 		Assert.notNull(name, "Name must not be null");
 
 		Class<?> clazz = resolvePrimitiveClassName(name);
@@ -224,7 +225,7 @@ public class ClassUtils {
 					// swallow - let original exception get through
 				}
 			}
-			throw ex;
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -340,6 +341,20 @@ public class ClassUtils {
 		Assert.notNull(fqClassName, "Class name must not be null");
 		int lastDotIndex = fqClassName.lastIndexOf(PACKAGE_SEPARATOR);
 		return (lastDotIndex != -1 ? fqClassName.substring(0, lastDotIndex) : "");
+	}
+	
+	/**
+	 * 获取class的构造器
+	 * @param clazz
+	 * @param parameterTypes
+	 * @return
+	 */
+	public static <T> Constructor<T> getConstructor(Class<T> clazz, Class<?>[] parameterTypes) {
+		try {
+			return clazz.getDeclaredConstructor(parameterTypes);
+		} catch (NoSuchMethodException | SecurityException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 }

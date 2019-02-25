@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.penglecode.xmodule.common.exception.ApplicationDataValidationException;
-import com.penglecode.xmodule.common.support.Messages.MessageHolder;
 
 /**
  * 数据验证的Assert,所有抛出异常均为{@code DataValidationException}

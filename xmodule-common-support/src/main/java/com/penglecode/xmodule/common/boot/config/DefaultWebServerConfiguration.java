@@ -30,6 +30,7 @@ import org.springframework.core.io.Resource;
 
 import com.penglecode.xmodule.common.consts.ApplicationConstants;
 import com.penglecode.xmodule.common.util.ArrayUtils;
+import com.penglecode.xmodule.common.util.StringUtils;
 
 /**
  * Servlet容器普通配置(see web.xml)
@@ -81,8 +82,7 @@ public class DefaultWebServerConfiguration extends AbstractSpringConfiguration {
 
 		private final Context context;
 
-		public TomcatStaticResourceConfigurer(Context context) {
-			super();
+		private TomcatStaticResourceConfigurer(Context context) {
 			this.context = context;
 		}
 
@@ -91,15 +91,14 @@ public class DefaultWebServerConfiguration extends AbstractSpringConfiguration {
 			if (event.getType().equals(Lifecycle.CONFIGURE_START_EVENT)) {
 				try {
 					Resource[] resources = ApplicationConstants.RESOURCE_PATTERN_RESOLVER.getResources("classpath*:/META-INF/resources/**");
-					Set<String> metaInfoRootLocations = new LinkedHashSet<String>();
+					Set<String> metaInfJarLocations = new LinkedHashSet<String>();
 					if(!ArrayUtils.isEmpty(resources)) {
 						for(Resource resource : resources) {
-							metaInfoRootLocations.addAll(getMetaInfoRootLocations(resource));
+							metaInfJarLocations.addAll(getMetaInfJarLocations(resource));
 						}
 					}
-					for(String location : metaInfoRootLocations) {
+					for(String location : metaInfJarLocations) {
 						try {
-							//LOGGER.info(">>> location = " + location);
 							this.context.getResources().createWebResourceSet(ResourceSetType.RESOURCE_JAR, "/", new URL(location), "/META-INF/resources");
 						} catch (Exception e) {
 							LOGGER.error("Create web resource set for [{}] failed : {}", location, e.getMessage());
@@ -111,21 +110,20 @@ public class DefaultWebServerConfiguration extends AbstractSpringConfiguration {
 			}
 		}
 		
-		protected List<String> getMetaInfoRootLocations(Resource resource) {
+		protected List<String> getMetaInfJarLocations(Resource resource) {
 			List<String> locations = new ArrayList<String>();
 			try {
 				URL url = resource.getURL();
 				String location = url.toString();
-				int index = location.indexOf("/META-INF/resources/");
+				String part = "/META-INF/resources";
+				int index = location.lastIndexOf(part);
 				if(index != -1) {
-					location = location.substring(0, index - 1);
-					locations.add(location); //add jar in fat jar's lib dir
-					
-					index = location.indexOf("/BOOT-INF/lib/");
-					if(index != -1) {
-						location = location.substring(0, index + 1);
-						locations.add(location); // add fat jar location
+					location = location.substring(0, index);
+					location = StringUtils.stripEnd(location, "!/");
+					if(location.endsWith(".jar")) { //jar
+						location = location + "!/";
 					}
+					locations.add(location); //add jar in fat jar's lib dir
 				}
 			} catch (IOException e) {
 				LOGGER.error(e.getMessage(), e);

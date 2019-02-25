@@ -172,6 +172,12 @@ public class JsonUtils {
 	 */
 	public static ObjectMapper createDefaultObjectMapper() {
 		ObjectMapper objectMapper = new CustomObjectMapper();
+		//通过以下三项配置来开启仅以属性字段来序列化和反序列化对象(忽略get方法)
+		//objectMapper.disable(MapperFeature.AUTO_DETECT_GETTERS);
+		//objectMapper.disable(MapperFeature.AUTO_DETECT_IS_GETTERS);
+		//objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		//将被序列化对象的类名作为一个字段(字段名@class)输出到序列化后的JSON字符串中
+		//objectMapper.enableDefaultTyping(DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
 		// 建只输出非Null且非Empty(如List.isEmpty)的属性到Json字符串的Mapper,建议在外部接口中使用
 		//defaultObjectMapper.setSerializationInclusion(Include.NON_DEFAULT);
 		//去掉默认的时间戳格式

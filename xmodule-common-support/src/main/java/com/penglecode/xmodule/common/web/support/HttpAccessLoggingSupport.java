@@ -23,9 +23,9 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.penglecode.xmodule.common.consts.ApplicationConstants;
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.support.AbstractSpringTypedBeanManager;
-import com.penglecode.xmodule.common.support.Messages;
 import com.penglecode.xmodule.common.support.NamedThreadFactory;
 import com.penglecode.xmodule.common.util.ArrayUtils;
 import com.penglecode.xmodule.common.util.CollectionUtils;
@@ -97,7 +97,7 @@ public abstract class HttpAccessLoggingSupport extends AbstractSpringTypedBeanMa
 	 * @return
 	 */
 	protected String getMessage(String code) {
-		return Messages.getMessage(code);
+		return ApplicationConstants.MESSAGE_SOURCE_ACCESSOR.getMessage(code);
 	}
 	
 	protected String getStringParameterValue(String[] values){

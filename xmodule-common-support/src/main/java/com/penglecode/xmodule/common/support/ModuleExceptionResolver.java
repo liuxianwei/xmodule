@@ -1,8 +1,8 @@
 package com.penglecode.xmodule.common.support;
 
+import com.penglecode.xmodule.common.consts.ApplicationConstants;
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.exception.ApplicationException;
-import com.penglecode.xmodule.common.support.Messages;
 import com.penglecode.xmodule.common.util.ExceptionUtils;
 
 /**
@@ -41,7 +41,7 @@ public class ModuleExceptionResolver {
 			target = ExceptionUtils.getRootCause(ex);
 			message = target.getMessage();
 			if(!ExceptionUtils.isContainsChineseChar(message)){
-				message = Messages.getMessage(messageCode, message); // 未知的异常消息,需要转换成统一的,以增强用户体验
+				message = ApplicationConstants.MESSAGE_SOURCE_ACCESSOR.getMessage(messageCode, new Object[] {message}, message); // 未知的异常消息,需要转换成统一的,以增强用户体验
 			}
 			stackTrace = ExceptionUtils.getStackTrace(ex);
 		}

@@ -1,0 +1,28 @@
+#应用日志配置
+logging:
+    path: /usr/local/xmodule/logs
+
+spring:
+    datasource:
+        #默认数据源配置
+        default: 
+            username: root
+            password: 123456
+            url: jdbc:mysql://127.0.0.1:3306/security_oauth2?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+
+    redis:
+        #SpringSecurity使用的Redis配置
+        security:
+            host: 127.0.0.1
+            port: 6379
+            
+    security:
+        #OAuth2相关配置
+        oauth2:
+            server:
+                token:
+                    #storeType: memory
+                    storeType: redis
+                clients:
+                    - {clientId: monkey, clientSecret: d0763edaa9d9bd2a9516280e9044d885}
+                    - {clientId: tiger, clientSecret: 43b90920409618f188bfc6923f16b9fa}

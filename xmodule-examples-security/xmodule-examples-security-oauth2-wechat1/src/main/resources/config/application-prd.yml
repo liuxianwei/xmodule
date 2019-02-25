@@ -1,0 +1,17 @@
+#应用日志配置
+logging:
+    path: /usr/local/xmodule/logs
+
+spring:
+    datasource:
+        #默认数据源配置
+        default: 
+            username: root
+            password: 123456
+            url: jdbc:mysql://127.0.0.1:3306/xmodule?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+            
+wechat:
+    oauth2:
+        appid: wx82baf31dc03fa38f
+        appsecret: f38af3ee6768cb41f8c798195f66b217
+        redirect_uri: http://penggle.eicp.net:49255/wechat-oauth-app/oauth2

@@ -10,13 +10,11 @@ import io.protostuff.Input;
 import io.protostuff.Output;
 import io.protostuff.Pipe;
 import io.protostuff.WireFormat.FieldType;
-import io.protostuff.runtime.DefaultIdStrategy;
 import io.protostuff.runtime.Delegate;
-import io.protostuff.runtime.RuntimeEnv;
 
 public class ProtostuffDelegates {
 
-	public static final Delegate<Locale> LOCALE_DELEGATE = new Delegate<Locale>() {
+    public static class LocaleDelegate implements Delegate<Locale> {
 
 		@Override
 		public FieldType getFieldType() {
@@ -46,12 +44,6 @@ public class ProtostuffDelegates {
 		public void writeTo(Output output, int number, Locale value, boolean repeated) throws IOException {
 			output.writeString(number, StringUtils.defaultIfEmpty(value.getLanguage()) + "_" + StringUtils.defaultIfEmpty(value.getCountry()), repeated);
 		}
-    };
-    
-    public static DefaultIdStrategy initDelegates() {
-    	DefaultIdStrategy strategy = (DefaultIdStrategy) RuntimeEnv.ID_STRATEGY;
-        strategy.registerDelegate(LOCALE_DELEGATE);
-        return strategy;
     }
 	
 }

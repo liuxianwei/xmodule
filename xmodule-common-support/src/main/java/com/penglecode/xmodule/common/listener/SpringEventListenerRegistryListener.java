@@ -2,6 +2,7 @@ package com.penglecode.xmodule.common.listener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -48,14 +49,14 @@ public class SpringEventListenerRegistryListener implements ApplicationListener<
 	@SuppressWarnings("unchecked")
 	protected List<ApplicationListener<ApplicationEvent>> scanSpringEventListeners() {
 		List<ApplicationListener<ApplicationEvent>> listeners = new ArrayList<ApplicationListener<ApplicationEvent>>();
-		List<String> classNames = ClassScanningUtils.scanPackages(BasePackage.class.getPackage().getName());
+		Set<String> classNames = ClassScanningUtils.scanPackageClassNames(BasePackage.class.getPackage().getName());
 		for(String className : classNames) {
 			try {
 				Class<?> clazz = Class.forName(className);
 				if(ApplicationListener.class.isAssignableFrom(clazz) && AnnotationUtils.findAnnotation(clazz, SpringEventListener.class) != null) {
 					listeners.add(BeanUtils.instantiateClass((Class<ApplicationListener<ApplicationEvent>>) clazz));
 				}
-			} catch (Exception e) {
+			} catch (Throwable e) {
 				LOGGER.error(e.getMessage());
 			}
 		}

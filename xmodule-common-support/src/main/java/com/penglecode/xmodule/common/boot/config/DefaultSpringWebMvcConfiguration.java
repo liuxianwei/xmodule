@@ -10,7 +10,9 @@ import javax.servlet.Servlet;
 
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +35,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.util.JsonUtils;
+import com.penglecode.xmodule.common.web.springmvc.handler.AbstractMvcHandlerExceptionResolver;
 import com.penglecode.xmodule.common.web.springmvc.handler.DefaultMvcHandlerExceptionResolver;
 /**
  * SpringMVC的定制化配置
@@ -48,11 +51,22 @@ public class DefaultSpringWebMvcConfiguration extends AbstractSpringConfiguratio
 	
 	private final ObjectProvider<List<HttpMessageConverter<?>>> httpMessageConvertersProvider;
 	
+	@Autowired
+	private ListableBeanFactory beanFactory;
+	
 	public DefaultSpringWebMvcConfiguration(ObjectProvider<List<HttpMessageConverter<?>>> httpMessageConvertersProvider) {
 		super();
 		this.httpMessageConvertersProvider = httpMessageConvertersProvider;
 	}
 
+	@Bean
+	@ConditionalOnMissingBean
+	public DefaultMvcHandlerExceptionResolver defaultMvcHandlerExceptionResolver() {
+		DefaultMvcHandlerExceptionResolver mvcHandlerExceptionResolver = new DefaultMvcHandlerExceptionResolver();
+		mvcHandlerExceptionResolver.setDefaultExceptionView("/common/error/500.html");
+		return mvcHandlerExceptionResolver;
+	}
+	
 	@Bean
 	public RequestContextFilter requestContextFilter() {
 		OrderedRequestContextFilter filter = new OrderedRequestContextFilter();
@@ -79,7 +93,7 @@ public class DefaultSpringWebMvcConfiguration extends AbstractSpringConfiguratio
 	
 	@Bean
 	@SuppressWarnings("rawtypes")
-	public HttpMessageConverters httpMessageConverters(ListableBeanFactory beanFactory) {
+	public HttpMessageConverters httpMessageConverters() {
 		Map<Class<?>,HttpMessageConverter<?>> finalConverters = new LinkedHashMap<Class<?>,HttpMessageConverter<?>>();
 		
 		Map<String,HttpMessageConverter> defaultConverters = beanFactory.getBeansOfType(HttpMessageConverter.class);
@@ -129,11 +143,15 @@ public class DefaultSpringWebMvcConfiguration extends AbstractSpringConfiguratio
         configurer.setUseTrailingSlashMatch(true);
     }
 	
+	/**
+	 * 配置MVC全局异常处理器
+	 */
 	@Override
 	public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
-		DefaultMvcHandlerExceptionResolver mvcHandlerExceptionResolver = new DefaultMvcHandlerExceptionResolver();
-		mvcHandlerExceptionResolver.setDefaultExceptionView("/common/error/500.html");
-		resolvers.add(mvcHandlerExceptionResolver);
+		Map<String,AbstractMvcHandlerExceptionResolver> beans = beanFactory.getBeansOfType(AbstractMvcHandlerExceptionResolver.class);
+		if(!CollectionUtils.isEmpty(beans)) {
+			resolvers.addAll(beans.values());
+		}
 	}
 
 }

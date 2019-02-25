@@ -1,7 +1,7 @@
 package com.penglecode.xmodule.upms.config;
 
-import static com.penglecode.xmodule.common.redis.LettuceConnectionFactoryUtils.createLettuceConnectionFactory;
 import static com.penglecode.xmodule.common.redis.LettuceConnectionFactoryUtils.createLettuceClientConfiguration;
+import static com.penglecode.xmodule.common.redis.LettuceConnectionFactoryUtils.createLettuceConnectionFactory;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -14,7 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import com.penglecode.xmodule.common.boot.config.AbstractSpringConfiguration;
-import com.penglecode.xmodule.common.util.JsonUtils;
+import com.penglecode.xmodule.common.util.BeanUtils;
 
 import io.lettuce.core.resource.ClientResources;
 
@@ -26,8 +26,7 @@ public class RedisConfiguration extends AbstractSpringConfiguration {
 	@Bean(name="dataRedisProperties")
 	@ConfigurationProperties(prefix="spring.redis.data")
 	public RedisProperties dataRedisProperties(@Qualifier("commonRedisProperties")RedisProperties commonRedisProperties) {
-		String commonRedisConfig = JsonUtils.object2Json(commonRedisProperties);
-		return JsonUtils.json2Object(commonRedisConfig, RedisProperties.class);
+		return BeanUtils.deepClone(commonRedisProperties);
 	}
 	
 	@Bean(name="dataClientConfiguration")

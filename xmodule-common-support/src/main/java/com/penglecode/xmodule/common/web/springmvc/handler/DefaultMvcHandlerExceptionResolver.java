@@ -10,16 +10,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
-import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.support.ModuleExceptionResolver.ExceptionMetadata;
+import com.penglecode.xmodule.common.support.Result;
 /**
- * 后台管理默认的异常处理器,按请求是异步请求还是同步请求分别做不同的处理
+ * 默认的MVC异常处理器,按请求是异步请求还是同步请求分别做不同的处理
  * 
- * @author	  	pengpeng
- * @date	  	2014年11月3日 下午9:56:01
- * @version  	1.0
+ * @author 	pengpeng
+ * @date	2019年2月18日 下午12:10:08
  */
-public class DefaultMvcHandlerExceptionResolver extends AbstractGlobalHandlerExceptionResolver {
+public class DefaultMvcHandlerExceptionResolver extends AbstractMvcHandlerExceptionResolver {
 
 	protected ModelAndView handle4AsyncRequest(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 		ExceptionMetadata em = ModuleExceptionResolver.resolveException(ex);
@@ -31,7 +30,7 @@ public class DefaultMvcHandlerExceptionResolver extends AbstractGlobalHandlerExc
 		mav.addObject(result);
 		return mav;
 	}
-
+	
 	protected ModelAndView handle4SyncRequest(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 		ExceptionMetadata em = ModuleExceptionResolver.resolveException(ex);
 		

@@ -254,8 +254,10 @@ public class StreamExample {
 	 * List转Map
 	 */
 	public static void streamListToMap() {
-		Map<String,Double> map = ALL_PRODUCT_LIST.stream().collect(Collectors.toMap(Product::getProductName, Product::getUnitPrice));
-		System.out.println(map);
+		Map<String,Double> map1 = ALL_PRODUCT_LIST.stream().collect(Collectors.toMap(Product::getProductName, Product::getUnitPrice));
+		System.out.println(map1);
+		Map<String,Product> map2 = ALL_PRODUCT_LIST.stream().filter(e -> e.getProductName() != null).collect(Collectors.toMap(Product::getProductName, Function.identity()));
+		System.out.println(map2);
 	}
 	
 	/**

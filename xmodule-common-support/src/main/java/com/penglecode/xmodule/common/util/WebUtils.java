@@ -1,7 +1,12 @@
 package com.penglecode.xmodule.common.util;
 
+import java.util.Collections;
+import java.util.Enumeration;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpHeaders;
 
 public class WebUtils {
 
@@ -15,6 +20,23 @@ public class WebUtils {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String paramValue = req.getHeader(paramName);
 		return StringUtils.trim(paramValue);
+	}
+	
+	/**
+	 * 获取所有请求头
+	 * @param request
+	 * @return
+	 */
+	public static HttpHeaders getHeaders(ServletRequest request) {
+		HttpHeaders headers = new HttpHeaders();
+		HttpServletRequest req = (HttpServletRequest) request;
+		Enumeration<String> headerNames = req.getHeaderNames();
+		while(headerNames.hasMoreElements()) {
+			String name = headerNames.nextElement();
+			Enumeration<String> values = req.getHeaders(name);
+			headers.put(name, Collections.list(values));
+		}
+		return headers;
 	}
 	
 	/**

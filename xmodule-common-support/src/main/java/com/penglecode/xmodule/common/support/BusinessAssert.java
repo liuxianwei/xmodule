@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.penglecode.xmodule.common.exception.ApplicationBusinessException;
-import com.penglecode.xmodule.common.support.Messages.MessageHolder;
 
 /**
  * 业务验证的Assert,所有抛出异常均为{@code BusinessException}

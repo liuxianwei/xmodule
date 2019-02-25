@@ -12,15 +12,14 @@ import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 import com.penglecode.xmodule.common.exception.ApplicationException;
 import com.penglecode.xmodule.common.util.SpringWebMvcUtils;
 /**
- * 全局异常处理器
+ * MVC异常处理器基类
  * 
- * @author	  	pengpeng
- * @date	  	2014年11月3日 下午9:56:01
- * @version  	1.0
+ * @author 	pengpeng
+ * @date	2019年2月18日 下午12:11:50
  */
-public abstract class AbstractGlobalHandlerExceptionResolver extends AbstractHandlerExceptionResolver {
+public abstract class AbstractMvcHandlerExceptionResolver extends AbstractHandlerExceptionResolver {
 
-	private static final Logger logger = LoggerFactory.getLogger(AbstractGlobalHandlerExceptionResolver.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMvcHandlerExceptionResolver.class);
 	
 	private String defaultExceptionView;
 	
@@ -36,7 +35,7 @@ public abstract class AbstractGlobalHandlerExceptionResolver extends AbstractHan
 		ModelAndView mav = null;
 		try {
 			if(!(ex instanceof ApplicationException)){
-				logger.error(ex.getMessage(), ex); //未知异常记录下来
+				LOGGER.error(ex.getMessage(), ex); //未知异常记录下来
 			}
 			if(handler instanceof HandlerMethod){
 				if(isAsyncRequest(request, response, handler)){ //异步请求的异常处理
@@ -46,7 +45,7 @@ public abstract class AbstractGlobalHandlerExceptionResolver extends AbstractHan
 				}
 			}
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			LOGGER.error(e.getMessage(), e);
 		}
 		return mav;
 	}

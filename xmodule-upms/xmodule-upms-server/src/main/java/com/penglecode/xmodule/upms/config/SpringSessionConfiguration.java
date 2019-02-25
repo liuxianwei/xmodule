@@ -17,7 +17,7 @@ import org.springframework.session.data.redis.config.annotation.SpringSessionRed
 
 import com.penglecode.xmodule.common.boot.config.AbstractSpringConfiguration;
 import com.penglecode.xmodule.common.redis.serializer.ProtostuffRedisSerializer;
-import com.penglecode.xmodule.common.util.JsonUtils;
+import com.penglecode.xmodule.common.util.BeanUtils;
 
 import io.lettuce.core.resource.ClientResources;
 
@@ -30,8 +30,7 @@ public class SpringSessionConfiguration extends AbstractSpringConfiguration {
 	@Bean(name="springSessionRedisProperties")
 	@ConfigurationProperties(prefix="spring.redis.session")
 	public RedisProperties sessionRedisProperties(@Qualifier("commonRedisProperties")RedisProperties commonRedisProperties) {
-		String commonRedisConfig = JsonUtils.object2Json(commonRedisProperties);
-		return JsonUtils.json2Object(commonRedisConfig, RedisProperties.class);
+		return BeanUtils.deepClone(commonRedisProperties);
 	}
 	
 	@Bean(name="springSessionClientConfiguration")

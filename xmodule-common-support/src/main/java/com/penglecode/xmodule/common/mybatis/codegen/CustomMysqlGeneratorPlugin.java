@@ -26,6 +26,8 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.penglecode.xmodule.common.support.BaseModel;
+import com.penglecode.xmodule.common.util.ClassUtils;
 import com.penglecode.xmodule.common.util.CollectionUtils;
 import com.penglecode.xmodule.common.util.JsonUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
@@ -42,7 +44,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 	/** 默认的表名别名 */
 	private static final String DEFAULT_TABLE_ALIAS_NAME = "a";
 	
-	protected FullyQualifiedJavaType serializable;
+	protected String serializable;
 	
 	protected Set<String> baseMappers = new HashSet<String>();
 	
@@ -61,7 +63,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 	@Override
 	public void setProperties(Properties properties) {
 		super.setProperties(properties);
-		this.serializable = new FullyQualifiedJavaType(properties.getProperty("modelSerializableClass", "java.io.Serializable"));
+		this.serializable = properties.getProperty("modelSerializableClass", "java.io.Serializable");
 		this.mybatisUtilsClass = properties.getProperty("mybatisUtilsClass");
 		this.mergeableXmlMapper = Boolean.valueOf(properties.getProperty("mergeableXmlMapper", "false"));
 		String baseMappers = properties.getProperty("baseMappers");
@@ -897,8 +899,14 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 	}
 
 	protected void makeSerializable(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-		topLevelClass.addImportedType(serializable);
-		topLevelClass.addSuperInterface(serializable);
+		String importedType = serializable;
+		String superInterface = serializable;
+		Class<?> clazz = ClassUtils.forName(superInterface);
+		if(clazz.equals(BaseModel.class)) {
+			superInterface = clazz.getSimpleName() + "<" + topLevelClass.getType().getShortName() + ">";
+		}
+		topLevelClass.addImportedType(new FullyQualifiedJavaType(importedType));
+		topLevelClass.addSuperInterface(new FullyQualifiedJavaType(superInterface));
 		
 		Field field = new Field();
 		field.setFinal(true);

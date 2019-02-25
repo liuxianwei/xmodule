@@ -5,6 +5,7 @@ import static com.penglecode.xmodule.common.consts.Constants.valueOf;
 import javax.servlet.ServletContext;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
@@ -28,6 +29,11 @@ public abstract class ApplicationConstants {
 	 * org.springframework.web.servlet.DispatcherServlet}加载出来的Spring MVC上下文
 	 */
 	public static final ApplicationContext WEB_APPLICATION_CONTEXT = valueOf(null);
+	
+	/**
+	 * Spring管理的资源文件访问器
+	 */
+	public static final MessageSourceAccessor MESSAGE_SOURCE_ACCESSOR = valueOf(null);
 
 	/**
 	 * 应用中的Servlet上下文

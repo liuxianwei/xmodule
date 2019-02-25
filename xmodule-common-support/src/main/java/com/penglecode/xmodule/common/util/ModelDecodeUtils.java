@@ -17,7 +17,7 @@ import com.penglecode.xmodule.common.support.BaseModel;
 public class ModelDecodeUtils {
 
 	public static <T extends BaseModel<T>> T decodeModel(T model) {
-		return model.decode();
+		return model != null ? model.decode() : null;
 	}
 	
 	public static <T extends BaseModel<T>> List<T> decodeModel(List<T> modelList) {

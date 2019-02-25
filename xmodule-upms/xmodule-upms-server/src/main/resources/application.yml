@@ -55,8 +55,6 @@ spring:
           - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
           - org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
           - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
-          #- org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-          #- org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
           - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
         
     profiles:

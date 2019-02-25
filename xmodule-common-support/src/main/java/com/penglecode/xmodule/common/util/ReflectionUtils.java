@@ -164,6 +164,18 @@ public class ReflectionUtils {
 	}
 	
 	/**
+	 * <p>在目标对象上获取属性字段的值</p>
+	 * 
+	 * @param target
+	 * @param fieldName
+	 * @return
+	 */
+	public static <T> T getFieldValue(Object target, String fieldName) {
+		Field field = ReflectionUtils.findField(target.getClass(), fieldName);
+		return getFieldValue(field, target);
+	}
+	
+	/**
 	 * <p>根据方法名字及入参在类中查找方法</p>
 	 * 
 	 * @param targetClass
