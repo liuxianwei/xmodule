@@ -1,6 +1,6 @@
 package com.penglecode.xmodule.newscloud.mybatis.codegen;
 
-import com.penglecode.xmodule.common.mybatis.codegen.AbstractMybatisCodeGenerator;
+import com.penglecode.xmodule.common.codegen.mybatis.AbstractMybatisCodeGenerator;
 
 public class NewsCloudMybatisCodeGenerator extends AbstractMybatisCodeGenerator {
 

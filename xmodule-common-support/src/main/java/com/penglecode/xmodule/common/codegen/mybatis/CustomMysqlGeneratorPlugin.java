@@ -1,4 +1,4 @@
-package com.penglecode.xmodule.common.mybatis.codegen;
+package com.penglecode.xmodule.common.codegen.mybatis;
 
 import java.sql.Types;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.penglecode.xmodule.springsecurity.upms.mybatis.codegen;
 
-import com.penglecode.xmodule.common.mybatis.codegen.AbstractMybatisCodeGenerator;
+import com.penglecode.xmodule.common.codegen.mybatis.AbstractMybatisCodeGenerator;
 
 public class Upms1MybatisCodeGenerator extends AbstractMybatisCodeGenerator {
 
