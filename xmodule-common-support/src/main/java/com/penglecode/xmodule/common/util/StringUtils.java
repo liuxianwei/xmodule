@@ -554,4 +554,16 @@ public class StringUtils {
     	return null;
     }
     
+    /**
+     * 单词首字母小写
+     * @param word
+     * @return
+     */
+    public static String firstLetterLowerCase(String word) {
+    	if(word != null) {
+    		return word.substring(0, 1) + word.substring(1);
+    	}
+    	return null;
+    }
+    
 }

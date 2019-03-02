@@ -6,7 +6,7 @@
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p] [%l] %m%n"/>
 		</console>
 
-		<RollingFile name="FILE" fileName="${sys:LOG_PATH}/xmodule-examples-security-oauth2-wechat1.log" filePattern="${sys:LOG_PATH}/xmodule-examples-security-oauth2-wechat1_%d{yyyy-MM-dd}_%i.log">
+		<RollingFile name="FILE" fileName="${sys:LOG_PATH}/${sys:LOG_FILE}.log" filePattern="${sys:LOG_PATH}/${sys:LOG_FILE}_%d{yyyy-MM-dd}_%i.log">
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p] [%l] %m%n" />
 			<Policies>
 				<TimeBasedTriggeringPolicy modulate="true" interval="1"/>

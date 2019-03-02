@@ -3,6 +3,7 @@ debug: false
 
 #应用日志配置
 logging:
+    file: ${spring.application.name}
     config: classpath:log4j2-spring.xml
 
 #Spring上下文初始化程序

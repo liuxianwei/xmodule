@@ -138,6 +138,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		//rootElement.addElement(createNewLineElement());
 		//rootElement.addElement(createBaseColumnListElement(introspectedTable)); //创建<sql id="xxxBaseColumnList"/>
 		rootElement.addElement(createNewLineElement());
+		rootElement.addElement(createAutoGenCodeCommentStartElement());
 		rootElement.addElement(createInsertModelElement(introspectedTable)); //创建<insert id="insertModel"/>
 		rootElement.addElement(createNewLineElement());
 		rootElement.addElement(createUpdateModelByIdElement(introspectedTable)); //创建<update id="updateModelById"/>
@@ -161,6 +162,12 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		rootElement.addElement(createSelectModelPageListByExampleElement(introspectedTable)); //创建<select id="selectModelPageListByExample"/>
 		rootElement.addElement(createNewLineElement());
 		rootElement.addElement(createCountModelPageListByExampleElement(introspectedTable)); //创建<select id="countModelPageListByExample"/>
+		rootElement.addElement(createNewLineElement());
+		rootElement.addElement(createAutoGenCodeCommentEndElement());
+		rootElement.addElement(createCustomizedCodeCommentStartElement());
+		rootElement.addElement(createNewLineElement());
+		rootElement.addElement(createNewLineElement());
+		rootElement.addElement(createCustomizedCodeCommentEndElement());
 		return true;
 	}
 	
@@ -268,6 +275,38 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 	
 	public TextElement createNewLineElement() {
 		return new TextElement(" ");
+	}
+	
+	public TextElement createAutoGenCodeCommentStartElement() {
+		StringBuilder sb = new StringBuilder();
+		OutputUtilities.xmlIndent(sb, 1);
+		sb.append("<!-- Auto-Generation Code Start -->");
+		OutputUtilities.newLine(sb);
+		return new TextElement(sb.toString());
+	}
+	
+	public TextElement createAutoGenCodeCommentEndElement() {
+		StringBuilder sb = new StringBuilder();
+		OutputUtilities.xmlIndent(sb, 1);
+		sb.append("<!-- Auto-Generation Code End -->");
+		OutputUtilities.newLine(sb);
+		return new TextElement(sb.toString());
+	}
+	
+	public TextElement createCustomizedCodeCommentStartElement() {
+		StringBuilder sb = new StringBuilder();
+		OutputUtilities.xmlIndent(sb, 1);
+		sb.append("<!-- Customized Code Start -->");
+		OutputUtilities.newLine(sb);
+		return new TextElement(sb.toString());
+	}
+	
+	public TextElement createCustomizedCodeCommentEndElement() {
+		StringBuilder sb = new StringBuilder();
+		OutputUtilities.xmlIndent(sb, 1);
+		sb.append("<!-- Customized Code End -->");
+		OutputUtilities.newLine(sb);
+		return new TextElement(sb.toString());
 	}
 	
 	public XmlElement createBaseColumnListElement(IntrospectedTable introspectedTable) {

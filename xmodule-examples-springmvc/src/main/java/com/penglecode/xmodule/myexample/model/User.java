@@ -1,7 +1,15 @@
 package com.penglecode.xmodule.myexample.model;
 
-public class User {
+import com.penglecode.xmodule.common.codegen.Id;
+import com.penglecode.xmodule.common.codegen.Model;
+import com.penglecode.xmodule.common.support.BaseModel;
 
+@Model(name="用户")
+public class User implements BaseModel<User> {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
 	private Long userId;
 	
 	private String userName;
