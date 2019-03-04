@@ -25,6 +25,8 @@ import com.penglecode.xmodule.common.web.security.oauth2.CustomOAuth2ExceptionRe
 @EnableResourceServer
 public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
+	private static final String DEFAULT_RESOURCE_ID = "demo-resource";
+	
 	@Autowired
 	private ResourceServerTokenServices tokenServices;
 	
@@ -63,9 +65,10 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
 	
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		resources.tokenServices(tokenServices);
-		resources.authenticationEntryPoint(oauth2AuthenticationEntryPoint());
-		resources.accessDeniedHandler(oauth2AccessDeniedHandler());
+		resources.resourceId(DEFAULT_RESOURCE_ID) //如果设置了resourceId，那么必须加入到AuthorizationServer端配置的resourceIds(...)列表中去
+				 .tokenServices(tokenServices)
+				 .authenticationEntryPoint(oauth2AuthenticationEntryPoint())
+				 .accessDeniedHandler(oauth2AccessDeniedHandler());
 	}
 
 	@Override

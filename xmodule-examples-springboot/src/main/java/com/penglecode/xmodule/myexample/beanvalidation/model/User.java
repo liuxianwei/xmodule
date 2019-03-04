@@ -8,13 +8,13 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import com.penglecode.xmodule.common.support.BaseModel;
-import com.penglecode.xmodule.myexample.beanvalidation.consts.ValidationGroups.Constraint1;
-import com.penglecode.xmodule.myexample.beanvalidation.consts.ValidationGroups.Constraint2;
-import com.penglecode.xmodule.myexample.beanvalidation.consts.ValidationGroups.Constraint3;
+import com.penglecode.xmodule.myexample.beanvalidation.consts.ValidationGroups.ConstraintOrder.Constraint1;
+import com.penglecode.xmodule.myexample.beanvalidation.consts.ValidationGroups.ConstraintOrder.Constraint2;
+import com.penglecode.xmodule.myexample.beanvalidation.consts.ValidationGroups.ConstraintOrder.Constraint3;
 import com.penglecode.xmodule.myexample.beanvalidation.consts.ValidationGroups.Create;
 import com.penglecode.xmodule.myexample.beanvalidation.consts.ValidationGroups.Update;
 
-public class User implements BaseModel {
+public class User implements BaseModel<User> {
 
 	private static final long serialVersionUID = 1L;
 

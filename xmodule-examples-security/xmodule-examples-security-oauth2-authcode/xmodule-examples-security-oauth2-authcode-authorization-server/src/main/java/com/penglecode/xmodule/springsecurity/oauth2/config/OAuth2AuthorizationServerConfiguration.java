@@ -35,6 +35,8 @@ import com.penglecode.xmodule.common.web.security.oauth2.OAuth2ServerConfigPrope
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
+	private static final String[] DEFAULT_RESOURCE_IDS = {"demo-resource"};
+	
 	@Autowired
     private AuthenticationManager authenticationManager;
 	
@@ -110,7 +112,8 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 	                .refreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds())
 	                .redirectUris(client.getRedirectUrl())
 	                .authorizedGrantTypes(client.getAuthorizedGrantTypes())
-	                .scopes(client.getScope());
+	                .scopes(client.getScope())
+	                .resourceIds(DEFAULT_RESOURCE_IDS);
 			}
 		}
 	}
