@@ -561,7 +561,7 @@ public class StringUtils {
      */
     public static String firstLetterLowerCase(String word) {
     	if(word != null) {
-    		return word.substring(0, 1) + word.substring(1);
+    		return word.substring(0, 1).toLowerCase() + word.substring(1);
     	}
     	return null;
     }

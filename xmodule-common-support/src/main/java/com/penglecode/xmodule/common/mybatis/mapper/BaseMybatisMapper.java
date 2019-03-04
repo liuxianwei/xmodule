@@ -81,7 +81,7 @@ public interface BaseMybatisMapper<T extends BaseModel<T>> {
 	
 	/**
 	 * 根据样例查询结果集
-	 * @param example	- 样例参数
+	 * @param example	- 样例参数(为null则查询所有)
 	 * @param sort		- 排序参数
 	 * @return
 	 */
@@ -89,7 +89,7 @@ public interface BaseMybatisMapper<T extends BaseModel<T>> {
 	
 	/**
 	 * 根据样例查询结果集(分页、排序)
-	 * @param example	- 样例参数
+	 * @param example	- 样例参数(为null则查询所有)
 	 * @param sort		- 排序参数
 	 * @param rowBounds	- 分页参数
 	 * @return
@@ -98,7 +98,7 @@ public interface BaseMybatisMapper<T extends BaseModel<T>> {
 	
 	/**
 	 * 根据样例查询结果集计数
-	 * @param example
+	 * @param example	- 样例参数(为null则查询所有)
 	 * @return
 	 */
 	public int countModelPageListByExample(@Param("example")T example);

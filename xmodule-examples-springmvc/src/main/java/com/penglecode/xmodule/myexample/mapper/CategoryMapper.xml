@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.penglecode.xmodule.myexample.mapper.CategoryMapper">
+   
+    <!-- Auto-Generation Code Start -->
+
+    <insert id="insertModel" keyProperty="categoryId" parameterType="Category" statementType="PREPARED" useGeneratedKeys="true">
+        INSERT INTO t_category(
+            category_id,
+            category_name,
+            parent_category_id,
+            create_time
+        ) VALUES (
+            #{categoryId, jdbcType=BIGINT},
+            #{categoryName, jdbcType=VARCHAR},
+            #{parentCategoryId, jdbcType=BIGINT},
+            #{createTime, jdbcType=VARCHAR}
+        )
+    </insert>
+   
+    <update id="updateModelById" parameterType="Category" statementType="PREPARED">
+        UPDATE t_category a
+           SET a.category_id = #{categoryId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(categoryName)">
+               ,a.category_name = #{categoryName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(parentCategoryId)">
+               ,a.parent_category_id = #{parentCategoryId, jdbcType=BIGINT}
+            </if>
+         WHERE a.category_id = #{categoryId, jdbcType=BIGINT}
+    </update>
+   
+    <update id="dynamicUpdateModelById" parameterType="Category" statementType="PREPARED">
+        UPDATE t_category a
+           SET a.category_id = #{categoryId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(categoryName)">
+               ,a.category_name = #{categoryName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(parentCategoryId)">
+               ,a.parent_category_id = #{parentCategoryId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
+               ,a.create_time = #{createTime, jdbcType=VARCHAR}
+            </if>
+         WHERE a.category_id = #{categoryId, jdbcType=BIGINT}
+    </update>
+   
+    <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
+        DELETE FROM t_category WHERE category_id = #{categoryId, jdbcType=BIGINT}
+    </delete>
+   
+    <select id="selectModelById" parameterType="java.lang.Long" resultType="Category" statementType="PREPARED">
+        SELECT a.category_id	categoryId,
+               a.category_name	categoryName,
+               a.parent_category_id	parentCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_category a
+         WHERE a.category_id = #{categoryId, jdbcType=BIGINT}
+    </select>
+   
+    <select id="selectModelByExample" parameterType="Category" resultType="Category" statementType="PREPARED">
+        SELECT a.category_id	categoryId,
+               a.category_name	categoryName,
+               a.parent_category_id	parentCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_category a
+         WHERE 1=1
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(categoryName)">
+           AND a.category_name like CONCAT('%', #{categoryName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(parentCategoryId)">
+           AND a.parent_category_id = #{parentCategoryId, jdbcType=BIGINT}
+        </if>
+
+    </select>
+   
+    <select id="selectModelListByIds" parameterType="java.util.List" resultType="Category" statementType="PREPARED">
+        SELECT a.category_id	categoryId,
+               a.category_name	categoryName,
+               a.parent_category_id	parentCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_category a
+         WHERE a.category_id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+         ORDER BY a.category_id ASC
+    </select>
+   
+    <select id="selectAllModelList" parameterType="java.util.Map" resultType="Category" statementType="PREPARED">
+        SELECT a.category_id	categoryId,
+               a.category_name	categoryName,
+               a.parent_category_id	parentCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_category a
+         WHERE 1=1
+         ORDER BY a.category_id ASC
+    </select>
+   
+    <select id="countAllModelList" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM t_category a
+         WHERE 1=1
+    </select>
+   
+    <select id="selectModelListByExample" parameterType="java.util.Map" resultType="Category" statementType="PREPARED">
+        SELECT a.category_id	categoryId,
+               a.category_name	categoryName,
+               a.parent_category_id	parentCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_category a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.categoryName)">
+           AND a.category_name like CONCAT('%', #{example.categoryName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.parentCategoryId)">
+           AND a.parent_category_id = #{example.parentCategoryId, jdbcType=BIGINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="selectModelPageListByExample" parameterType="java.util.Map" resultType="Category" statementType="PREPARED">
+        SELECT a.category_id	categoryId,
+               a.category_name	categoryName,
+               a.parent_category_id	parentCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_category a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.categoryName)">
+           AND a.category_name like CONCAT('%', #{example.categoryName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.parentCategoryId)">
+           AND a.parent_category_id = #{example.parentCategoryId, jdbcType=BIGINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="countModelPageListByExample" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM t_category a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.categoryName)">
+           AND a.category_name like CONCAT('%', #{example.categoryName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.parentCategoryId)">
+           AND a.parent_category_id = #{example.parentCategoryId, jdbcType=BIGINT}
+        </if>
+    </select>
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
+   
+   
+    <!-- Customized Code End -->
+
+</mapper>

@@ -39,6 +39,4 @@ public class ModelDecodeUtils {
 		return modelList;
 	}
 
-	
-	
 }

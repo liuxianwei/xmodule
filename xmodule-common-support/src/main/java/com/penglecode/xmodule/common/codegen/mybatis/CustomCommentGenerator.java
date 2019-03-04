@@ -49,13 +49,15 @@ public class CustomCommentGenerator implements CommentGenerator {
 		
 		String modelComments = introspectedTable.getRemarks();
 		if(StringUtils.isEmpty(modelComments)) {
-			modelComments = introspectedTable.getTableConfiguration().getDomainObjectName() + " (" + introspectedTable.getTableConfiguration().getTableName() + ")" + " 实体类";
+			String domainObjectName = introspectedTable.getTableConfiguration().getDomainObjectName();
+			modelComments = StringUtils.defaultIfEmpty(introspectedTable.getTableConfiguration().getProperty("modelName"), domainObjectName) 
+							+ " (" + introspectedTable.getTableConfiguration().getTableName() + ")" + " 实体类";
 		}
 		
 		topLevelClass.addJavaDocLine(" * " + modelComments);
 		topLevelClass.addJavaDocLine(" * ");
 		topLevelClass.addJavaDocLine(" * @author " + StringUtils.defaultIfEmpty(introspectedTable.getTableConfiguration().getProperty("modelCommentAuthor"), "Administrator"));
-		topLevelClass.addJavaDocLine(" * @date	" + DateTimeUtils.formatNow() + "");
+		topLevelClass.addJavaDocLine(" * @date	" + DateTimeUtils.formatNow("yyyy'年'MM'月'dd'日' a HH:mm:ss") + "");
 		topLevelClass.addJavaDocLine(" */");
 	}
 

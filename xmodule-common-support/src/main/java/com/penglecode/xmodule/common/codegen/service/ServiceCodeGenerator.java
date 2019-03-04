@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -62,9 +63,15 @@ public abstract class ServiceCodeGenerator {
 		System.out.println(">>> 生成数据模型的服务代码开始!");
 		prepareServiceCode(config);
 		
-		for(Class<?> modelClass : modelClasses) {
-			generateServiceInterfaceCode(config, modelClass);
-			generateServiceImplementationCode(config, modelClass);
+		List<String> generatedCodeFilePaths = new ArrayList<String>();
+		try {
+			for(Class<?> modelClass : modelClasses) {
+				generatedCodeFilePaths.add(generateServiceInterfaceCode(config, modelClass));
+				generatedCodeFilePaths.add(generateServiceImplementationCode(config, modelClass));
+			}
+		} catch (Exception e) {
+			generatedCodeFilePaths.stream().forEach(FileUtils::deleteFileQuietly); //rollback for exception
+			throw e;
 		}
 		System.out.println("<<< 生成数据模型的服务代码完毕!");
 	}
@@ -87,26 +94,28 @@ public abstract class ServiceCodeGenerator {
 	 * 生成服务接口代码
 	 * @param config
 	 * @param modelClass
+	 * @return 返回生成的代码文件路径
 	 * @throws Exception
 	 */
-	protected void generateServiceInterfaceCode(ServiceCodeConfig config, Class<?> modelClass) throws Exception {
+	protected String generateServiceInterfaceCode(ServiceCodeConfig config, Class<?> modelClass) throws Exception {
 		System.out.println(String.format(">>> 生成数据模型[%s]的服务接口代码", modelClass.getName()));
 		Map<String,Object> serviceCodeParameter = createServiceInterfaceCodeParameter(config, modelClass);
 		serviceCodeParameter.put("serviceClassFileName", generateServiceCodeFileName((String) serviceCodeParameter.get("serviceClassName"), new File(config.getServiceInterfaceDir())));
-		doServiceInterfaceCodeGeneration(config, serviceCodeParameter);
+		return doServiceInterfaceCodeGeneration(config, serviceCodeParameter);
 	}
 	
 	/**
 	 * 生成服务实现代码
 	 * @param config
 	 * @param modelClass
+	 * @return 返回生成的代码文件路径
 	 * @throws Exception
 	 */
-	protected void generateServiceImplementationCode(ServiceCodeConfig config, Class<?> modelClass) throws Exception {
+	protected String generateServiceImplementationCode(ServiceCodeConfig config, Class<?> modelClass) throws Exception {
 		System.out.println(String.format(">>> 生成数据模型[%s]的服务实现代码", modelClass.getName()));
 		Map<String,Object> serviceCodeParameter = createServiceImplementationCodeParameter(config, modelClass);
 		serviceCodeParameter.put("serviceImplClassFileName", generateServiceCodeFileName((String) serviceCodeParameter.get("serviceImplClassName"), new File(config.getServiceImplementationDir())));
-		doServiceImplementationCodeGeneration(config, serviceCodeParameter);
+		return doServiceImplementationCodeGeneration(config, serviceCodeParameter);
 	}
 	
 	/**
@@ -120,15 +129,17 @@ public abstract class ServiceCodeGenerator {
 		String fileSuffix = "";
 		File[] childFiles = serviceClassFileDir.listFiles(f -> !f.isDirectory());
 		if(!ArrayUtils.isEmpty(childFiles)) {
-			int version = Stream.of(childFiles).filter(f -> f.getName().startsWith(serviceClassFileName)).map(f -> {
+			Integer version = Stream.of(childFiles).filter(f -> f.getName().startsWith(serviceClassFileName)).map(f -> {
 				String suffix = f.getName().replace(serviceClassFileName, "");
 				if(StringUtils.isEmpty(suffix)) {
 					return 0;
 				} else {
 					return Integer.parseInt(StringUtils.stripStart(suffix, "."));
 				}
-			}).max(Comparator.comparing(Function.identity())).get();
-			fileSuffix = "." + (version + 1);
+			}).max(Comparator.comparing(Function.identity())).orElse(null);
+			if(version != null) {
+				fileSuffix = "." + (version + 1);
+			}
 		}
 		return serviceClassFileName + fileSuffix;
 	}
@@ -278,7 +289,7 @@ public abstract class ServiceCodeGenerator {
 				}
 			}
 		});
-		Assert.notNull(value.getValue(), "No @Id found in model class : " + modelClass);
+		Assert.notNull(value.getValue(), "No @Id found in model class : " + modelClass.getName());
 		return value.getValue();
 	}
 	
@@ -294,10 +305,11 @@ public abstract class ServiceCodeGenerator {
 	 * 执行服务接口代码生成
 	 * @param config
 	 * @param serviceCodeParameter
+	 * @return 返回生成的代码文件路径
 	 * @throws Exception
 	 */
 	@SuppressWarnings("deprecation")
-	protected void doServiceInterfaceCodeGeneration(ServiceCodeConfig config, Map<String,Object> serviceCodeParameter) throws Exception {
+	protected String doServiceInterfaceCodeGeneration(ServiceCodeConfig config, Map<String,Object> serviceCodeParameter) throws Exception {
 		Configuration configuration = new Configuration();
 		configuration.setDirectoryForTemplateLoading(getServiceCodeTemplateDir());
 		Template serviceCodeTemplate = configuration.getTemplate("ModelService.ftl");
@@ -305,16 +317,18 @@ public abstract class ServiceCodeGenerator {
 		try (Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(serviceCodeFile))))) {
 			serviceCodeTemplate.process(serviceCodeParameter, out);
 		}
+		return serviceCodeFile;
 	}
 	
 	/**
 	 * 执行服务实现接口代码生成
 	 * @param config
 	 * @param serviceCodeParameter
+	 * @return 返回生成的代码文件路径
 	 * @throws Exception
 	 */
 	@SuppressWarnings("deprecation")
-	protected void doServiceImplementationCodeGeneration(ServiceCodeConfig config, Map<String,Object> serviceCodeParameter) throws Exception {
+	protected String doServiceImplementationCodeGeneration(ServiceCodeConfig config, Map<String,Object> serviceCodeParameter) throws Exception {
 		Configuration configuration = new Configuration();
 		configuration.setDirectoryForTemplateLoading(getServiceCodeTemplateDir());
 		Template serviceCodeTemplate = configuration.getTemplate("ModelServiceImpl.ftl");
@@ -322,6 +336,7 @@ public abstract class ServiceCodeGenerator {
 		try (Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(serviceCodeFile))))) {
 			serviceCodeTemplate.process(serviceCodeParameter, out);
 		}
+		return serviceCodeFile;
 	}
 	
 	/**
@@ -375,7 +390,7 @@ public abstract class ServiceCodeGenerator {
 				e.printStackTrace();
 			}
 		});
-		Assert.notNull(value.getValue(), "No " + mapperClassName + " found for model class : " + modelClass);
+		Assert.notNull(value.getValue(), "No " + mapperClassName + " found for model class : " + modelClass.getName());
 		return value.getValue();
 	}
 	

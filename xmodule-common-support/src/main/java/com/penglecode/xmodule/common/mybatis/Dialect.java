@@ -21,6 +21,15 @@ public interface Dialect {
 	
 	public enum Type {
 		MYSQL, ORACLE;
+		
+		public static Type getType(String name) {
+			for(Type em : values()) {
+				if(em.name().equals(name)) {
+					return em;
+				}
+			}
+			return null;
+		}
 	}
 	
 }

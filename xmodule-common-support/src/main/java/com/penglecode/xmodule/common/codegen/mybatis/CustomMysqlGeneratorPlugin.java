@@ -26,10 +26,14 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.penglecode.xmodule.common.codegen.Id;
+import com.penglecode.xmodule.common.codegen.Model;
+import com.penglecode.xmodule.common.mybatis.Dialect.Type;
 import com.penglecode.xmodule.common.support.BaseModel;
 import com.penglecode.xmodule.common.util.ClassUtils;
 import com.penglecode.xmodule.common.util.CollectionUtils;
 import com.penglecode.xmodule.common.util.JsonUtils;
+import com.penglecode.xmodule.common.util.ObjectUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
 
 
@@ -43,6 +47,8 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 
 	/** 默认的表名别名 */
 	private static final String DEFAULT_TABLE_ALIAS_NAME = "a";
+	
+	protected Type dialect = Type.MYSQL;
 	
 	protected String serializable;
 	
@@ -63,6 +69,8 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 	@Override
 	public void setProperties(Properties properties) {
 		super.setProperties(properties);
+		String dialectName = properties.getProperty("dialect", Type.MYSQL.name());
+		this.dialect = ObjectUtils.defaultIfNull(Type.getType(dialectName), Type.MYSQL);
 		this.serializable = properties.getProperty("modelSerializableClass", "java.io.Serializable");
 		this.mybatisUtilsClass = properties.getProperty("mybatisUtilsClass");
 		this.mergeableXmlMapper = Boolean.valueOf(properties.getProperty("mergeableXmlMapper", "false"));
@@ -73,10 +81,11 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 			}
 		}
 	}
-
+	
 	@Override
 	public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-		makeSerializable(topLevelClass, introspectedTable); //加入 XxxModel implements BaseModel {} 声明
+		applyModelAnnotations(topLevelClass, introspectedTable);
+		applyModelSerializableFields(topLevelClass, introspectedTable); //加入 XxxModel implements BaseModel {} 声明
 		return true;
 	}
 	
@@ -857,7 +866,11 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 	 */
 	protected void applyExampleWhereCondition(StringBuilder sql, WhereConditionOperator op, IntrospectedColumn column, String paramDomain) {
 		if(WhereConditionOperator.LIKE.equals(op)) {
-			sql.append(DEFAULT_TABLE_ALIAS_NAME + "." + column.getActualColumnName().toLowerCase() + " like CONCAT('%', " + "#{" + paramDomain + column.getJavaProperty() + ", jdbcType=" + getJdbcTypeName(column) + "}, '%')");
+			if(Type.ORACLE.equals(dialect)) { //Oracle数据库 like写法
+				sql.append(DEFAULT_TABLE_ALIAS_NAME + "." + column.getActualColumnName().toLowerCase() + " like '%' || " + "#{" + paramDomain + column.getJavaProperty() + ", jdbcType=" + getJdbcTypeName(column) + "} || '%'");
+			} else { //默认为MySQL写法
+				sql.append(DEFAULT_TABLE_ALIAS_NAME + "." + column.getActualColumnName().toLowerCase() + " like CONCAT('%', " + "#{" + paramDomain + column.getJavaProperty() + ", jdbcType=" + getJdbcTypeName(column) + "}, '%')");
+			}
 		} else {
 			sql.append(DEFAULT_TABLE_ALIAS_NAME + "." + column.getActualColumnName().toLowerCase() + " = " + "#{" + paramDomain + column.getJavaProperty() + ", jdbcType=" + getJdbcTypeName(column) + "}");
 		}
@@ -910,11 +923,20 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 	
 	protected String getSelectColumnName(IntrospectedColumn column) {
 		String selectColumnString = DEFAULT_TABLE_ALIAS_NAME + "." + column.getActualColumnName().toLowerCase();
-		if(Types.TIMESTAMP == column.getJdbcType()) {
-			return "DATE_FORMAT(" + selectColumnString + ", '%Y-%m-%d %T')"; //mysql
-		} else if (Types.DATE == column.getJdbcType()) {
-			return "DATE_FORMAT(" + selectColumnString + ", '%Y-%m-%d')"; //mysql
+		if(Type.ORACLE.equals(dialect)) { //Oracle 日期时间格式化写法
+			if(Types.TIMESTAMP == column.getJdbcType()) {
+				return "TO_CHAR(" + selectColumnString + ", 'yyyy-mm-dd hh24:mi:ss')";
+			} else if (Types.DATE == column.getJdbcType()) {
+				return "TO_CHAR(" + selectColumnString + ", 'yyyy-mm-dd')";
+			}
+		} else { //默认为MySQL写法
+			if(Types.TIMESTAMP == column.getJdbcType()) {
+				return "DATE_FORMAT(" + selectColumnString + ", '%Y-%m-%d %T')";
+			} else if (Types.DATE == column.getJdbcType()) {
+				return "DATE_FORMAT(" + selectColumnString + ", '%Y-%m-%d')";
+			}
 		}
+		
 		return selectColumnString;
 	}
 	
@@ -936,8 +958,22 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 	public boolean sqlMapSelectAllElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
 		return false;
 	}
+	
+	protected void applyModelAnnotations(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+		String modelName = introspectedTable.getTableConfiguration().getProperty("modelName");
+		if(!StringUtils.isEmpty(modelName)) {
+			topLevelClass.addAnnotation("@" + Model.class.getSimpleName() + "(name=\"" + modelName + "\")");
+			topLevelClass.addImportedType(new FullyQualifiedJavaType(Model.class.getName()));
+		}
+		IntrospectedColumn pkColumn = getPrimaryKeyColumn(introspectedTable, 0);
+		String primaryKeyFieldName = pkColumn.getJavaProperty();
+		topLevelClass.getFields().stream().filter(f -> f.getName().equals(primaryKeyFieldName)).findFirst().ifPresent(f -> {
+			f.addAnnotation("@" + Id.class.getSimpleName());
+			topLevelClass.addImportedType(new FullyQualifiedJavaType(Id.class.getName()));
+		});
+	}
 
-	protected void makeSerializable(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+	protected void applyModelSerializableFields(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 		String importedType = serializable;
 		String superInterface = serializable;
 		Class<?> clazz = ClassUtils.forName(superInterface);

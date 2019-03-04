@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.penglecode.xmodule.myexample.mapper.ProductMapper">
+   
+    <!-- Auto-Generation Code Start -->
+
+    <insert id="insertModel" keyProperty="productId" parameterType="Product" statementType="PREPARED" useGeneratedKeys="true">
+        INSERT INTO t_product(
+            product_id,
+            product_name,
+            product_type,
+            unit_price,
+            inventory,
+            main_category_id,
+            create_time
+        ) VALUES (
+            #{productId, jdbcType=BIGINT},
+            #{productName, jdbcType=VARCHAR},
+            #{productType, jdbcType=TINYINT},
+            #{unitPrice, jdbcType=DECIMAL},
+            #{inventory, jdbcType=INTEGER},
+            #{mainCategoryId, jdbcType=BIGINT},
+            #{createTime, jdbcType=VARCHAR}
+        )
+    </insert>
+   
+    <update id="updateModelById" parameterType="Product" statementType="PREPARED">
+        UPDATE t_product a
+           SET a.product_id = #{productId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productName)">
+               ,a.product_name = #{productName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productType)">
+               ,a.product_type = #{productType, jdbcType=TINYINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(unitPrice)">
+               ,a.unit_price = #{unitPrice, jdbcType=DECIMAL}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(inventory)">
+               ,a.inventory = #{inventory, jdbcType=INTEGER}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mainCategoryId)">
+               ,a.main_category_id = #{mainCategoryId, jdbcType=BIGINT}
+            </if>
+         WHERE a.product_id = #{productId, jdbcType=BIGINT}
+    </update>
+   
+    <update id="dynamicUpdateModelById" parameterType="Product" statementType="PREPARED">
+        UPDATE t_product a
+           SET a.product_id = #{productId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productName)">
+               ,a.product_name = #{productName, jdbcType=VARCHAR}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productType)">
+               ,a.product_type = #{productType, jdbcType=TINYINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(unitPrice)">
+               ,a.unit_price = #{unitPrice, jdbcType=DECIMAL}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(inventory)">
+               ,a.inventory = #{inventory, jdbcType=INTEGER}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mainCategoryId)">
+               ,a.main_category_id = #{mainCategoryId, jdbcType=BIGINT}
+            </if>
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
+               ,a.create_time = #{createTime, jdbcType=VARCHAR}
+            </if>
+         WHERE a.product_id = #{productId, jdbcType=BIGINT}
+    </update>
+   
+    <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
+        DELETE FROM t_product WHERE product_id = #{productId, jdbcType=BIGINT}
+    </delete>
+   
+    <select id="selectModelById" parameterType="java.lang.Long" resultType="Product" statementType="PREPARED">
+        SELECT a.product_id	productId,
+               a.product_name	productName,
+               a.product_type	productType,
+               a.unit_price	unitPrice,
+               a.inventory	inventory,
+               a.main_category_id	mainCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_product a
+         WHERE a.product_id = #{productId, jdbcType=BIGINT}
+    </select>
+   
+    <select id="selectModelByExample" parameterType="Product" resultType="Product" statementType="PREPARED">
+        SELECT a.product_id	productId,
+               a.product_name	productName,
+               a.product_type	productType,
+               a.unit_price	unitPrice,
+               a.inventory	inventory,
+               a.main_category_id	mainCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_product a
+         WHERE 1=1
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productName)">
+           AND a.product_name like CONCAT('%', #{productName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productType)">
+           AND a.product_type = #{productType, jdbcType=TINYINT}
+        </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mainCategoryId)">
+           AND a.main_category_id = #{mainCategoryId, jdbcType=BIGINT}
+        </if>
+
+    </select>
+   
+    <select id="selectModelListByIds" parameterType="java.util.List" resultType="Product" statementType="PREPARED">
+        SELECT a.product_id	productId,
+               a.product_name	productName,
+               a.product_type	productType,
+               a.unit_price	unitPrice,
+               a.inventory	inventory,
+               a.main_category_id	mainCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_product a
+         WHERE a.product_id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+         ORDER BY a.product_id ASC
+    </select>
+   
+    <select id="selectAllModelList" parameterType="java.util.Map" resultType="Product" statementType="PREPARED">
+        SELECT a.product_id	productId,
+               a.product_name	productName,
+               a.product_type	productType,
+               a.unit_price	unitPrice,
+               a.inventory	inventory,
+               a.main_category_id	mainCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_product a
+         WHERE 1=1
+         ORDER BY a.product_id ASC
+    </select>
+   
+    <select id="countAllModelList" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM t_product a
+         WHERE 1=1
+    </select>
+   
+    <select id="selectModelListByExample" parameterType="java.util.Map" resultType="Product" statementType="PREPARED">
+        SELECT a.product_id	productId,
+               a.product_name	productName,
+               a.product_type	productType,
+               a.unit_price	unitPrice,
+               a.inventory	inventory,
+               a.main_category_id	mainCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_product a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.productName)">
+           AND a.product_name like CONCAT('%', #{example.productName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.productType)">
+           AND a.product_type = #{example.productType, jdbcType=TINYINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.mainCategoryId)">
+           AND a.main_category_id = #{example.mainCategoryId, jdbcType=BIGINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="selectModelPageListByExample" parameterType="java.util.Map" resultType="Product" statementType="PREPARED">
+        SELECT a.product_id	productId,
+               a.product_name	productName,
+               a.product_type	productType,
+               a.unit_price	unitPrice,
+               a.inventory	inventory,
+               a.main_category_id	mainCategoryId,
+               DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime
+          FROM t_product a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.productName)">
+           AND a.product_name like CONCAT('%', #{example.productName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.productType)">
+           AND a.product_type = #{example.productType, jdbcType=TINYINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.mainCategoryId)">
+           AND a.main_category_id = #{example.mainCategoryId, jdbcType=BIGINT}
+        </if>
+        <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
+         ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
+        </if>
+    </select>
+   
+    <select id="countModelPageListByExample" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="PREPARED">
+        SELECT count(*)
+          FROM t_product a
+         WHERE 1=1
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.productName)">
+           AND a.product_name like CONCAT('%', #{example.productName, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.productType)">
+           AND a.product_type = #{example.productType, jdbcType=TINYINT}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.mainCategoryId)">
+           AND a.main_category_id = #{example.mainCategoryId, jdbcType=BIGINT}
+        </if>
+    </select>
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
+   
+   
+    <!-- Customized Code End -->
+
+</mapper>
