@@ -18,7 +18,7 @@ server:
     port: 8081
     servlet:
         context-path: /
-        application-display-name: xmodule-examples-security-oauth2-authorization-server
+        application-display-name: xmodule-examples-security-oauth2-authcode-authorization-server
         session:
             timeout: 1800
 
@@ -45,11 +45,11 @@ info:
         name: '@project.name@'
         description: '@project.description@'
         version: '@project.version@'
-        spring-boot-version: '@project.parent.parent.parent.parent.version@'
+        spring-boot-version: '@project.parent.parent.parent.parent.parent.version@'
 #SpringBoot应用的名称
 spring:
     application:
-        name: xmodule-examples-security-oauth2-authorization-server
+        name: xmodule-examples-security-oauth2-authcode-authorization-server
     #被排除的自动配置
     autoconfigure:
         exclude:

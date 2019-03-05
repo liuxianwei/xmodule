@@ -24,5 +24,23 @@ spring:
                     #storeType: memory
                     storeType: redis
                 clients:
-                    - {clientId: monkey, clientSecret: d0763edaa9d9bd2a9516280e9044d885}
-                    - {clientId: tiger, clientSecret: 43b90920409618f188bfc6923f16b9fa}
+                    #客户端1
+                    - clientId: monkey
+                      clientSecret: d0763edaa9d9bd2a9516280e9044d885
+                      redirectUrl: http://www.baidu.com
+                      scope: app
+                      authorizedGrantTypes:
+                          - authorization_code
+                          - refresh_token
+                      resourceIds: 
+                          - demo-resource
+                    #客户端2
+                    - clientId: tiger
+                      clientSecret: 43b90920409618f188bfc6923f16b9fa
+                      redirectUrl: http://www.baidu.com
+                      scope: app
+                      authorizedGrantTypes:
+                          - authorization_code
+                          - refresh_token
+                      resourceIds: 
+                          - demo-resource

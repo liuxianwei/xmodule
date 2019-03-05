@@ -26,3 +26,4 @@ spring:
                     storeType: redis
                 clientId: monkey
                 clientSecret: d0763edaa9d9bd2a9516280e9044d885
+                resourceId: demo-resource

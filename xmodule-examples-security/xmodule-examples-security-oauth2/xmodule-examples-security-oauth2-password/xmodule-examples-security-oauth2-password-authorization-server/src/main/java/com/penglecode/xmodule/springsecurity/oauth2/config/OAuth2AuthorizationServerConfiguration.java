@@ -73,7 +73,7 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 	}
 	
 	/**
-	 * AuthorizationServerSecurityConfigurer：用来配置令牌端点(Token Endpoint)的安全约束.
+	 * AuthorizationServerSecurityConfigurer：用来配置令牌端点(Token Endpoint)的安全约束.(pre认证，一般是httpbasic)
 	 */
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -105,19 +105,18 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 		if(!ArrayUtils.isEmpty(oauth2ServerConfig.getClients())) {
 			for(OAuth2Client client : oauth2ServerConfig.getClients()) {
 				build.withClient(client.getClientId())
-                	.secret(passwordEncoder.encode(client.getClientSecret()))
+					.secret(passwordEncoder.encode(client.getClientSecret()))
                 	.accessTokenValiditySeconds(client.getAccessTokenValiditySeconds())
 	                .refreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds())
-	                .redirectUris(client.getRedirectUrl())
-	                .authorizedGrantTypes(client.getAuthorizedGrantTypes())
-	                .scopes(client.getScope())
-	                .resourceIds(client.getResourceIds());
+	                .authorizedGrantTypes(client.getAuthorizedGrantTypes()) //使用配置文件中设置的password模式
+	                .resourceIds(client.getResourceIds())
+	                .scopes(client.getScope());
 			}
 		}
 	}
 
 	/**
-	 * AuthorizationServerEndpointsConfigurer：用来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)。
+	 * AuthorizationServerEndpointsConfigurer：用来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)。(after认证，即用户名+密码认证)
 	 */
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {

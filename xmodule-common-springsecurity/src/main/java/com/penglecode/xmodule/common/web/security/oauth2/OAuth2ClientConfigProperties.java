@@ -16,6 +16,9 @@ public class OAuth2ClientConfigProperties {
 	/** 客户端秘钥 */
     private String clientSecret;
     
+    /** 客户端访问的资源ID */
+    private String resourceId;
+    
 	public OAuth2TokenConfigProperties getToken() {
 		return token;
 	}
@@ -38,6 +41,14 @@ public class OAuth2ClientConfigProperties {
 
 	public void setClientSecret(String clientSecret) {
 		this.clientSecret = clientSecret;
+	}
+
+	public String getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(String resourceId) {
+		this.resourceId = resourceId;
 	}
 
 }

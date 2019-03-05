@@ -1,7 +1,7 @@
 #应用日志配置
 logging:
-    path: d:/logs
-    
+    path: /usr/local/xmodule/logs
+
 spring:
     datasource:
         #默认数据源配置
@@ -24,6 +24,6 @@ spring:
                     #storeType: memory
                     #checkUrl: http://127.0.0.1:8081/oauth/check_token
                     storeType: redis
-                clientId: monkey
+                clientId: user_client
                 clientSecret: d0763edaa9d9bd2a9516280e9044d885
                 resourceId: demo-resource

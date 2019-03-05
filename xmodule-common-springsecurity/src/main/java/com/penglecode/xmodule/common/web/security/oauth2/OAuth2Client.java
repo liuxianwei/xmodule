@@ -15,7 +15,7 @@ public class OAuth2Client {
     private String clientSecret;
     
     /** 重定向URL */
-    private String redirectUrl = "http://www.baidu.com";
+    private String redirectUrl;
 
     /** accessToken有效期(秒) */
     private Integer accessTokenValiditySeconds = 60 * 60 * 2;
@@ -24,10 +24,16 @@ public class OAuth2Client {
     private Integer refreshTokenValiditySeconds = 60 * 60 * 24 * 7;
     
     /** 授权类型 */
-    private String[] authorizedGrantTypes = {"refresh_token", "authorization_code"};
+    private String[] authorizedGrantTypes = {};
+    
+    /** 可授权资源集合 */
+    private String[] resourceIds;
+    
+    /** 客户端角色 */
+    private String[] authorities;
     
     /** 授权范围 */
-    private String scope = "app";
+    private String scope;
 
 	public String getClientId() {
 		return clientId;
@@ -79,6 +85,22 @@ public class OAuth2Client {
 
 	public String getScope() {
 		return scope;
+	}
+
+	public String[] getResourceIds() {
+		return resourceIds;
+	}
+
+	public void setResourceIds(String[] resourceIds) {
+		this.resourceIds = resourceIds;
+	}
+
+	public String[] getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(String[] authorities) {
+		this.authorities = authorities;
 	}
 
 	public void setScope(String scope) {
