@@ -15,5 +15,6 @@
 		<module>xmodule-examples-security-oauth2-upms</module>
 		<module>xmodule-examples-security-oauth2-authcode</module>
 		<module>xmodule-examples-security-oauth2-password</module>
+		<module>xmodule-examples-security-oauth2-client</module>
 	</modules>
 </project>

@@ -331,10 +331,12 @@ public class OAuth2TokenJackson2Module extends SimpleModule {
 				ReflectionUtils.setFieldValue(refreshField, storedRequest, refresh);
 			}
 			
-			objectNode = (ObjectNode) rootNode.get("userAuthentication");
-			Class<? extends AbstractAuthenticationToken> authenticationTokenClass = (Class<? extends AbstractAuthenticationToken>) ClassUtils.forName(objectNode.get("authenticationTokenClass").asText());
-			
-			AbstractAuthenticationToken userAuthentication = codec.readValue(getTraversedJsonParser(objectNode, codec), authenticationTokenClass);
+			AbstractAuthenticationToken userAuthentication = null;
+			if(rootNode.hasNonNull("userAuthentication")) {
+				objectNode = (ObjectNode) rootNode.get("userAuthentication");
+				Class<? extends AbstractAuthenticationToken> authenticationTokenClass = (Class<? extends AbstractAuthenticationToken>) ClassUtils.forName(objectNode.get("authenticationTokenClass").asText());
+				userAuthentication = codec.readValue(getTraversedJsonParser(objectNode, codec), authenticationTokenClass);
+			}
 			AbstractAuthenticationToken authenticationToken = new OAuth2Authentication(storedRequest, userAuthentication);
 			authenticationToken.setAuthenticated(rootNode.get("authenticated").asBoolean());
 			return authenticationToken;
