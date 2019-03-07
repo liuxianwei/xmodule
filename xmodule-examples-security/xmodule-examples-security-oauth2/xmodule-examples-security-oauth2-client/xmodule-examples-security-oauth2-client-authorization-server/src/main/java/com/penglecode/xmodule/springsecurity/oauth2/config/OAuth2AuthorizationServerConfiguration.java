@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -35,12 +33,6 @@ import com.penglecode.xmodule.common.web.security.oauth2.OAuth2ServerConfigPrope
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-	@Autowired
-    private AuthenticationManager authenticationManager;
-	
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
 	@Autowired
     private PasswordEncoder passwordEncoder;
 	
@@ -120,9 +112,7 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 	 */
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.tokenStore(tokenStore)
-        		 .authenticationManager(authenticationManager)
-        		 .userDetailsService(userDetailsService);
+		endpoints.tokenStore(tokenStore);
 	}
 	
 }
