@@ -1,0 +1,20 @@
+#应用日志配置
+logging:
+    path: d:/logs
+    
+spring:
+    datasource:
+        #默认数据源配置
+        default: 
+            username: root
+            password: 123456
+            url: jdbc:mysql://127.0.0.1:3306/xmodule?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+            
+    #ClickHouse数据库配置
+    clickhouse:
+        standalone:
+            enabled: true
+            datasource:
+                user: root
+                password: 123456
+                url: jdbc:clickhouse://172.16.96.15:8123/flexedge

@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-clickhouse</artifactId>
+	<packaging>pom</packaging>
+	<name>xmodule-examples-clickhouse</name>
+	<description>大数据实时分析型数据库ClickHouse的示例</description>
+	
+	<modules>
+		<module>xmodule-examples-clickhouse-samples</module>
+	</modules>
+</project>
