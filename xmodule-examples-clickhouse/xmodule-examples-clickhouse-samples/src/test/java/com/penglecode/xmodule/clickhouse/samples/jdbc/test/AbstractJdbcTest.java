@@ -17,7 +17,12 @@ public abstract class AbstractJdbcTest {
 	
 	@Before
 	public void init() {
-		String url = "jdbc:clickhouse://172.16.96.15:8123/flexedge";
+		//String url = "jdbc:clickhouse://172.16.96.15:8123/flexedge";
+		//String url = "jdbc:clickhouse://172.16.96.57:8123/flexedge";
+		//String url = "jdbc:clickhouse://172.16.18.253:8123/flexedge";
+		//String url = "jdbc:clickhouse://172.16.96.59:8123/flexedge";
+		//String url = "jdbc:clickhouse://192.168.137.119:8123/flexedge";
+		String url = "jdbc:clickhouse://47.99.147.15:8123/flexedge";
 		String user = "root";
 		String password = "123456";
 		Properties props = new Properties();

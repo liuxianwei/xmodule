@@ -12,9 +12,12 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.junit.Test;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
+import com.penglecode.xmodule.clickhouse.samples.model.StackoverflowUser;
 import com.penglecode.xmodule.common.support.ValueHolder;
 import com.penglecode.xmodule.common.util.FileUtils;
+import com.penglecode.xmodule.common.util.JsonUtils;
 
 public class StackoverflowUserJdbcTest extends AbstractJdbcTest {
 
@@ -38,7 +41,7 @@ public class StackoverflowUserJdbcTest extends AbstractJdbcTest {
 				if(index % batchSize == 0) {
 					batchCount.setValue(batchCount.getValue() + 1);
 					insertUsers(lines);
-					System.out.println(String.format("【%s】>>> batch inserts: %s", batchCount.getValue(), lines.size()));
+					System.out.println(String.format("【%s】>>> batch inserts: %s", batchCount.getValue(), lines.size() - 2));
 					lines.clear();
 				}
 			}
@@ -55,6 +58,9 @@ public class StackoverflowUserJdbcTest extends AbstractJdbcTest {
 			for(Element element : rowElements) {
 				value = element.attributeValue("Id");
 				Long id = Long.valueOf(value);
+				if(id == -1) {
+					continue;
+				}
 				String name = element.attributeValue("DisplayName");
 				value = element.attributeValue("Reputation");
 				Integer reputation = Integer.valueOf(value);
@@ -103,6 +109,24 @@ public class StackoverflowUserJdbcTest extends AbstractJdbcTest {
 			return dateTime.substring(0, dateTime.lastIndexOf('.'));
 		}
 		return "0000-00-00 00:00:00";
+	}
+	
+	@Test
+	public void selectUserById() {
+		long start = System.currentTimeMillis();
+		String sql = "select * from stackoverflow_user a where a.id = ?";
+		StackoverflowUser user = jdbcTemplate.queryForObject(sql, new Object[] {11141936}, new BeanPropertyRowMapper<StackoverflowUser>(StackoverflowUser.class));
+		long end = System.currentTimeMillis();
+		System.out.println(String.format(">>> cost : %s, data : %s", end - start, JsonUtils.object2Json(user)));
+	}
+	
+	@Test
+	public void selectUserCount() {
+		long start = System.currentTimeMillis();
+		String sql = "select count(*) from stackoverflow_user";
+		Long count = jdbcTemplate.queryForObject(sql, Long.class);
+		long end = System.currentTimeMillis();
+		System.out.println(String.format(">>> cost : %s, data : %s", end - start, count));
 	}
 	
 }

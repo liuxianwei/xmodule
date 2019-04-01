@@ -2,9 +2,12 @@ package com.penglecode.xmodule.common.util;
 
 import java.util.Map;
 
+import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.NotWritablePropertyException;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 /**
  * bean与bean之间、bean与map之间的转换
@@ -26,13 +29,13 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 	
 	/**
 	 * map转为bean
-	 * @param source
-	 * @param targetType
+	 * @param beanType
+	 * @param properties
 	 * @return
 	 */
-	public static <T> T mapToBean(Map<String,Object> source, Class<T> targetType) {
-		T target = instantiate(targetType);
-		new BeanWrapperImpl(target).setPropertyValues(source);
+	public static <T> T mapToBean(Class<T> beanType, Map<String,Object> properties) {
+		T target = instantiate(beanType);
+		populate(target, properties);
 		return target;
 	}
 	
@@ -42,7 +45,17 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 	 * @param properties
 	 */
 	public static void populate(Object bean, Map<String,Object> properties) {
-		new BeanWrapperImpl(bean).setPropertyValues(properties);
+		if(!CollectionUtils.isEmpty(properties)) {
+			BeanWrapper beanWrapper = new BeanWrapperImpl(bean);
+			for(Map.Entry<String,Object> property : properties.entrySet()) {
+				if(beanWrapper.isWritableProperty(property.getKey())) {
+					try {
+						beanWrapper.setPropertyValue(property.getKey(), property.getValue());
+					} catch (NotWritablePropertyException e) {
+					}
+				}
+			}
+		}
 	}
 	
 	/**
