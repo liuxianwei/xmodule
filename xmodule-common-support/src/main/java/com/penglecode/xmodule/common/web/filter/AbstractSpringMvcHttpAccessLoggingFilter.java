@@ -9,7 +9,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
@@ -36,8 +36,8 @@ public abstract class AbstractSpringMvcHttpAccessLoggingFilter extends AbstractH
 				HandlerMethod handlerMethod = entry.getValue();
 				Method resourceMethod = handlerMethod.getMethod();
 				Class<?> resourceClass = handlerMethod.getBeanType();
-				RequestMapping classRequestMapping = AnnotationUtils.findAnnotation(resourceClass, RequestMapping.class);
-				RequestMapping methodRequestMapping = AnnotationUtils.findAnnotation(resourceMethod, RequestMapping.class);
+				RequestMapping classRequestMapping = AnnotatedElementUtils.findMergedAnnotation(resourceClass, RequestMapping.class);
+				RequestMapping methodRequestMapping = AnnotatedElementUtils.findMergedAnnotation(resourceMethod, RequestMapping.class);
 				MvcResourceMethodMapping mvcResourceMethodMapping = resolveMvcResourceMethodMapping(resourceClass, resourceMethod, classRequestMapping, methodRequestMapping);
 				if(mvcResourceMethodMapping != null) {
 					allMvcResourceMethodMappings.add(mvcResourceMethodMapping);

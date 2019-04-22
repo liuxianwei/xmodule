@@ -15,8 +15,6 @@
 		<module>xmodule-examples-security-simple2</module>
 		<module>xmodule-examples-security-simple3</module>
 		<module>xmodule-examples-security-supms</module>
-		<module>xmodule-examples-security-oauth2-wechat1</module>
-		<module>xmodule-examples-security-oauth2-jwt</module>
 		<module>xmodule-examples-security-oauth2</module>
 	</modules>
 </project>

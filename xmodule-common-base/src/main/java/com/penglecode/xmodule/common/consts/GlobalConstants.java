@@ -54,6 +54,11 @@ public class GlobalConstants {
 	public static final List<String> DEFAULT_UPLOAD_IMAGE_FORMATS = Arrays.asList("jpg", "jpeg", "png");
 	
 	/**
+	 * 默认的上传图片长宽允许的误差(默认10px)
+	 */
+	public static final Integer DEFAULT_UPLOAD_IMAGE_PIXEL_DEVIATION = 10;
+	
+	/**
 	 * 返回结果之成功
 	 */
 	public static final String RESULT_CODE_SUCCESS = "200";

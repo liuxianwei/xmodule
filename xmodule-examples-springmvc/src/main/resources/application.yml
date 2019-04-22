@@ -13,7 +13,7 @@ context:
 
 #Servlet容器配置
 server:
-    port: 8080
+    port: 8081
     servlet:
         context-path: /
         application-display-name: xmodule-examples-springmvc
@@ -58,7 +58,7 @@ spring:
           - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
         
     profiles:
-        active: dev
+        active: prd
 
     #Spring国际化配置
     messages:
