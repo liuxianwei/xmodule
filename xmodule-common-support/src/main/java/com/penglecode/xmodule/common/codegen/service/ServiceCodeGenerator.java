@@ -32,6 +32,7 @@ import com.penglecode.xmodule.common.codegen.Model;
 import com.penglecode.xmodule.common.mybatis.mapper.BaseMybatisMapper;
 import com.penglecode.xmodule.common.support.Page;
 import com.penglecode.xmodule.common.support.Sort;
+import com.penglecode.xmodule.common.support.ValidationAssert;
 import com.penglecode.xmodule.common.support.ValueHolder;
 import com.penglecode.xmodule.common.util.ArrayUtils;
 import com.penglecode.xmodule.common.util.ClassScanningUtils;
@@ -162,6 +163,7 @@ public abstract class ServiceCodeGenerator {
 		serviceCodeParameter.put("author", config.getAuthor());
 		serviceCodeParameter.put("modelClass", modelClass.getName());
 		serviceCodeParameter.put("modelClassName", modelClass.getSimpleName());
+		serviceCodeParameter.put("modelAliasName", getModelAliasName(modelClass));
 		serviceCodeParameter.put("modelName", getModelName(modelClass));
 		
 		Class<?> modelIdClass = getModelIdClass(modelClass);
@@ -203,12 +205,13 @@ public abstract class ServiceCodeGenerator {
 		
 		String serviceClassName = createServiceInterfaceClassName(modelClass.getSimpleName());
 		serviceCodeParameter.put("serviceClassName", serviceClassName);
-		serviceCodeParameter.put("serviceClassNameLower", StringUtils.firstLetterLowerCase(serviceClassName));
+		serviceCodeParameter.put("modelClassNameLower", StringUtils.firstLetterLowerCase(modelClass.getSimpleName()));
 		serviceCodeParameter.put("serviceImplClassName", createServiceImplementationClassName(modelClass.getSimpleName()));
 		serviceCodeParameter.put("serviceBeanName", StringUtils.firstLetterLowerCase(serviceClassName));
 		
 		serviceCodeParameter.put("modelClass", modelClass.getName());
 		serviceCodeParameter.put("modelClassName", modelClass.getSimpleName());
+		serviceCodeParameter.put("modelAliasName", getModelAliasName(modelClass));
 		serviceCodeParameter.put("modelName", getModelName(modelClass));
 		
 		Class<?> modelIdClass = getModelIdClass(modelClass);
@@ -230,13 +233,13 @@ public abstract class ServiceCodeGenerator {
 		thirdImports.add(Service.class.getName());
 		thirdImports.add(Propagation.class.getName());
 		thirdImports.add(Transactional.class.getName());
-		thirdImports.add(Assert.class.getName());
 		serviceCodeParameter.put("thirdImports", thirdImports);
 		
 		//项目内导入类库
 		Set<String> projectImports = new TreeSet<String>(Comparator.comparing(Function.identity()));
 		projectImports.add(Page.class.getName());
 		projectImports.add(Sort.class.getName());
+		projectImports.add(ValidationAssert.class.getName());
 		projectImports.add(modelClass.getName());
 		projectImports.add(ModelDecodeUtils.class.getName());
 		projectImports.add(getModelMapperClass(config, modelClass).getName());
@@ -271,6 +274,16 @@ public abstract class ServiceCodeGenerator {
 	protected String getModelName(Class<?> modelClass) {
 		Model model = AnnotationUtils.findAnnotation(modelClass, Model.class);
 		return StringUtils.defaultIfEmpty(model.name(), modelClass.getSimpleName());
+	}
+	
+	/**
+	 * 获取数据模型的别名
+	 * @param modelClass
+	 * @return
+	 */
+	protected String getModelAliasName(Class<?> modelClass) {
+		Model model = AnnotationUtils.findAnnotation(modelClass, Model.class);
+		return StringUtils.defaultIfEmpty(model.alias(), modelClass.getSimpleName());
 	}
 	
 	/**

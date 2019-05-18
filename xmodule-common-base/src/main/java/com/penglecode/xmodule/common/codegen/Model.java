@@ -20,4 +20,10 @@ public @interface Model {
 	 */
 	String name() default "";
 	
+	/**
+	 * 模型别名
+	 * @return
+	 */
+	String alias() default "";
+	
 }
