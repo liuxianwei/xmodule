@@ -190,7 +190,7 @@ public abstract class AbstractHttpAccessLoggingFilter extends OncePerRequestFilt
 		httpAccessLog.setAccessEndMillis(null);
 		httpAccessLog.setProcessTime(null);
 		httpAccessLog.setAsynRequest(HttpServletUtils.isAjaxRequest(request));
-		httpAccessLog.setAppId(GlobalConstants.MVVM_APP_CONFIG.getAppId());
+		httpAccessLog.setAppId(GlobalConstants.MVVM_WEBAPP_CONFIG.getAppId());
 		if(isLoggingRequestHeader()){
 			httpAccessLog.setRequestHeader(extractRequestHeader(request, context));
 		}

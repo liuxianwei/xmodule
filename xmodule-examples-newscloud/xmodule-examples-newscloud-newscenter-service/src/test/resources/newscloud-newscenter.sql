@@ -15,7 +15,7 @@ CREATE TABLE nc_news
 	-- 新闻ID
 	news_id varchar(100) NOT NULL COMMENT '新闻ID',
 	-- 新闻标题
-	news_title varchar(255) NOT NULL COMMENT '新闻标题',
+	news_title varchar(150) NOT NULL COMMENT '新闻标题',
 	-- 新闻内容
 	news_content text NOT NULL COMMENT '新闻内容',
 	-- 新闻标签

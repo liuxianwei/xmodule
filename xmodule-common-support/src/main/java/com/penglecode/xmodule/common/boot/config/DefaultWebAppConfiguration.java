@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
-import com.penglecode.xmodule.common.support.MvvmAppConfig;
+import com.penglecode.xmodule.common.support.MvvmWebAppConfig;
 import com.penglecode.xmodule.common.web.support.DefaultHttpAccessExceptionHandler;
 import com.penglecode.xmodule.common.web.support.HttpAccessExceptionHandler;
 
@@ -23,11 +23,11 @@ public class DefaultWebAppConfiguration extends AbstractSpringConfiguration {
 	 * @return
 	 */
 	@Bean
-	@ConfigurationProperties(prefix="spring.cloud.mvvm-app-config")
-	public MvvmAppConfig mvvmWebAppConfig() {
-		MvvmAppConfig appconfig = new MvvmAppConfig();
-		setFinalFieldValue(GlobalConstants.class, "MVVM_APP_CONFIG", appconfig);
-		return appconfig;
+	@ConfigurationProperties(prefix="spring.cloud.mvvm-webapp-config")
+	public MvvmWebAppConfig mvvmWebAppConfig() {
+		MvvmWebAppConfig mvvmWebAppConfig = new MvvmWebAppConfig();
+		setFinalFieldValue(GlobalConstants.class, "MVVM_WEBAPP_CONFIG", mvvmWebAppConfig);
+		return mvvmWebAppConfig;
 	}
 	
 	/**

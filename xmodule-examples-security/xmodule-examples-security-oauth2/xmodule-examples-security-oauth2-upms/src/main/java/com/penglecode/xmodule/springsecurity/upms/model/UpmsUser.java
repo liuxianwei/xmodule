@@ -260,11 +260,11 @@ public class UpmsUser implements BaseModel<UpmsUser> {
         if (userIcon != null && !userIcon.trim().equals("")) {
         	String userIconUrl = userIcon;
         	if(userIconUrl.toLowerCase().startsWith("/static/")){ //upms UI工程目录下的本地静态图片
-        		userIconUrl = GlobalConstants.MVVM_APP_CONFIG.getAppWebServerUrl() + userIconUrl;
+        		userIconUrl = GlobalConstants.MVVM_WEBAPP_CONFIG.getAppWebServerUrl() + userIconUrl;
         	} else if (userIconUrl.toLowerCase().startsWith("http")){
         		//nothing to do
         	} else { //默认以全局静态文件来处理
-        		userIconUrl = GlobalConstants.MVVM_APP_CONFIG.getGlobalFileServerUrl() + userIconUrl;
+        		userIconUrl = GlobalConstants.MVVM_WEBAPP_CONFIG.getGlobalFileServerUrl() + userIconUrl;
         	}
         	setUserIconUrl(userIconUrl);
         }

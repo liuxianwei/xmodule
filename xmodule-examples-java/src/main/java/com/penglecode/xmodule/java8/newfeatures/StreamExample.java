@@ -184,7 +184,8 @@ public class StreamExample {
 		
 		System.out.println("------------------------------");
 		
-		ALL_PRODUCT_LIST.stream().collect(Collectors.groupingBy(Product::getProductType, Collectors.mapping(p -> p.getProductName(), Collectors.toList()))).forEach((name, groups) -> {
+		Map<String, List<String>> productTypedNames = ALL_PRODUCT_LIST.stream().collect(Collectors.groupingBy(Product::getProductType, Collectors.mapping(p -> p.getProductName(), Collectors.toList())));
+		productTypedNames.forEach((name, groups) -> {
 			System.out.println(name + " = " + groups);
 		});
 	}
@@ -283,10 +284,10 @@ public class StreamExample {
 		//streamMap();
 		//streamFlatMap();
 		//streamCollectWithGroupByCount();
-		streamCollectWithGroupByCountSort();
+		//streamCollectWithGroupByCountSort();
 		//streamCollectWithSort();
 		//streamCollectWithGroupBySum();
-		//streamCollectWithGroupByMapping();
+		streamCollectWithGroupByMapping();
 		//streamWithNulls();
 		//sequentialSumOfSquares();
 		//parallelSumOfSquares();

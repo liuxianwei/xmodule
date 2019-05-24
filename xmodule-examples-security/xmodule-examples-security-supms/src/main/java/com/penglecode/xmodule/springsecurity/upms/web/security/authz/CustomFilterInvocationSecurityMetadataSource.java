@@ -23,7 +23,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import com.penglecode.xmodule.common.support.MvvmAppConfig;
+import com.penglecode.xmodule.common.support.MvvmWebAppConfig;
 import com.penglecode.xmodule.common.util.CollectionUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
 import com.penglecode.xmodule.common.web.security.service.RoleResourceService;
@@ -42,7 +42,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 	private String supremeRole = "SUPERME";
 	
 	@Autowired
-	private MvvmAppConfig mvvmWebAppConfigProperties;
+	private MvvmWebAppConfig mvvmWebAppConfigProperties;
 	
 	@Autowired
 	private RoleResourceService roleResourceService;

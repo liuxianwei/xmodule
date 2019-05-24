@@ -10,7 +10,9 @@ logging:
 context:
     initializer:
         classes: com.penglecode.xmodule.common.initializer.DefaultSpringAppPreInitializer
-
+    listener:
+        classes: com.penglecode.xmodule.common.listener.SpringEventListenerRegistryListener
+        
 #Servlet容器配置
 server:
     port: 8081

@@ -66,7 +66,7 @@ public class UserController extends HttpAPIResourceSupport implements UserApiSer
 	}
 	
 	@Override
-	public PageResult<List<User>> getUserListByPage2(@RequestParam Map<String,Object> parameter) {
+	public PageResult<List<User>> getUserListByPage2(Map<String,Object> parameter) {
 		return userApiService.getUserListByPage2(parameter);
 	}
 

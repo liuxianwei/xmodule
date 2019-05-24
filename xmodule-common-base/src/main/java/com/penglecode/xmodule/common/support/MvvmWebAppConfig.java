@@ -6,7 +6,7 @@ package com.penglecode.xmodule.common.support;
  * @author 	pengpeng
  * @date	2018年9月30日 上午11:20:39
  */
-public class MvvmAppConfig {
+public class MvvmWebAppConfig {
 	
 	/** 整个应用的web服务url(例如基于nginx)，例如: http://127.0.0.1 */
 	private String globalWebServerUrl;

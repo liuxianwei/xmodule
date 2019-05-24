@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
-import com.penglecode.xmodule.common.support.MvvmAppConfig;
 import com.penglecode.xmodule.common.support.ModuleExceptionResolver.ExceptionMetadata;
+import com.penglecode.xmodule.common.support.MvvmWebAppConfig;
 import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.web.security.config.SecurityConfigProperties;
 import com.penglecode.xmodule.common.web.security.consts.SecurityApplicationConstants;
@@ -34,7 +34,7 @@ public class UpmsLoginController extends HttpAPIResourceSupport {
 	private SecurityConfigProperties securityConfigProperties;
 	
 	@Autowired
-	private MvvmAppConfig mvvmWebAppConfigProperties;
+	private MvvmWebAppConfig mvvmWebAppConfigProperties;
 	
 	/**
 	 * 登录出错

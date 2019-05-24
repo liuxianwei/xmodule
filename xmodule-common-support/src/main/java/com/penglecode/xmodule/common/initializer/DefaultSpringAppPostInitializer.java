@@ -4,9 +4,9 @@ import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.AbstractMessageSource;
+import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceAware;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
@@ -15,7 +15,6 @@ import org.springframework.web.context.support.ServletContextResourcePatternReso
 import com.penglecode.xmodule.common.consts.ApplicationConstants;
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.util.FileUtils;
-import com.penglecode.xmodule.common.util.SpringUtils;
 
 /**
  * Spring应用启动完成时的初始化程序
@@ -24,7 +23,7 @@ import com.penglecode.xmodule.common.util.SpringUtils;
  * @date	2018年2月5日 下午12:40:31
  */
 @Component
-public class DefaultSpringAppPostInitializer extends SpringAppPostInitializer<ConfigurableApplicationContext> {
+public class DefaultSpringAppPostInitializer extends SpringAppPostInitializer<ConfigurableApplicationContext> implements MessageSourceAware {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSpringAppPostInitializer.class);
 
@@ -41,18 +40,16 @@ public class DefaultSpringAppPostInitializer extends SpringAppPostInitializer<Co
         		setFinalFieldValue(ApplicationConstants.class, "RESOURCE_PATTERN_RESOLVER", new ServletContextResourcePatternResolver(servletContext));
     		}
 		}
-		
-		try {
-			AbstractMessageSource messageSource = SpringUtils.getBean(AbstractMessageSource.class);
-			setFinalFieldValue(ApplicationConstants.class, "MESSAGE_SOURCE_ACCESSOR", new MessageSourceAccessor(messageSource, GlobalConstants.DEFAULT_LOCALE));
-		} catch (BeansException e) {
-			LOGGER.error(e.getMessage());
-		}
 	}
 	
 	@Override
 	public int getOrder() {
 		return Integer.MIN_VALUE;
+	}
+
+	@Override
+	public void setMessageSource(MessageSource messageSource) {
+		setFinalFieldValue(ApplicationConstants.class, "MESSAGE_SOURCE_ACCESSOR", new MessageSourceAccessor(messageSource, GlobalConstants.DEFAULT_LOCALE));
 	}
 
 }

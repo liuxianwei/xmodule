@@ -3,13 +3,16 @@ debug: false
 
 #应用日志配置
 logging:
+    file: ${spring.application.name}
     config: classpath:log4j2-spring.xml
 
 #Spring上下文初始化程序
 context:
     initializer:
         classes: com.penglecode.xmodule.common.initializer.DefaultSpringAppPreInitializer
-
+    listener:
+        classes: com.penglecode.xmodule.common.listener.SpringEventListenerRegistryListener
+        
 #Servlet容器配置
 server:
     port: 18181
@@ -44,8 +47,8 @@ info:
         name: newscloud-usercenter-service
         description: SpringCloud服务提供端示例项目：NewsCloud的用户中心
         version: 1.0.0
-        spring-cloud-version: Finchley.SR1
-        spring-boot-version: 2.0.4.RELEASE
+        spring-cloud-version: Greenwich
+        spring-boot-version: 2.1.2.RELEASE
         
 #SpringBoot应用的名称
 spring:
@@ -56,6 +59,8 @@ spring:
         exclude:
           - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
           - org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
+          - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+          - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
           - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
     
     profiles:
@@ -118,28 +123,18 @@ spring:
         mapperScanPackage: com.penglecode.xmodule
 
     cloud:
-        #应用配置信息
-        appconfig:
-            current-app-name: newscloud-usercenter-service
-            global-web-server-url: http://127.0.0.1
-            global-file-server-url: http://127.0.0.1/static
-            global-file-server-root: d:/nginxfiles/static
+        #MVVM应用配置信息
+        mvvm-webapp-config:
+            globalWebServerUrl: http://127.0.0.1
+            globalFileServerUrl: http://127.0.0.1/static
+            globalFileServerRoot: d:/nginxfiles/static
+            appName: newscloud-usercenter
+            appDesc: 统一用户权限管理应用
+            appWebServerUrl: http://127.0.0.1/newscloud-usercenter
+            appWebContextPath: /newscloud-usercenter
+            appApiServerUrl: http://127.0.0.1/newscloud-usercenter-api
+            appApiContextPath: /newscloud-usercenter-api
             
-            user-appconfig:
-                app-name: newscloud-usercenter-service
-                app-desc: NewsCloud的用户中心
-                web-server-url: http://127.0.0.1/user
-                web-context-path: /user
-                api-server-url: http://127.0.0.1:18181/user-api
-                api-context-path: /user-api
-                
-            news-appconfig:
-                app-name: newscloud-newscenter-service
-                app-desc: NewsCloud的新闻中心
-                web-server-url: http://127.0.0.1/news
-                web-context-path: /news
-                api-server-url: http://127.0.0.1:18281/news-api
-                api-context-path: /news-api
 #Eureka客户端配置
 eureka: 
     instance: 

@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import com.penglecode.xmodule.common.support.MvvmAppConfig;
+import com.penglecode.xmodule.common.support.MvvmWebAppConfig;
 
 /**
  * 全局共通常量
@@ -101,6 +101,6 @@ public class GlobalConstants {
 	/**
 	 * 全局应用配置(包括应用的name, url, contextpath等)
 	 */
-	public static final MvvmAppConfig MVVM_APP_CONFIG = valueOf(new MvvmAppConfig());
+	public static final MvvmWebAppConfig MVVM_WEBAPP_CONFIG = valueOf(new MvvmWebAppConfig());
 	
 }

@@ -45,7 +45,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
             }
         }
         if (!StringUtils.isEmpty(model.getUserIcon())) {
-        	model.setUserIconUrl(GlobalConstants.MVVM_APP_CONFIG.getGlobalFileServerUrl() + model.getUserIcon());
+        	model.setUserIconUrl(GlobalConstants.MVVM_WEBAPP_CONFIG.getGlobalFileServerUrl() + model.getUserIcon());
         }
 	};
 	

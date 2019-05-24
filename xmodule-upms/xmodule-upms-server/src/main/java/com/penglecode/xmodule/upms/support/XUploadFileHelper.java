@@ -22,7 +22,7 @@ public class XUploadFileHelper {
 		try {
 			String srcFullFileName = FileUtils.formatFilePath(contextRealPath + "/" + tempUploadFileName);
 			String storeUploadFileName = tempUploadFileName.replace(GlobalConstants.DEFAULT_UPLOAD_TEMP_SAVE_PATH, GlobalConstants.DEFAULT_USER_ICON_SAVE_PATH);
-			String fileServerRootDir = GlobalConstants.MVVM_APP_CONFIG.getGlobalFileServerRoot();
+			String fileServerRootDir = GlobalConstants.MVVM_WEBAPP_CONFIG.getGlobalFileServerRoot();
 			String destFullFileName = FileUtils.formatFilePath(fileServerRootDir + storeUploadFileName);
 			FileUtils.copyFile(srcFullFileName, destFullFileName);
 			return storeUploadFileName;

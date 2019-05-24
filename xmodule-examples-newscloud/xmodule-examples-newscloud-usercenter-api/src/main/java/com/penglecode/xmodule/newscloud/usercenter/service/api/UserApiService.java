@@ -90,7 +90,7 @@ public interface UserApiService {
 	 * @return
 	 */
 	@GetMapping(value="/api/user/list1", produces=APPLICATION_JSON)
-	public PageResult<List<User>> getUserListByPage1(@RequestParam("condition") User condition, @RequestParam("page") Page page, @RequestParam("sort") Sort sort);
+	public PageResult<List<User>> getUserListByPage1(@RequestParam User condition, @RequestParam Page page, @RequestParam Sort sort);
 	
 	/**
 	 * 根据条件查询用户列表(分页、排序)
@@ -106,7 +106,7 @@ public interface UserApiService {
 	 * @return
 	 */
 	@GetMapping(value="/api/user/list/bystatus", produces=APPLICATION_JSON)
-	public Result<List<User>> getUserListByStatus(@RequestParam("authorized") Boolean authorized, @RequestParam("statuses") Integer... statuses);
+	public Result<List<User>> getUserListByStatus(@RequestParam Boolean authorized, @RequestParam Integer... statuses);
 	
 	/**
 	 * 用户关注他人

@@ -21,7 +21,7 @@ import com.penglecode.xmodule.common.util.ClassScanningUtils;
 
 /**
  * Spring事件监听器自动注册Listener，参照{@link #org.springframework.boot.context.config.DelegatingApplicationListener}来实现的，
- * 通过扫描注解@
+ * 通过扫描注解@SpringEventListener
  * (注意：ApplicationStartingEvent是无法自动注册的，因为ApplicationStartingEvent只能使用SpringApplication.addListeners(..)来注册，别无他法！)
  * 
  * @author 	pengpeng

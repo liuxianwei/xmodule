@@ -6,7 +6,7 @@
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p] [%l] %m%n"/>
 		</console>
 
-		<RollingFile name="FILE" fileName="${sys:LOG_PATH}/xmodule-examples-newscloud-service-usercenter.log" filePattern="${sys:LOG_PATH}/xmodule-examples-newscloud-service-usercenter_%d{yyyy-MM-dd}_%i.log">
+		<RollingFile name="FILE" fileName="${sys:LOG_PATH}/${sys:LOG_FILE}.log" filePattern="${sys:LOG_PATH}/${sys:LOG_FILE}_%d{yyyy-MM-dd}_%i.log">
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p] [%l] %m%n" />
 			<Policies>
 				<TimeBasedTriggeringPolicy modulate="true" interval="1"/>
@@ -22,9 +22,9 @@
 		<logger name="org.apache.ibatis" level="INFO"/>
 		<logger name="org.mybatis.spring" level="INFO"/>
 		<logger name="org.springframework" level="INFO"/>
+		<logger name="org.springframework.boot.autoconfigure.logging" level="ERROR"/>
 		<logger name="com.alibaba.druid" level="INFO"/>
 		<logger name="druid.sql" level="INFO"/>
-		<logger name="com.netflix" level="INFO"/>
 		
 		<logger name="com.penglecode" level="DEBUG"/>
 		

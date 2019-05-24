@@ -44,7 +44,7 @@ public class UserApiServiceImpl extends HttpAPIResourceSupport implements UserAp
             }
         }
         if (!StringUtils.isEmpty(model.getUserIconUrl())) {
-        	model.setUserIconUrl(GlobalConstants.MVVM_APP_CONFIG.getGlobalFileServerUrl() + model.getUserIconUrl());
+        	model.setUserIconUrl(GlobalConstants.MVVM_WEBAPP_CONFIG.getGlobalFileServerUrl() + model.getUserIconUrl());
         }
 	};
 	
@@ -149,7 +149,7 @@ public class UserApiServiceImpl extends HttpAPIResourceSupport implements UserAp
 	}
 
 	@Override
-	public PageResult<List<User>> getUserListByPage2(@RequestParam Map<String, Object> parameter) {
+	public PageResult<List<User>> getUserListByPage2(Map<String, Object> parameter) {
 		User condition = new User();
 		Page page = Page.of(1, 10);
 		Sort sort = Sort.by();
