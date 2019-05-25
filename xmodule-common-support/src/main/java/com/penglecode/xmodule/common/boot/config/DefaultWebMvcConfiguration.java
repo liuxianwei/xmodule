@@ -46,7 +46,7 @@ import com.penglecode.xmodule.common.web.springmvc.support.EnhancedRequestMappin
  */
 @Configuration
 @ConditionalOnClass({ Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class })
-public class DefaultSpringWebMvcConfiguration extends AbstractSpringConfiguration implements WebMvcConfigurer, WebMvcRegistrations {
+public class DefaultWebMvcConfiguration extends AbstractSpringConfiguration implements WebMvcConfigurer, WebMvcRegistrations {
 	
 	public static final Charset DEFAULT_CHARSET = Charset.forName(GlobalConstants.DEFAULT_CHARSET);
 	
@@ -54,7 +54,7 @@ public class DefaultSpringWebMvcConfiguration extends AbstractSpringConfiguratio
 	
 	private final RequestMappingHandlerAdapter defaultRequestMappingHandlerAdapter = new EnhancedRequestMappingHandlerAdapter();
 	
-	public DefaultSpringWebMvcConfiguration(DefaultListableBeanFactory beanFactory) {
+	public DefaultWebMvcConfiguration(DefaultListableBeanFactory beanFactory) {
 		super();
 		this.beanFactory = beanFactory;
 	}
