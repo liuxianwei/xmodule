@@ -1,0 +1,24 @@
+#SpringBoot应用的名称
+spring:
+    application:
+        name: springcloud-bus-consumer1
+    #SpringCloud配置
+    cloud:
+        bus:
+            id: ${spring.application.name}:${server.port}
+            enabled: true
+            destination: topic-springcloud-bus-examples
+            trace:
+                enabled: true
+            example:
+                role: consumer
+        refresh:
+            enabled: false
+        config:
+            #关闭配置中心发现
+            enabled: false
+            
+eureka:
+    client:
+        #关闭基于eureka的服务注册与发现
+        enabled: false

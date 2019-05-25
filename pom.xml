@@ -369,5 +369,6 @@
 		<module>xmodule-examples-springboot</module>
 		<module>xmodule-upms</module>
 		<module>xmodule-examples-clickhouse</module>
+		<module>xmodule-examples-springcloud</module>
 	</modules>
 </project>

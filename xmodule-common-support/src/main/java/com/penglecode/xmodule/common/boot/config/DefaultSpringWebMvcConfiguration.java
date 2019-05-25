@@ -1,20 +1,17 @@
 package com.penglecode.xmodule.common.boot.config;
 
-import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.Servlet;
 
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +23,6 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.filter.RequestContextFilter;
-import org.springframework.web.method.annotation.RequestParamMethodArgumentResolver;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -39,12 +34,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
-import com.penglecode.xmodule.common.support.DtoModel;
 import com.penglecode.xmodule.common.util.JsonUtils;
-import com.penglecode.xmodule.common.util.ReflectionUtils;
 import com.penglecode.xmodule.common.web.springmvc.handler.AbstractMvcHandlerExceptionResolver;
 import com.penglecode.xmodule.common.web.springmvc.handler.DefaultMvcHandlerExceptionResolver;
-import com.penglecode.xmodule.common.web.springmvc.resolver.EnhancedRequestParamMethodArgumentResolver;
+import com.penglecode.xmodule.common.web.springmvc.support.EnhancedRequestMappingHandlerAdapter;
 /**
  * SpringMVC的定制化配置
  * 
@@ -57,18 +50,13 @@ public class DefaultSpringWebMvcConfiguration extends AbstractSpringConfiguratio
 	
 	public static final Charset DEFAULT_CHARSET = Charset.forName(GlobalConstants.DEFAULT_CHARSET);
 	
-	private final List<HttpMessageConverter<?>> httpMessageConverters;
-	
 	private final DefaultListableBeanFactory beanFactory;
 	
-	private final RequestMappingHandlerAdapter requestMappingHandlerAdapter;
+	private final RequestMappingHandlerAdapter defaultRequestMappingHandlerAdapter = new EnhancedRequestMappingHandlerAdapter();
 	
-	public DefaultSpringWebMvcConfiguration(ObjectProvider<List<HttpMessageConverter<?>>> httpMessageConvertersProvider,
-			ObjectProvider<DefaultListableBeanFactory> beanFactoryProvider) {
+	public DefaultSpringWebMvcConfiguration(DefaultListableBeanFactory beanFactory) {
 		super();
-		this.httpMessageConverters = httpMessageConvertersProvider.getIfAvailable();
-		this.beanFactory = beanFactoryProvider.getIfAvailable();
-		this.requestMappingHandlerAdapter = createRequestMappingHandlerAdapter();
+		this.beanFactory = beanFactory;
 	}
 
 	@Bean
@@ -103,39 +91,26 @@ public class DefaultSpringWebMvcConfiguration extends AbstractSpringConfiguratio
 		return resolver;
 	}
 	
-	@Bean
-	@SuppressWarnings("rawtypes")
-	public HttpMessageConverters httpMessageConverters() {
-		Map<Class<?>,HttpMessageConverter<?>> finalConverters = new LinkedHashMap<Class<?>,HttpMessageConverter<?>>();
-		
-		Map<String,HttpMessageConverter> defaultConverters = beanFactory.getBeansOfType(HttpMessageConverter.class);
-		if(!CollectionUtils.isEmpty(defaultConverters)) {
-			for(Map.Entry<String,HttpMessageConverter> entry : defaultConverters.entrySet()) {
-				HttpMessageConverter converter = entry.getValue();
-				finalConverters.put(converter.getClass(), converter);
-			}
+	@Override
+	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+		if(!CollectionUtils.isEmpty(converters)) {
+			Map<Class<?>, HttpMessageConverter<?>> finalConverters = converters.stream().collect(Collectors.toMap(HttpMessageConverter::getClass, Function.identity(), (converter1, converter2) -> converter1));
+			StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
+			stringHttpMessageConverter.setDefaultCharset(DEFAULT_CHARSET);
+			stringHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.TEXT_HTML, MediaType.TEXT_PLAIN, MediaType.ALL));
+			finalConverters.put(stringHttpMessageConverter.getClass(), stringHttpMessageConverter);
+			
+			MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+			mappingJackson2HttpMessageConverter.setDefaultCharset(DEFAULT_CHARSET);
+			mappingJackson2HttpMessageConverter.setObjectMapper(JsonUtils.getDefaultObjectMapper());
+			mappingJackson2HttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+			finalConverters.put(mappingJackson2HttpMessageConverter.getClass(), mappingJackson2HttpMessageConverter);
+			
+			converters.clear();
+			converters.addAll(finalConverters.values());
 		}
-		
-		StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
-		stringHttpMessageConverter.setDefaultCharset(DEFAULT_CHARSET);
-		stringHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.TEXT_HTML, MediaType.TEXT_PLAIN, MediaType.ALL));
-		finalConverters.put(stringHttpMessageConverter.getClass(), stringHttpMessageConverter);
-		
-		MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-		mappingJackson2HttpMessageConverter.setDefaultCharset(DEFAULT_CHARSET);
-		mappingJackson2HttpMessageConverter.setObjectMapper(JsonUtils.getDefaultObjectMapper());
-		mappingJackson2HttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
-		finalConverters.put(mappingJackson2HttpMessageConverter.getClass(), mappingJackson2HttpMessageConverter);
-		
-		if(!CollectionUtils.isEmpty(httpMessageConverters)) {
-			for(HttpMessageConverter<?> converter : httpMessageConverters) {
-				finalConverters.put(converter.getClass(), converter);
-			}
-		}
-		
-		return new HttpMessageConverters(finalConverters.values());
 	}
-	
+
 	/**
 	 * 过滤静态资源不走DispatcherServlet
 	 */
@@ -165,36 +140,12 @@ public class DefaultSpringWebMvcConfiguration extends AbstractSpringConfiguratio
 		}
 	}
 
+	/**
+	 * 自定义RequestMappingHandlerAdapter
+	 */
 	@Override
 	public RequestMappingHandlerAdapter getRequestMappingHandlerAdapter() {
-		return requestMappingHandlerAdapter;
-	}
-	
-	protected RequestMappingHandlerAdapter createRequestMappingHandlerAdapter() {
-		RequestMappingHandlerAdapter oldRequestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
-		RequestMappingHandlerAdapter newRequestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
-		
-		Method getDefaultArgumentResolversMethod = ReflectionUtils.findMethod(RequestMappingHandlerAdapter.class, "getDefaultArgumentResolvers");
-		List<HandlerMethodArgumentResolver> defaultArgumentResolvers = ReflectionUtils.invokeMethod(getDefaultArgumentResolversMethod, oldRequestMappingHandlerAdapter);
-		replaceRequestParamMethodArgumentResolvers(defaultArgumentResolvers);
-		newRequestMappingHandlerAdapter.setArgumentResolvers(defaultArgumentResolvers);
-		
-		Method getDefaultInitBinderArgumentResolversMethod = ReflectionUtils.findMethod(RequestMappingHandlerAdapter.class, "getDefaultInitBinderArgumentResolvers");
-		List<HandlerMethodArgumentResolver> defaultInitBinderArgumentResolvers = ReflectionUtils.invokeMethod(getDefaultInitBinderArgumentResolversMethod, oldRequestMappingHandlerAdapter);
-		replaceRequestParamMethodArgumentResolvers(defaultInitBinderArgumentResolvers);
-		newRequestMappingHandlerAdapter.setInitBinderArgumentResolvers(defaultInitBinderArgumentResolvers);
-		return newRequestMappingHandlerAdapter;
-	}
-	
-	protected void replaceRequestParamMethodArgumentResolvers(List<HandlerMethodArgumentResolver> methodArgumentResolvers) {
-		methodArgumentResolvers.forEach(argumentResolver -> {
-			if(argumentResolver.getClass().equals(RequestParamMethodArgumentResolver.class)) {
-				Boolean useDefaultResolution = ReflectionUtils.getFieldValue(argumentResolver, "useDefaultResolution");
-				EnhancedRequestParamMethodArgumentResolver enhancedArgumentResolver = new EnhancedRequestParamMethodArgumentResolver(beanFactory, useDefaultResolution);
-				enhancedArgumentResolver.setResolvableParameterTypes(Arrays.asList(DtoModel.class));
-				Collections.replaceAll(methodArgumentResolvers, argumentResolver, enhancedArgumentResolver);
-			}
-		});
+		return defaultRequestMappingHandlerAdapter;
 	}
 	
 }

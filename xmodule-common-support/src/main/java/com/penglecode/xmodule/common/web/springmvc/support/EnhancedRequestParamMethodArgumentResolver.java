@@ -1,4 +1,4 @@
-package com.penglecode.xmodule.common.web.springmvc.resolver;
+package com.penglecode.xmodule.common.web.springmvc.support;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;

@@ -1,0 +1,11 @@
+#应用日志配置
+logging:
+    path: /usr/local/xmodule/logs
+    
+#RabbitMQ消息总线配置
+spring:
+    rabbitmq:
+        host: 172.16.96.15
+        port: 5672
+        username: admin
+        password: 123456

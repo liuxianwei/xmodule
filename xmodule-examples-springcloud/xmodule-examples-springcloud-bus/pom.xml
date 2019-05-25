@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule-examples-springcloud</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-springcloud-bus</artifactId>
+	<packaging>pom</packaging>
+	<name>xmodule-examples-springcloud-bus</name>
+	<description>SpringCloud消息总线示例</description>
+	<modules>
+		<module>xmodule-examples-springcloud-bus-producer</module>
+		<module>xmodule-examples-springcloud-bus-common</module>
+		<module>xmodule-examples-springcloud-bus-consumer1</module>
+		<module>xmodule-examples-springcloud-bus-consumer2</module>
+	</modules>
+</project>
