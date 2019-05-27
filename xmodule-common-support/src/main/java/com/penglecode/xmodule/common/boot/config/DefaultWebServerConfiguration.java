@@ -20,6 +20,7 @@ import org.apache.tomcat.util.scan.StandardJarScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
@@ -40,9 +41,12 @@ import com.penglecode.xmodule.common.util.StringUtils;
  */
 @Configuration
 @ConditionalOnClass({ Tomcat.class })
+@ConditionalOnProperty(name=DefaultWebServerConfiguration.CONFIGURATION_ENABLED, havingValue="true", matchIfMissing=true)
 public class DefaultWebServerConfiguration extends AbstractSpringConfiguration {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultWebServerConfiguration.class);
+	
+	public static final String CONFIGURATION_ENABLED = "server.tomcat.customized.enabled";
 	
 	@Bean
 	public AbstractServletWebServerFactory tomcatServletWebServerFactory() {

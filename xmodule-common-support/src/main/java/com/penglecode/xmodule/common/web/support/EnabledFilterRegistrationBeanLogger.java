@@ -13,8 +13,8 @@ import org.springframework.boot.web.servlet.AbstractFilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletContextInitializerBeans;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
-import com.penglecode.xmodule.common.listener.SpringEventListener;
 import com.penglecode.xmodule.common.util.CollectionUtils;
 import com.penglecode.xmodule.common.util.ReflectionUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
@@ -25,7 +25,7 @@ import com.penglecode.xmodule.common.util.StringUtils;
  * @author pengpeng
  * @date 2018年6月5日 上午9:43:07
  */
-@SpringEventListener
+@Component
 public class EnabledFilterRegistrationBeanLogger implements ApplicationListener<ContextRefreshedEvent> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EnabledFilterRegistrationBeanLogger.class);

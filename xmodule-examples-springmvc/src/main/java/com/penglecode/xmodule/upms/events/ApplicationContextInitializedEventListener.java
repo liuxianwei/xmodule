@@ -2,10 +2,9 @@ package com.penglecode.xmodule.upms.events;
 
 import org.springframework.boot.context.event.ApplicationContextInitializedEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
-import com.penglecode.xmodule.common.listener.SpringEventListener;
-
-@SpringEventListener
+@Component
 public class ApplicationContextInitializedEventListener implements ApplicationListener<ApplicationContextInitializedEvent> {
 
 	@Override

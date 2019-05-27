@@ -27,13 +27,13 @@ public class DefaultSpringAppPostInitializer extends SpringAppPostInitializer<Co
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSpringAppPostInitializer.class);
 
-	public void initialize(ConfigurableApplicationContext applicationContext) {
-		LOGGER.info(">>> Spring应用启动初始化程序! applicationContext = {}", applicationContext);
+	public void doInitialize(ConfigurableApplicationContext applicationContext) {
+		LOGGER.info(">>> Spring应用启动后置初始化程序! applicationContext = {}", applicationContext);
 		if(applicationContext instanceof WebApplicationContext){ //容器环境下运行Spring ApplicationContext上下文
-			LOGGER.info(">>> 初始化Spring应用中依赖于Servlet环境的系统常量!");
 			setFinalFieldValue(ApplicationConstants.class, "WEB_APPLICATION_CONTEXT", applicationContext);
 			ServletContext servletContext = ((WebApplicationContext) applicationContext).getServletContext();
     		if(servletContext != null) {
+    			LOGGER.info(">>> 初始化Spring应用中依赖于Servlet环境的系统常量!");
     			setFinalFieldValue(ApplicationConstants.class, "SERVLET_CONTEXT", servletContext);
         		setFinalFieldValue(ApplicationConstants.class, "CONTEXT_PATH", FileUtils.formatFilePath(servletContext.getContextPath()));
         		setFinalFieldValue(ApplicationConstants.class, "CONTEXT_REAL_PATH", FileUtils.formatFilePath(servletContext.getRealPath("/")));

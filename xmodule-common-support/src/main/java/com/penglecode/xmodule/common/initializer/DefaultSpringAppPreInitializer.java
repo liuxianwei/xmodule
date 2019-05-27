@@ -34,20 +34,23 @@ public class DefaultSpringAppPreInitializer extends AbstractSpringAppInitializer
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSpringAppPreInitializer.class);
 
-	public void initialize(ConfigurableApplicationContext applicationContext) {
-		LOGGER.info(">>> Spring 应用启动初始化程序! applicationContext = {}", applicationContext);
-		ApplicationContext rootApplicationContext = applicationContext.getParent() != null ? applicationContext.getParent() : applicationContext;
-		SpringEnvConstantPool.setEnvironment(rootApplicationContext.getEnvironment());
-		SpringUtils.setApplicationContext(rootApplicationContext);
-		setFinalFieldValue(ApplicationConstants.class, "APPLICATION_CONTEXT", rootApplicationContext);
-		if(applicationContext instanceof WebApplicationContext) { //容器环境下运行Spring ApplicationContext上下文
-			setFinalFieldValue(ApplicationConstants.class, "WEB_APPLICATION_CONTEXT", applicationContext);
-			ServletContext servletContext = ((WebApplicationContext) applicationContext).getServletContext();
-			if(servletContext != null) {
-				setFinalFieldValue(ApplicationConstants.class, "SERVLET_CONTEXT", servletContext);
-				setFinalFieldValue(ApplicationConstants.class, "CONTEXT_PATH", FileUtils.formatFilePath(servletContext.getContextPath()));
-				setFinalFieldValue(ApplicationConstants.class, "CONTEXT_REAL_PATH", FileUtils.formatFilePath(servletContext.getRealPath("/")));
-				setFinalFieldValue(ApplicationConstants.class, "RESOURCE_PATTERN_RESOLVER", new ServletContextResourcePatternResolver(servletContext));
+	public void doInitialize(ConfigurableApplicationContext applicationContext) {
+		ApplicationContext rootApplicationContext = SpringUtils.getRootApplicationContext(applicationContext);
+		if(SpringUtils.getApplicationContext() == null) {
+			LOGGER.info(">>> Spring 应用启动前置初始化程序! applicationContext = {}", applicationContext);
+			SpringUtils.setApplicationContext(rootApplicationContext);
+			SpringEnvConstantPool.setEnvironment(rootApplicationContext.getEnvironment());
+			setFinalFieldValue(ApplicationConstants.class, "APPLICATION_CONTEXT", rootApplicationContext);
+			if(applicationContext instanceof WebApplicationContext) { //容器环境下运行Spring ApplicationContext上下文
+				setFinalFieldValue(ApplicationConstants.class, "WEB_APPLICATION_CONTEXT", applicationContext);
+				ServletContext servletContext = ((WebApplicationContext) applicationContext).getServletContext();
+				if(servletContext != null) {
+					LOGGER.info(">>> 初始化Spring应用中依赖于Servlet环境的系统常量!");
+					setFinalFieldValue(ApplicationConstants.class, "SERVLET_CONTEXT", servletContext);
+					setFinalFieldValue(ApplicationConstants.class, "CONTEXT_PATH", FileUtils.formatFilePath(servletContext.getContextPath()));
+					setFinalFieldValue(ApplicationConstants.class, "CONTEXT_REAL_PATH", FileUtils.formatFilePath(servletContext.getRealPath("/")));
+					setFinalFieldValue(ApplicationConstants.class, "RESOURCE_PATTERN_RESOLVER", new ServletContextResourcePatternResolver(servletContext));
+				}
 			}
 		}
 	}

@@ -21,8 +21,6 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.Assert;
 
-import com.penglecode.xmodule.common.listener.SpringEventListener;
-
 /**
  * 搜索class的工具类
  * 

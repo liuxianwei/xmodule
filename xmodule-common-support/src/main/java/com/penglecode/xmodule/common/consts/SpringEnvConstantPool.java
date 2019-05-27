@@ -17,7 +17,7 @@ public class SpringEnvConstantPool<T> implements ConstantPool<T> {
 	public static Environment getEnvironment() {
 		return environment;
 	}
-
+	
 	@Override
 	public T valueOf(String name, Class<T> constType, T defaultValue) {
 		return getEnvironment().getProperty(name, constType, defaultValue);

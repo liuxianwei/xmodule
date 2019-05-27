@@ -53,6 +53,13 @@ public class SpringUtils {
 		SpringUtils.applicationContext = applicationContext;
 	}
 	
+	public static ApplicationContext getRootApplicationContext(ApplicationContext applicationContext) {
+		if(applicationContext != null) {
+			return applicationContext.getParent() == null ? applicationContext : getRootApplicationContext(applicationContext.getParent());
+		}
+		return null;
+	}
+	
 	/**
 	 * 手动创建一个Bean
 	 * @param beanName

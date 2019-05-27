@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import com.penglecode.xmodule.BasePackage;
 import com.penglecode.xmodule.common.boot.config.AbstractSpringConfiguration;
 import com.penglecode.xmodule.springcloud.busexample.bus.listener.AppInfoUpdatedRemoteBusEventListener;
-import com.penglecode.xmodule.springcloud.busexample.bus.listener.BusExampleAckEventListener;
+import com.penglecode.xmodule.springcloud.busexample.bus.listener.ConsumerStartedEventListener;
+import com.penglecode.xmodule.springcloud.busexample.bus.listener.ConsumerStartedRemoteBusEventListener;
 
 @Configuration
 @ConditionalOnBusEnabled
@@ -18,15 +19,27 @@ public class SpringCloudBusConfiguration extends AbstractSpringConfiguration {
 
 	public final static String SPRING_CLOUD_BUS_EXAMPLE_ROLE = "spring.cloud.bus.example.role";
 	
-	@Bean
+	/*@Bean
 	public BusExampleAckEventListener busExampleAckEventListener() {
 		return new BusExampleAckEventListener();
+	}*/
+	
+	@Bean
+	@ConditionalOnProperty(name=SPRING_CLOUD_BUS_EXAMPLE_ROLE, havingValue="producer")
+	public ConsumerStartedRemoteBusEventListener consumerStartedRemoteBusEventListener() {
+		return new ConsumerStartedRemoteBusEventListener();
 	}
 	
 	@Bean
 	@ConditionalOnProperty(name=SPRING_CLOUD_BUS_EXAMPLE_ROLE, havingValue="consumer")
 	public AppInfoUpdatedRemoteBusEventListener appInfoUpdatedRemoteBusEventListener() {
 		return new AppInfoUpdatedRemoteBusEventListener();
+	}
+	
+	@Bean
+	@ConditionalOnProperty(name=SPRING_CLOUD_BUS_EXAMPLE_ROLE, havingValue="consumer")
+	public ConsumerStartedEventListener consumerStartedEventListener() {
+		return new ConsumerStartedEventListener();
 	}
 	
 }

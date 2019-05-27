@@ -2,10 +2,9 @@ package com.penglecode.xmodule.upms.events;
 
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
-import com.penglecode.xmodule.common.listener.SpringEventListener;
-
-@SpringEventListener
+@Component
 public class WebServerInitializedEventListener implements ApplicationListener<WebServerInitializedEvent> {
 
 	@Override

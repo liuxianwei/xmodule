@@ -15,6 +15,10 @@ import com.penglecode.xmodule.common.util.ReflectionUtils;
  */
 public abstract class AbstractSpringAppInitializer<T extends ConfigurableApplicationContext> {
 
+	private volatile boolean initialized = false;
+	
+	private final Object mutex = new Object();
+	
 	protected void setFinalFieldValue(Field field, Object value) {
 		if(field != null){
 			ReflectionUtils.setFinalFieldValue(null, field, value);
@@ -28,6 +32,20 @@ public abstract class AbstractSpringAppInitializer<T extends ConfigurableApplica
 		}
 	}
 	
-	public abstract void initialize(T applicationContext);
+	public final void initialize(T applicationContext) {
+		if(!initialized) {
+			synchronized(mutex) {
+				if(!initialized) {
+					try {
+						doInitialize(applicationContext);
+					} finally {
+						initialized = true;
+					}
+				}
+			}
+		}
+	}
+	
+	public abstract void doInitialize(T applicationContext);
 	
 }

@@ -6,6 +6,7 @@ import javax.servlet.Servlet;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -21,8 +22,11 @@ import com.penglecode.xmodule.common.web.support.DefaultErrorController;
 @Configuration
 @ConditionalOnWebApplication(type = Type.SERVLET)
 @ConditionalOnClass({ Servlet.class, DispatcherServlet.class })
+@ConditionalOnProperty(name=DefaultErrorMvcConfiguration.CONFIGURATION_ENABLED, havingValue="true", matchIfMissing=true)
 public class DefaultErrorMvcConfiguration extends AbstractSpringConfiguration {
 
+	public static final String CONFIGURATION_ENABLED = "server.error.customized.enabled";
+	
 	private final ServerProperties serverProperties;
 
 	private final List<ErrorViewResolver> errorViewResolvers;

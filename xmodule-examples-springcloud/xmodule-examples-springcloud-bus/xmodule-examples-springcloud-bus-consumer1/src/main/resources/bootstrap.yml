@@ -2,10 +2,12 @@
 spring:
     application:
         name: springcloud-bus-consumer1
+        index: 1
+        #index: ${random.uuid}
     #SpringCloud配置
     cloud:
         bus:
-            id: ${spring.application.name}:${server.port}
+            id: ${spring.application.name}:${spring.application.index}
             enabled: true
             destination: topic-springcloud-bus-examples
             trace:

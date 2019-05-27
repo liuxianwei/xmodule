@@ -16,11 +16,17 @@ import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.util.DateTimeUtils;
 import com.penglecode.xmodule.common.web.support.HttpAPIResourceSupport;
 import com.penglecode.xmodule.common.web.support.HttpAccessLogging;
+import com.penglecode.xmodule.myexample.consts.ExampleConstants;
 
 @RestController
 @RequestMapping("/api/example1")
 public class Example1Controller extends HttpAPIResourceSupport {
 
+	@RequestMapping(value={"/appid"}, method=GET, produces=APPLICATION_JSON)
+	public Object appId(HttpServletRequest request, HttpServletResponse response) {
+		return Result.success().message("OK").data(ExampleConstants.APP_ID).build();
+	}
+	
 	@RequestMapping(value={"/time", "/now"}, method=GET, produces=APPLICATION_JSON)
 	@HttpAccessLogging(title="NOW_TIME")
 	public Object nowTime(HttpServletRequest request, HttpServletResponse response) {
