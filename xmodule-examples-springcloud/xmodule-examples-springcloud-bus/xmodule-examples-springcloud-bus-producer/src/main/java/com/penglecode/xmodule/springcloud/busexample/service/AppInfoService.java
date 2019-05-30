@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.penglecode.xmodule.common.cloud.consts.SpringCloudApplicationConstants;
-import com.penglecode.xmodule.common.support.VersionedData;
+import com.penglecode.xmodule.common.support.VersionedObject;
 import com.penglecode.xmodule.common.util.BeanUtils;
 import com.penglecode.xmodule.common.util.DateTimeUtils;
 import com.penglecode.xmodule.common.util.ObjectUtils;
@@ -25,7 +25,7 @@ public class AppInfoService implements AppInfoBusEventPublisher {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppInfoService.class);
 	
-	private static final VersionedData<Map<Long,AppInfo>> ALL_APP_INFOS = new VersionedData<>(UUIDUtils.uuid(), new LinkedHashMap<Long,AppInfo>());
+	private static final VersionedObject<Map<Long,AppInfo>> ALL_APP_INFOS = new VersionedObject<>(UUIDUtils.uuid(), new LinkedHashMap<Long,AppInfo>());
 	
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -36,7 +36,7 @@ public class AppInfoService implements AppInfoBusEventPublisher {
 		appInfo.setAppKey(StringUtils.defaultIfEmpty(appInfo.getAppKey(), UUIDUtils.uuid()));
 		appInfo.setAppSecret(StringUtils.defaultIfEmpty(appInfo.getAppSecret(), UUIDUtils.uuid()));
 		appInfo.setCreateTime(DateTimeUtils.formatNow());
-		ALL_APP_INFOS.getData().put(appInfo.getAppId(), appInfo);
+		ALL_APP_INFOS.getObject().put(appInfo.getAppId(), appInfo);
 		ALL_APP_INFOS.setVersion(UUIDUtils.uuid());
 		publishAppInfoUpdatedEvent();
 	}
@@ -44,7 +44,7 @@ public class AppInfoService implements AppInfoBusEventPublisher {
 	public void updateAppInfoById(AppInfo appInfo) {
 		Assert.notNull(appInfo, "Parameter 'appInfo' must be required!");
 		Assert.notNull(appInfo.getAppId(), "Parameter 'appInfo.appId' must be required!");
-		ALL_APP_INFOS.getData().forEach((id, app) -> {
+		ALL_APP_INFOS.getObject().forEach((id, app) -> {
 			if(appInfo.getAppId().equals(id)) {
 				BeanUtils.copyProperties(appInfo, app);
 			}
@@ -55,7 +55,7 @@ public class AppInfoService implements AppInfoBusEventPublisher {
 	
 	public void deleteAppInfoById(Long appId) {
 		Assert.notNull(appId, "Parameter 'appId' must be required!");
-		ALL_APP_INFOS.getData().remove(appId);
+		ALL_APP_INFOS.getObject().remove(appId);
 		ALL_APP_INFOS.setVersion(UUIDUtils.uuid());
 		publishAppInfoUpdatedEvent();
 	}
@@ -63,7 +63,7 @@ public class AppInfoService implements AppInfoBusEventPublisher {
 	public void publishAppInfoUpdatedEvent() {
 		String busId = SpringCloudApplicationConstants.SPRING_CLOUD_BUS_ID;
 		String contextId = applicationContext.getId();
-		LOGGER.info(">>> publish event，contextId = {}, busId = {}, allAppInfos = {}", contextId, busId, ALL_APP_INFOS.getData());
+		LOGGER.info(">>> publish event，contextId = {}, busId = {}, allAppInfos = {}", contextId, busId, ALL_APP_INFOS.getObject());
 		
 		applicationContext.publishEvent(new AppInfoUpdatedRemoteBusEvent(this, busId, ALL_APP_INFOS));
 	}

@@ -5,14 +5,14 @@ import java.util.Map;
 import org.springframework.context.ApplicationListener;
 
 import com.penglecode.xmodule.common.cloud.consts.SpringCloudApplicationConstants;
-import com.penglecode.xmodule.common.support.VersionedData;
+import com.penglecode.xmodule.common.support.VersionedObject;
 import com.penglecode.xmodule.common.util.JsonUtils;
 import com.penglecode.xmodule.springcloud.busexample.bus.event.AppInfoUpdatedRemoteBusEvent;
 import com.penglecode.xmodule.springcloud.busexample.model.AppInfo;
 
 public class AppInfoUpdatedRemoteBusEventListener implements ApplicationListener<AppInfoUpdatedRemoteBusEvent> {
 
-	private volatile VersionedData<Map<Long,AppInfo>> allAppInfos;
+	private volatile VersionedObject<Map<Long,AppInfo>> allAppInfos;
 	
 	@Override
 	public void onApplicationEvent(AppInfoUpdatedRemoteBusEvent event) {

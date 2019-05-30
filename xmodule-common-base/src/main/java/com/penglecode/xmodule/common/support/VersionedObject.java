@@ -2,22 +2,22 @@ package com.penglecode.xmodule.common.support;
 
 import java.io.Serializable;
 
-public class VersionedData<T> implements Serializable {
+public class VersionedObject<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private String version;
 	
-	private T data;
+	private T object;
 
-	public VersionedData() {
+	public VersionedObject() {
 		super();
 	}
 
-	public VersionedData(String version, T data) {
+	public VersionedObject(String version, T object) {
 		super();
 		this.version = version;
-		this.data = data;
+		this.object = object;
 	}
 
 	public String getVersion() {
@@ -28,12 +28,12 @@ public class VersionedData<T> implements Serializable {
 		this.version = version;
 	}
 
-	public T getData() {
-		return data;
+	public T getObject() {
+		return object;
 	}
 
-	public void setData(T data) {
-		this.data = data;
+	public void setObject(T object) {
+		this.object = object;
 	}
-	
+
 }
