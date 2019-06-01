@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule-examples-springcloud-nacos</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-springcloud-nacos-service-api</artifactId>
+	<name>xmodule-examples-springcloud-nacos-service-api</name>
+	<description>基于Nacos的服务注册与发现之服务接口</description>
+
+	<dependencies>
+		<!-- xmodule-common-springcloud -->
+		<dependency>
+			<groupId>com.penglecode</groupId>
+			<artifactId>xmodule-common-springcloud</artifactId>
+			<version>${xmodule.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>xmodule-examples-newscloud-newscenter-api</finalName>
+	</build>
+</project>

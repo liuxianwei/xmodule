@@ -32,7 +32,13 @@ import com.penglecode.xmodule.common.util.SpringUtils;
  */
 public class DefaultSpringAppPreInitializer extends AbstractSpringAppInitializer<ConfigurableApplicationContext> implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
+	private static final String NACOS_LOGGING_DEFAULT_CONFIG_ENABLED_PROPERTY = "nacos.logging.default.config.enabled";
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSpringAppPreInitializer.class);
+	
+	static {
+		System.setProperty(NACOS_LOGGING_DEFAULT_CONFIG_ENABLED_PROPERTY, Boolean.FALSE.toString());
+	}
 
 	public void doInitialize(ConfigurableApplicationContext applicationContext) {
 		ApplicationContext rootApplicationContext = SpringUtils.getRootApplicationContext(applicationContext);

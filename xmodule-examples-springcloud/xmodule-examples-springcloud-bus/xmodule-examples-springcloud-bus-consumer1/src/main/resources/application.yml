@@ -42,7 +42,7 @@ management:
 
 info:
     app:
-        name: newscloud-frontend
+        name: springcloud-bus-consumer1
         description: SpringCloud消息总线-producer生产者
         version: 1.0.0
         spring-cloud-version: Greenwich

@@ -128,7 +128,7 @@ public class EnhancedRequestParamMethodArgumentResolver extends RequestParamMeth
 			synchronized (this) {
 				if(conversionService == null) {
 					try {
-						conversionService = (ConversionService) beanFactory.getBean("mvcConversionService"); //mvcConversionService create by WebMvcAutoConfiguration
+						conversionService = (ConversionService) beanFactory.getBean("mvcConversionService"); //lazy init mvcConversionService, create by WebMvcAutoConfiguration
 					} catch (BeansException e) {
 						conversionService = new DefaultConversionService();
 					}

@@ -1,11 +1,8 @@
 package com.penglecode.xmodule.common.boot.config;
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import javax.servlet.Servlet;
 
@@ -18,10 +15,6 @@ import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -35,7 +28,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
-import com.penglecode.xmodule.common.util.JsonUtils;
 import com.penglecode.xmodule.common.web.springmvc.handler.AbstractMvcHandlerExceptionResolver;
 import com.penglecode.xmodule.common.web.springmvc.handler.DefaultMvcHandlerExceptionResolver;
 import com.penglecode.xmodule.common.web.springmvc.support.EnhancedRequestMappingHandlerAdapter;
@@ -95,26 +87,6 @@ public class DefaultWebMvcConfiguration extends AbstractSpringConfiguration impl
 		return resolver;
 	}
 	
-	@Override
-	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-		if(!CollectionUtils.isEmpty(converters)) {
-			Map<Class<?>, HttpMessageConverter<?>> finalConverters = converters.stream().collect(Collectors.toMap(HttpMessageConverter::getClass, Function.identity(), (converter1, converter2) -> converter1));
-			StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
-			stringHttpMessageConverter.setDefaultCharset(DEFAULT_CHARSET);
-			stringHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.TEXT_HTML, MediaType.TEXT_PLAIN, MediaType.ALL));
-			finalConverters.put(stringHttpMessageConverter.getClass(), stringHttpMessageConverter);
-			
-			MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-			mappingJackson2HttpMessageConverter.setDefaultCharset(DEFAULT_CHARSET);
-			mappingJackson2HttpMessageConverter.setObjectMapper(JsonUtils.getDefaultObjectMapper());
-			mappingJackson2HttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
-			finalConverters.put(mappingJackson2HttpMessageConverter.getClass(), mappingJackson2HttpMessageConverter);
-			
-			converters.clear();
-			converters.addAll(finalConverters.values());
-		}
-	}
-
 	/**
 	 * 过滤静态资源不走DispatcherServlet
 	 */

@@ -38,6 +38,12 @@
 			<artifactId>xmodule-common-springcloud</artifactId>
 			<version>${xmodule.version}</version>
 		</dependency>
+		
+		<!-- spring-cloud-starter-bus-amqp -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
