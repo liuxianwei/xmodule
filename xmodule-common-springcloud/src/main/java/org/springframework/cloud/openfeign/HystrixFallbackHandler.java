@@ -7,14 +7,14 @@ import java.util.List;
 import org.springframework.cglib.proxy.InvocationHandler;
 
 /**
- * 默认熔断统一处理拦截器
+ * 默认熔断|降级统一拦截处理器
  * 
  * 如需自定义请继承重写doInvoke方法
  * 
  * @author 	pengpeng
  * @date	2019年6月1日 下午3:17:20
  */
-public abstract class HystrixFallbackInvocationHandler implements InvocationHandler {
+public abstract class HystrixFallbackHandler implements InvocationHandler {
 
 	private static final List<String> JAVA_OBJECT_METHODS = Arrays.asList("equals", "hashCode", "toString", "clone", "finalize", "getClass", "notify", "notifyAll", "wait");
 	
@@ -22,7 +22,7 @@ public abstract class HystrixFallbackInvocationHandler implements InvocationHand
 	
 	private final Throwable cause;
 	
-	public HystrixFallbackInvocationHandler(Class<?> feignClientClass, Throwable cause) {
+	public HystrixFallbackHandler(Class<?> feignClientClass, Throwable cause) {
 		super();
 		this.feignClientClass = feignClientClass;
 		this.cause = cause;
@@ -55,10 +55,10 @@ public abstract class HystrixFallbackInvocationHandler implements InvocationHand
 		    	throw new UnsupportedOperationException("Operation Not Supported!");
 		    }
 	    }
-		return doInvoke(proxy, method, args);
+		return handle(proxy, method, args);
 	}
 	
-	protected abstract Object doInvoke(Object proxy, Method method, Object[] args) throws Throwable;
+	protected abstract Object handle(Object proxy, Method method, Object[] args) throws Throwable;
 
 	public Class<?> getFeignClientClass() {
 		return feignClientClass;

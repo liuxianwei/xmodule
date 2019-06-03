@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.cloud.openfeign.DefaultHystrixFallbackFactory;
 import org.springframework.cloud.openfeign.FeignFormatterRegistrar;
 import org.springframework.cloud.openfeign.HystrixFallbackConfiguration;
-import org.springframework.cloud.openfeign.DefaultHystrixFallbackFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -41,10 +41,10 @@ public class DefaultFeignClientsConfiguration extends AbstractSpringConfiguratio
 	@Bean
 	@Scope("prototype")
 	@ConditionalOnMissingBean
-	public DefaultHystrixFallbackFactory proxyHystrixFallbackFactory() {
-		DefaultHystrixFallbackFactory proxyHystrixFallbackFactory = new DefaultHystrixFallbackFactory();
-		proxyHystrixFallbackFactory.setFallbackInvocationHandlerFactory(new DefaultHystrixFallbackInvocationHandlerFactory());
-		return proxyHystrixFallbackFactory;
+	public DefaultHystrixFallbackFactory defaultHystrixFallbackFactory() {
+		DefaultHystrixFallbackFactory defaultHystrixFallbackFactory = new DefaultHystrixFallbackFactory();
+		defaultHystrixFallbackFactory.setFallbackHandlerFactory(new DefaultHystrixFallbackHandlerFactory());
+		return defaultHystrixFallbackFactory;
 	}
 	
 	@Bean

@@ -4,8 +4,6 @@ import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.Assert;
 
-import com.penglecode.xmodule.common.cloud.feign.DefaultHystrixFallbackInvocationHandlerFactory;
-
 import feign.hystrix.FallbackFactory;
 
 /**
@@ -23,31 +21,30 @@ public class DefaultHystrixFallbackFactory implements FallbackFactory<Fallbackab
 
 	private Class<?> feignClientClass;
 	
-	private HystrixFallbackInvocationHandlerFactory fallbackInvocationHandlerFactory = new DefaultHystrixFallbackInvocationHandlerFactory();
+	private HystrixFallbackHandlerFactory fallbackHandlerFactory;
 	
 	@Override
 	public FallbackableFeignClient create(Throwable cause) {
 		//在create之前需要设置feignClientClass，见#
-		Assert.notNull(feignClientClass, "Property 'feignClientClass' not set yet!");
+		Assert.notNull(feignClientClass, "Property 'feignClientClass' must be required!");
+		Assert.notNull(fallbackHandlerFactory, "Property 'fallbackHandlerFactory' must be required!");
 		return doCreate(cause);
 	}
 	
 	protected FallbackableFeignClient doCreate(Throwable cause) {
-		System.out.println("Create Fallback for " + getFeignClientClass());
 		Enhancer enhancer = new Enhancer();
 		enhancer.setClassLoader(Thread.currentThread().getContextClassLoader());
 		enhancer.setSuperclass(getFeignClientClass());
-		enhancer.setCallback(getFallbackInvocationHandlerFactory().createInvocationHandler(getFeignClientClass(), cause));
+		enhancer.setCallback(getFallbackHandlerFactory().createHandler(getFeignClientClass(), cause));
         return (FallbackableFeignClient) enhancer.create();
 	}
 	
-	public HystrixFallbackInvocationHandlerFactory getFallbackInvocationHandlerFactory() {
-		return fallbackInvocationHandlerFactory;
+	public HystrixFallbackHandlerFactory getFallbackHandlerFactory() {
+		return fallbackHandlerFactory;
 	}
 
-	public void setFallbackInvocationHandlerFactory(
-			HystrixFallbackInvocationHandlerFactory fallbackInvocationHandlerFactory) {
-		this.fallbackInvocationHandlerFactory = fallbackInvocationHandlerFactory;
+	public void setFallbackHandlerFactory(HystrixFallbackHandlerFactory fallbackHandlerFactory) {
+		this.fallbackHandlerFactory = fallbackHandlerFactory;
 	}
 
 	public Class<?> getFeignClientClass() {
