@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.springframework.cloud.openfeign.FallbackableFeignClient;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.CommonHystrixFallbackFactory;
+import org.springframework.cloud.openfeign.DefaultHystrixFallbackFactory;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +28,7 @@ import com.penglecode.xmodule.springcloud.nacosexample.model.Product;
  * @author 	pengpeng
  * @date	2018年10月8日 下午2:43:58
  */
-@FeignClient(name="springcloud-nacos-producer", qualifier="productApiService", contextId="productApiService", fallbackFactory=CommonHystrixFallbackFactory.class)
+@FeignClient(name="springcloud-nacos-producer", qualifier="productApiService", contextId="productApiService", fallbackFactory=DefaultHystrixFallbackFactory.class)
 public interface ProductApiService extends FallbackableFeignClient {
 
 	/**

@@ -56,9 +56,9 @@ public class HystrixFallbackTargeter implements Targeter {
 											Class<?> fallbackFactoryClass) {
 		FallbackFactory<? extends T> fallbackFactory = (FallbackFactory<? extends T>)
 			getFromContext("fallbackFactory", feignClientName, context, fallbackFactoryClass, FallbackFactory.class);
-		if(fallbackFactory instanceof CommonHystrixFallbackFactory) {
-			CommonHystrixFallbackFactory proxyHystrixFallbackFactory = (CommonHystrixFallbackFactory) fallbackFactory;
-			proxyHystrixFallbackFactory.setFeignClientClass(target.type());
+		if(fallbackFactory instanceof DefaultHystrixFallbackFactory) {
+			DefaultHystrixFallbackFactory hystrixFallbackFactory = (DefaultHystrixFallbackFactory) fallbackFactory;
+			hystrixFallbackFactory.setFeignClientClass(target.type());
 		}
 		return builder.target(target, fallbackFactory);
 	}

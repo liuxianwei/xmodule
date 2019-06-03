@@ -9,7 +9,7 @@ import com.penglecode.xmodule.common.cloud.feign.DefaultHystrixFallbackInvocatio
 import feign.hystrix.FallbackFactory;
 
 /**
- * 公共的服务服务熔断|降级实现工厂类，
+ * 默认的服务服务熔断|降级实现工厂类，
  * 
  * 通过Cglib动态代理来实现统一的服务熔断|降级逻辑
  * 
@@ -19,7 +19,7 @@ import feign.hystrix.FallbackFactory;
  * @date	2019年6月1日 下午5:12:21
  */
 @Scope("prototype")
-public class CommonHystrixFallbackFactory implements FallbackFactory<FallbackableFeignClient> {
+public class DefaultHystrixFallbackFactory implements FallbackFactory<FallbackableFeignClient> {
 
 	private Class<?> feignClientClass;
 	
