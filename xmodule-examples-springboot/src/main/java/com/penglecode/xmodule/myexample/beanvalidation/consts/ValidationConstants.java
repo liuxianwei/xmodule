@@ -1,11 +1,11 @@
 package com.penglecode.xmodule.myexample.beanvalidation.consts;
 
-import static com.penglecode.xmodule.common.consts.Constants.*;
+import com.penglecode.xmodule.common.consts.Constant;
 
 public class ValidationConstants {
 
-	public static final String USER_HOME = valueOf("user.home", null);
+	public static final Constant<String> USER_HOME = new Constant<String>("user.home", null) {};
 	
-	public static final String TMP_DIR = valueOf("java.io.tmpdir", null);
+	public static final Constant<String> TMP_DIR = new Constant<String>("java.io.tmpdir", null) {};
 	
 }

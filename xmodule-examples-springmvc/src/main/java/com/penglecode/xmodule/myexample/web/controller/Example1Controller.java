@@ -24,7 +24,7 @@ public class Example1Controller extends HttpAPIResourceSupport {
 
 	@RequestMapping(value={"/appid"}, method=GET, produces=APPLICATION_JSON)
 	public Object appId(HttpServletRequest request, HttpServletResponse response) {
-		return Result.success().message("OK").data(ExampleConstants.APP_ID).build();
+		return Result.success().message("OK").data(ExampleConstants.APP_ID.value()).build();
 	}
 	
 	@RequestMapping(value={"/time", "/now"}, method=GET, produces=APPLICATION_JSON)

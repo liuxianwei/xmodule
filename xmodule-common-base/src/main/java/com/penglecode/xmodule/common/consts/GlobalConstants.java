@@ -1,6 +1,6 @@
 package com.penglecode.xmodule.common.consts;
 
-import static com.penglecode.xmodule.common.consts.Constants.valueOf;
+import static com.penglecode.xmodule.common.consts.Constant.defaultOf;
 
 import java.util.Arrays;
 import java.util.List;
@@ -101,6 +101,6 @@ public class GlobalConstants {
 	/**
 	 * 全局应用配置(包括应用的name, url, contextpath等)
 	 */
-	public static final MvvmWebAppConfig MVVM_WEBAPP_CONFIG = valueOf(new MvvmWebAppConfig());
+	public static final MvvmWebAppConfig MVVM_WEBAPP_CONFIG = defaultOf(new MvvmWebAppConfig());
 	
 }

@@ -11,7 +11,7 @@ public class SpringEnvConstantPool<T> implements ConstantPool<T> {
 	
 	public static void setEnvironment(Environment environment) {
 		SpringEnvConstantPool.environment = environment;
-		Constants.setConstantPool(new SpringEnvConstantPool<Object>());
+		Constant.setConstantPool(new SpringEnvConstantPool<Object>());
 	}
 	
 	public static Environment getEnvironment() {

@@ -61,7 +61,7 @@ public class AppInfoService implements AppInfoBusEventPublisher {
 	}
 	
 	public void publishAppInfoUpdatedEvent() {
-		String busId = SpringCloudApplicationConstants.SPRING_CLOUD_BUS_ID;
+		String busId = SpringCloudApplicationConstants.SPRING_CLOUD_BUS_ID.value();
 		String contextId = applicationContext.getId();
 		LOGGER.info(">>> publish event，contextId = {}, busId = {}, allAppInfos = {}", contextId, busId, ALL_APP_INFOS.getObject());
 		

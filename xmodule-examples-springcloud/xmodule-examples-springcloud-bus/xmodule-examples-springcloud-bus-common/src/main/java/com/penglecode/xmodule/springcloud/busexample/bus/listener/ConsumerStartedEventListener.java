@@ -22,7 +22,7 @@ public class ConsumerStartedEventListener implements ApplicationListener<Applica
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		if(event.getApplicationContext().equals(applicationContext)) {
-			String busId = SpringCloudApplicationConstants.SPRING_CLOUD_BUS_ID;
+			String busId = SpringCloudApplicationConstants.SPRING_CLOUD_BUS_ID.value();
 			System.out.println(String.format("【Consumer-Started-Event】>>> 消费者Consumer[%s]启动起来了，即将向生产者Producer发送通知......", busId));
 			event.getApplicationContext().publishEvent(new ConsumerStartedRemoteBusEvent(this, busId));
 		}

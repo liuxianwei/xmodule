@@ -1,6 +1,6 @@
 package com.penglecode.xmodule.common.web.security.oauth2;
 
-import static com.penglecode.xmodule.common.consts.Constants.valueOf;
+import static com.penglecode.xmodule.common.consts.Constant.defaultOf;
 
 /**
  * OAuth2常量
@@ -10,6 +10,6 @@ import static com.penglecode.xmodule.common.consts.Constants.valueOf;
  */
 public class SecurityOAuth2Constants {
 
-	public static final String OAUTH2_TOKEN_SERVICE_REQUEST_SOURCE = valueOf("TokenServiceRequestSource");
+	public static final String OAUTH2_TOKEN_SERVICE_REQUEST_SOURCE = defaultOf("TokenServiceRequestSource");
 	
 }

@@ -16,7 +16,7 @@ public class AppInfoUpdatedRemoteBusEventListener implements ApplicationListener
 	
 	@Override
 	public void onApplicationEvent(AppInfoUpdatedRemoteBusEvent event) {
-		String busId = SpringCloudApplicationConstants.SPRING_CLOUD_BUS_ID;
+		String busId = SpringCloudApplicationConstants.SPRING_CLOUD_BUS_ID.value();
 		boolean dataChanged = allAppInfos == null || !allAppInfos.getVersion().equals(event.getAllAppInfos().getVersion());
 		if(dataChanged) {
 			this.allAppInfos = event.getAllAppInfos();

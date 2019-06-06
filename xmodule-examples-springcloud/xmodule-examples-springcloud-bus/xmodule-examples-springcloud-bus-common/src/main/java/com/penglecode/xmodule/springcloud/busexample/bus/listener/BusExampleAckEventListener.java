@@ -10,7 +10,7 @@ public class BusExampleAckEventListener implements ApplicationListener<AckRemote
 	
 	@Override
 	public void onApplicationEvent(AckRemoteApplicationEvent event) {
-		String busId = SpringCloudApplicationConstants.SPRING_CLOUD_BUS_ID;
+		String busId = SpringCloudApplicationConstants.SPRING_CLOUD_BUS_ID.value();
 		if(!event.getOriginService().equals(busId)) { //忽略自己发向自己的ACK
 			System.out.println(String.format("【ACK-Event】>>> ServiceId [%s] listeners on, event = %s", busId, JsonUtils.object2Json(event)));
 		}
