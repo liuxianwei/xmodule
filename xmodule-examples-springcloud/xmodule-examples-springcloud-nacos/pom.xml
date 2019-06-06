@@ -15,5 +15,8 @@
 		<module>xmodule-examples-springcloud-nacos-service-api</module>
 		<module>xmodule-examples-springcloud-nacos-service-producer</module>
 		<module>xmodule-examples-springcloud-nacos-service-consumer</module>
+		<module>
+			xmodule-examples-springcloud-nacos-service-gateway
+		</module>
 	</modules>
 </project>

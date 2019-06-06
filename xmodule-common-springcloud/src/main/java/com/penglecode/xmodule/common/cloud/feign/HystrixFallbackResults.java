@@ -13,14 +13,14 @@ import com.penglecode.xmodule.common.support.Result;
  */
 public class HystrixFallbackResults {
 
-	private static final HttpStatus SERVICE_UNAVAILABLE = HttpStatus.SERVICE_UNAVAILABLE;
+	public static final HttpStatus DEFAULT_FALLBACK_STATUS = HttpStatus.SERVICE_UNAVAILABLE;
 	
 	public static <T> Result<T> defaultFallbackResult() {
-		return Result.failure().code(String.valueOf(SERVICE_UNAVAILABLE.value())).message(String.format("请求失败：%s, %s", SERVICE_UNAVAILABLE.value(), SERVICE_UNAVAILABLE.getReasonPhrase())).build();
+		return Result.failure().code(String.valueOf(DEFAULT_FALLBACK_STATUS.value())).message(String.format("请求失败: %s", DEFAULT_FALLBACK_STATUS.getReasonPhrase())).build();
 	}
 	
 	public static <T> PageResult<T> defaultFallbackPageResult() {
-		return PageResult.failure().code(String.valueOf(SERVICE_UNAVAILABLE.value())).message(String.format("请求失败：%s, %s", SERVICE_UNAVAILABLE.value(), SERVICE_UNAVAILABLE.getReasonPhrase())).build();
+		return PageResult.failure().code(String.valueOf(DEFAULT_FALLBACK_STATUS.value())).message(String.format("请求失败: %s", DEFAULT_FALLBACK_STATUS.getReasonPhrase())).build();
 	}
 	
 }

@@ -1,0 +1,79 @@
+#SpringBoot应用的名称
+spring:
+    application:
+        name: springcloud-nacos-gateway
+    #SpringCloud配置
+    cloud:
+        inetutils:
+            preferredNetworks: 
+                - 172.16
+        nacos:
+            discovery:
+                server-addr: 127.0.0.1:8848
+                register-enabled: false
+        #负载均衡重试配置
+        loadbalancer:
+            retry: true
+            use404: true
+        #网关配置
+        gateway:
+            #基于注册/发现的动态路由配置
+            discovery:
+                locator:
+                    enabled: true
+                    route-id-prefix: nacos-
+                    filters:
+                      #默认的最终请求URL重写过滤器
+                      - name: RewritePath
+                        args:
+                            regexp: "'/' + serviceId + '/(?<remaining>.*)'"
+                            replacement: "'/${remaining}'"
+                      #服务重试过滤器
+                      - name: Retry
+                        args: 
+                            retries: "2"
+                            statuses: "'BAD_GATEWAY,GATEWAY_TIMEOUT,SERVICE_UNAVAILABLE'"
+                            methods: "'GET,POST,PUT,DELETE'"
+                      - name: Hystrix
+                        args:
+                            name: "'fallbackCmd'"
+                            fallbackUri: "'forward:/api/fallback'"
+            #静态路由配置
+            routes:
+                - id: nacos-service-static-route
+                  uri: http://127.0.0.1:18181
+                  predicates:
+                      - Path=/nacos-service-producer/**
+                  filters:
+                      - StripPrefix=1
+                      - name: Retry
+                        args: 
+                            retries: 2
+                            statuses: BAD_GATEWAY,GATEWAY_TIMEOUT,SERVICE_UNAVAILABLE
+                            methods: GET,POST,PUT,DELETE
+                            exceptions:
+                                - java.io.IOException
+                                - java.util.concurrent.TimeoutException
+                                - io.netty.handler.timeout.TimeoutException
+                                - org.springframework.cloud.gateway.support.TimeoutException
+                      - name: Hystrix
+                        args:
+                            name: fallbackCmd
+                            fallbackUri: forward:/api/fallback
+
+#Ribbon(负载均衡)配置
+ribbon:
+    ReadTimeout: 10000
+    ConnectTimeout: 10000
+    hystrix:
+        enabled: false
+        
+#Hystrix(熔断|降级)配置
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        #默认的熔断超时时间,默认1000毫秒,需要设大点否则很容易触发熔断
+                        timeoutInMilliseconds: 15000

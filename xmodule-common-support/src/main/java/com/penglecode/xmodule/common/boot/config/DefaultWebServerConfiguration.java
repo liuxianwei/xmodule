@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
@@ -41,6 +43,7 @@ import com.penglecode.xmodule.common.util.StringUtils;
  */
 @Configuration
 @ConditionalOnClass({ Tomcat.class })
+@ConditionalOnWebApplication(type = Type.SERVLET)
 @ConditionalOnProperty(name=DefaultWebServerConfiguration.CONFIGURATION_ENABLED, havingValue="true", matchIfMissing=true)
 public class DefaultWebServerConfiguration extends AbstractSpringConfiguration {
 

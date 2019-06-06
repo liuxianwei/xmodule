@@ -24,18 +24,6 @@
 			<version>${xmodule.version}</version>
 			<exclusions>
 				<exclusion>
-					<groupId>org.glassfish.jersey.ext</groupId>
-					<artifactId>jersey-spring4</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.glassfish.jersey.media</groupId>
-					<artifactId>jersey-media-json-jackson</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.glassfish.jersey.media</groupId>
-					<artifactId>jersey-media-multipart</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>org.apache.zookeeper</groupId>
 					<artifactId>zookeeper</artifactId>
 				</exclusion>
@@ -62,6 +50,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- spring-boot-starter-test -->

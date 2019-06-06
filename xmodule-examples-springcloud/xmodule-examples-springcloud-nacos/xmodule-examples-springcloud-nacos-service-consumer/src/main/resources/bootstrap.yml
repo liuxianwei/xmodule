@@ -4,9 +4,13 @@ spring:
         name: springcloud-nacos-consumer
     #SpringCloud配置
     cloud:
+        inetutils:
+            preferredNetworks: 
+                - 172.16
         nacos:
             discovery:
                 server-addr: 127.0.0.1:8848
+                register-enabled: false
                 
 #Feign(HttpClient)客户端配置
 feign:
