@@ -33,15 +33,15 @@
 		<protostuff.version>1.5.9</protostuff.version>
 		<httpclient.version>4.5.5</httpclient.version>
 		<netty.version>4.1.27.Final</netty.version>
-		<zookeeper.version>3.4.10</zookeeper.version>
-		<curator.version>4.1.0</curator.version>
+		<zookeeper.version>3.5.5</zookeeper.version>
+		<curator.version>4.2.0</curator.version>
 		<jersey.version>2.27</jersey.version>
 		<jax-rs.version>2.1</jax-rs.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<druid.version>1.1.10</druid.version>
 		<mysql.version>5.1.46</mysql.version>
 		<clickhouse.version>0.1.50</clickhouse.version>
-		<security-oauth2.version>2.3.4.RELEASE</security-oauth2.version>
+		<security-oauth2.version>2.3.6.RELEASE</security-oauth2.version>
 		<security-jwt.version>1.0.10.RELEASE</security-jwt.version>
 		<jwt.version>0.9.1</jwt.version>
 
