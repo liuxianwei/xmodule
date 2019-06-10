@@ -1,0 +1,8 @@
+service:
+    instance:
+        - name: app1
+          host: 127.0.0.1
+          port: 8081
+        - name: app2
+          host: 127.0.0.1
+          port: 8082

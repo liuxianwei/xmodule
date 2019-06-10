@@ -18,5 +18,9 @@
 		<module>
 			xmodule-examples-springcloud-nacos-service-gateway
 		</module>
+		<module>
+			xmodule-examples-springcloud-nacos-config-client
+		</module>
+		<module>xmodule-examples-springcloud-nacos-config-admin</module>
 	</modules>
 </project>

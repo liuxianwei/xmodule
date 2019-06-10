@@ -1,0 +1,16 @@
+#SpringBoot应用的名称
+spring:
+    application:
+        name: springcloud-nacos-config-client
+    #SpringCloud配置
+    cloud:
+        inetutils:
+            preferredNetworks: 
+                - 172.16
+        config:
+            #关闭配置中心发现
+            enabled: true
+        nacos:
+            config:
+                server-addr: 127.0.0.1:8848
+                file-extension: yaml

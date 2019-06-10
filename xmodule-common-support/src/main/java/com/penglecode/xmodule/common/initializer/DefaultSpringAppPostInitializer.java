@@ -8,7 +8,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.ServletContextResourcePatternResolver;
 
@@ -22,7 +21,6 @@ import com.penglecode.xmodule.common.util.FileUtils;
  * @author 	pengpeng
  * @date	2018年2月5日 下午12:40:31
  */
-@Component
 public class DefaultSpringAppPostInitializer extends SpringAppPostInitializer<ConfigurableApplicationContext> implements MessageSourceAware {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSpringAppPostInitializer.class);

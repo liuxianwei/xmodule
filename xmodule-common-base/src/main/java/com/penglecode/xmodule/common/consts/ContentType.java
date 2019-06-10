@@ -15,9 +15,13 @@ public class ContentType {
 	
 	public static final String TEXT_XML = "text/xml";
 	
+	public static final String TEXT_YAML = "text/yaml";
+	
 	public static final String APPLICATION_JSON = "application/json;charset=UTF-8";
 	
 	public static final String APPLICATION_XML = "application/xml";
+	
+	public static final String APPLICATION_YAML = "application/yaml;charset=UTF-8";
 	
 	public static final String APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded";
 	
