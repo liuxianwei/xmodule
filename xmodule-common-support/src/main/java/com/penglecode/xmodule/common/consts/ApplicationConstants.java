@@ -6,6 +6,7 @@ import javax.servlet.ServletContext;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
@@ -23,13 +24,12 @@ public abstract class ApplicationConstants {
 	 * org.springframework.web.context.ContextLoaderListener}加载出来的spring上下文
 	 */
 	public static final ApplicationContext APPLICATION_CONTEXT = defaultOf(null);
-
-	/**
-	 * Spring的MVC上下文,由@{link
-	 * org.springframework.web.servlet.DispatcherServlet}加载出来的Spring MVC上下文
-	 */
-	public static final ApplicationContext WEB_APPLICATION_CONTEXT = defaultOf(null);
 	
+	/**
+	 * Spring的环境变量上下文
+	 */
+	public static final Environment ENVIRONMENT = defaultOf(null);
+
 	/**
 	 * Spring管理的资源文件访问器
 	 */

@@ -27,8 +27,8 @@ public abstract class AbstractSpringMvcHttpAccessLoggingFilter extends AbstractH
 	
 	@Override
 	protected void initAllMvcResourceMethodMappings() {
-		ApplicationContext mvcApplicationContext = ApplicationConstants.WEB_APPLICATION_CONTEXT;
-		AbstractHandlerMethodMapping<?> springMvcHandlerMethodMapping = mvcApplicationContext.getBean(AbstractHandlerMethodMapping.class);
+		ApplicationContext applicationContext = ApplicationConstants.APPLICATION_CONTEXT;
+		AbstractHandlerMethodMapping<?> springMvcHandlerMethodMapping = applicationContext.getBean(AbstractHandlerMethodMapping.class);
 		Map<?, HandlerMethod> handlerMethods = springMvcHandlerMethodMapping.getHandlerMethods();
 		if(!CollectionUtils.isEmpty(handlerMethods)) {
 			List<MvcResourceMethodMapping> allMvcResourceMethodMappings = new ArrayList<MvcResourceMethodMapping>();

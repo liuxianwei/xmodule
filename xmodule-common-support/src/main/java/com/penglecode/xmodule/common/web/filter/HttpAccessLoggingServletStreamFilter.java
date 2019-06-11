@@ -117,8 +117,8 @@ public class HttpAccessLoggingServletStreamFilter extends OncePerRequestFilter {
 		if(!this.initialized){
 			synchronized (mutex) {
 				if(!this.initialized){
-					ApplicationContext mvcApplicationContext = ApplicationConstants.WEB_APPLICATION_CONTEXT;
-					this.springMvcHandlerMethodMapping = mvcApplicationContext.getBean(AbstractHandlerMethodMapping.class);
+					ApplicationContext applicationContext = ApplicationConstants.APPLICATION_CONTEXT;
+					this.springMvcHandlerMethodMapping = applicationContext.getBean(AbstractHandlerMethodMapping.class);
 					this.initialized = true;
 				}
 			}
