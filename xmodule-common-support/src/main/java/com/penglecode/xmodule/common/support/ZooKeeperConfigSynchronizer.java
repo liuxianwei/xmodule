@@ -105,6 +105,7 @@ public abstract class ZooKeeperConfigSynchronizer implements DistributedConfigSy
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void subscribeConfig() {
 		NodeCacheListener listener = new NodeCacheListener() {
