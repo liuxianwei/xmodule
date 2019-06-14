@@ -10,15 +10,13 @@ logging:
 context:
     initializer:
         classes: com.penglecode.xmodule.common.initializer.DefaultSpringAppPreInitializer
-    listener:
-        classes: com.penglecode.xmodule.common.listener.SpringEventListenerRegistryListener
         
 #Servlet容器配置
 server:
     port: 8081
     servlet:
         context-path: /
-        application-display-name: xmodule-examples-security-oauth2-client-authorization-server
+        application-display-name: ${spring.application.name}
         session:
             timeout: 1800
 

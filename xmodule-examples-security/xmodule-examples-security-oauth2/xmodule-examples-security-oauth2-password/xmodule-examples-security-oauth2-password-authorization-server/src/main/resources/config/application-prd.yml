@@ -35,3 +35,14 @@ spring:
                           - demo-resource
                       authorities:
                           - role_user_client
+                    #APP客户端
+                    - clientId: app_client
+                      clientSecret: d0763edaa9d9bd2a9516280e9044d885
+                      scope: app
+                      authorizedGrantTypes:
+                          - client_credentials
+                          - refresh_token
+                      resourceIds: 
+                          - demo-resource
+                      authorities:
+                          - role_app_client
