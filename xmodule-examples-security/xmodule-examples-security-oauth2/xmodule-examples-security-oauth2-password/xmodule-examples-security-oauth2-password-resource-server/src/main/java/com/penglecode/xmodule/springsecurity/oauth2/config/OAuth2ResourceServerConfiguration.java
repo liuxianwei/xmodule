@@ -13,8 +13,8 @@ import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEn
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import com.penglecode.xmodule.common.web.security.oauth2.CustomOAuth2ExceptionRenderer;
-import com.penglecode.xmodule.common.web.security.oauth2.OAuth2ClientConfigProperties;
+import com.penglecode.xmodule.common.security.oauth2.CustomOAuth2ExceptionRenderer;
+import com.penglecode.xmodule.common.security.oauth2.OAuth2ClientConfigProperties;
 
 /**
  * SpringSecurity-OAuth2资源服务器配置

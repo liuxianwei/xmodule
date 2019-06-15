@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
+import com.penglecode.xmodule.common.security.util.UserPasswordUtils;
 import com.penglecode.xmodule.common.support.BusinessAssert;
 import com.penglecode.xmodule.common.support.Page;
 import com.penglecode.xmodule.common.support.Sort;
@@ -20,7 +21,6 @@ import com.penglecode.xmodule.common.util.DateTimeUtils;
 import com.penglecode.xmodule.common.util.ModelDecodeUtils;
 import com.penglecode.xmodule.common.util.ObjectUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
-import com.penglecode.xmodule.common.web.security.util.UserPasswordUtils;
 import com.penglecode.xmodule.springsecurity.upms.consts.em.UpmsUserStatusEnum;
 import com.penglecode.xmodule.springsecurity.upms.consts.em.UpmsUserTypeEnum;
 import com.penglecode.xmodule.springsecurity.upms.mapper.UpmsUserMapper;

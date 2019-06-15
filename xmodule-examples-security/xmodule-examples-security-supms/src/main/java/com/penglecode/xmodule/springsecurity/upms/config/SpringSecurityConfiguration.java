@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.ForwardLogoutSuccessHandler;
 
 import com.penglecode.xmodule.common.boot.config.FilterRegistrationOrder;
-import com.penglecode.xmodule.common.web.security.config.SecurityConfigProperties;
+import com.penglecode.xmodule.common.security.config.SecurityConfigProperties;
 import com.penglecode.xmodule.springsecurity.upms.web.security.authc.CustomAuthenticationEntryPoint;
 import com.penglecode.xmodule.springsecurity.upms.web.security.authc.CustomAuthenticationFailureHandler;
 import com.penglecode.xmodule.springsecurity.upms.web.security.authc.CustomAuthenticationSuccessHandler;

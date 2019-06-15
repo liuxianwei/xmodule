@@ -31,10 +31,10 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import com.penglecode.xmodule.common.boot.config.AbstractSpringConfiguration;
+import com.penglecode.xmodule.common.security.oauth2.OAuth2ClientConfigProperties;
+import com.penglecode.xmodule.common.security.oauth2.ProtostuffSerializationStrategy;
+import com.penglecode.xmodule.common.security.oauth2.SecurityOAuth2Constants;
 import com.penglecode.xmodule.common.util.BeanUtils;
-import com.penglecode.xmodule.common.web.security.oauth2.OAuth2ClientConfigProperties;
-import com.penglecode.xmodule.common.web.security.oauth2.ProtostuffSerializationStrategy;
-import com.penglecode.xmodule.common.web.security.oauth2.SecurityOAuth2Constants;
 
 import io.lettuce.core.resource.ClientResources;
 

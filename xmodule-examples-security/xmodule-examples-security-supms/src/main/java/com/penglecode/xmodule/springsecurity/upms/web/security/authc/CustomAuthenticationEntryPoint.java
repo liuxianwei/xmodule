@@ -11,7 +11,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.util.Assert;
 
-import com.penglecode.xmodule.common.web.security.consts.SecurityApplicationConstants;
+import com.penglecode.xmodule.common.security.consts.SecurityApplicationConstants;
 import com.penglecode.xmodule.springsecurity.upms.web.security.servlet.SecurityAccessDecideRequest;
 
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {

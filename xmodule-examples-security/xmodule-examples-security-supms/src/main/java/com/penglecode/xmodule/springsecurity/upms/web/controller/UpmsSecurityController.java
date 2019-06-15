@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.penglecode.xmodule.common.security.config.SecurityConfigProperties;
 import com.penglecode.xmodule.common.support.Result;
-import com.penglecode.xmodule.common.web.security.config.SecurityConfigProperties;
 import com.penglecode.xmodule.common.web.support.HttpAPIResourceSupport;
 
 @RestController

@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
+import com.penglecode.xmodule.common.security.service.RoleResourceService;
+import com.penglecode.xmodule.common.security.support.RoleResource;
 import com.penglecode.xmodule.common.support.BusinessAssert;
 import com.penglecode.xmodule.common.support.Page;
 import com.penglecode.xmodule.common.support.Sort;
@@ -22,8 +24,6 @@ import com.penglecode.xmodule.common.util.DateTimeUtils;
 import com.penglecode.xmodule.common.util.ModelDecodeUtils;
 import com.penglecode.xmodule.common.util.ObjectUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
-import com.penglecode.xmodule.common.web.security.service.RoleResourceService;
-import com.penglecode.xmodule.common.web.security.support.RoleResource;
 import com.penglecode.xmodule.upms.consts.em.UpmsResourceActionTypeEnum;
 import com.penglecode.xmodule.upms.consts.em.UpmsResourceTypeEnum;
 import com.penglecode.xmodule.upms.mapper.UpmsResourceMapper;

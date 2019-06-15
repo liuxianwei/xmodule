@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.springframework.security.web.util.UrlUtils;
 import org.springframework.util.Assert;
 
+import com.penglecode.xmodule.common.security.consts.SecurityApplicationConstants;
 import com.penglecode.xmodule.common.util.StringUtils;
 import com.penglecode.xmodule.common.util.URIUtils;
-import com.penglecode.xmodule.common.web.security.consts.SecurityApplicationConstants;
 
 /**
  * 客户端访问权限判断请求(重写了一些方法来达到修改请求URL的目的)

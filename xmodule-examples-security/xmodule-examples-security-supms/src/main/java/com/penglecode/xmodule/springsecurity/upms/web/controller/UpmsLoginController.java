@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
+import com.penglecode.xmodule.common.security.config.SecurityConfigProperties;
+import com.penglecode.xmodule.common.security.consts.SecurityApplicationConstants;
 import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
 import com.penglecode.xmodule.common.support.ModuleExceptionResolver.ExceptionMetadata;
 import com.penglecode.xmodule.common.support.MvvmWebAppConfig;
 import com.penglecode.xmodule.common.support.Result;
-import com.penglecode.xmodule.common.web.security.config.SecurityConfigProperties;
-import com.penglecode.xmodule.common.web.security.consts.SecurityApplicationConstants;
 import com.penglecode.xmodule.common.web.support.HttpAPIResourceSupport;
 import com.penglecode.xmodule.springsecurity.upms.web.security.authc.LoginUser;
 

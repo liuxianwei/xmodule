@@ -24,11 +24,11 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import com.penglecode.xmodule.common.boot.config.AbstractSpringConfiguration;
+import com.penglecode.xmodule.common.security.oauth2.Jackson2SerializationStrategy;
+import com.penglecode.xmodule.common.security.oauth2.OAuth2ExceptionResponseBodyHandler;
+import com.penglecode.xmodule.common.security.oauth2.OAuth2MvcHandlerExceptionResolver;
+import com.penglecode.xmodule.common.security.oauth2.OAuth2ServerConfigProperties;
 import com.penglecode.xmodule.common.util.BeanUtils;
-import com.penglecode.xmodule.common.web.security.oauth2.Jackson2SerializationStrategy;
-import com.penglecode.xmodule.common.web.security.oauth2.OAuth2ExceptionResponseBodyHandler;
-import com.penglecode.xmodule.common.web.security.oauth2.OAuth2MvcHandlerExceptionResolver;
-import com.penglecode.xmodule.common.web.security.oauth2.OAuth2ServerConfigProperties;
 import com.penglecode.xmodule.common.web.springmvc.handler.DefaultMvcHandlerExceptionResolver;
 
 import io.lettuce.core.resource.ClientResources;

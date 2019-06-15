@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.penglecode.xmodule.common.web.security.consts.SecurityApplicationConstants;
+import com.penglecode.xmodule.common.security.consts.SecurityApplicationConstants;
 
 /**
  * 客户端访问权限判断请求过滤器

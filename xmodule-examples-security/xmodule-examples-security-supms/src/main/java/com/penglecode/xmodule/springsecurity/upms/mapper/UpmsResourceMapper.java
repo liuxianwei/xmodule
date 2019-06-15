@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.penglecode.xmodule.common.mybatis.mapper.BaseMybatisMapper;
+import com.penglecode.xmodule.common.security.support.RoleResource;
 import com.penglecode.xmodule.common.support.DefaultDatabase;
-import com.penglecode.xmodule.common.web.security.support.RoleResource;
 import com.penglecode.xmodule.springsecurity.upms.model.UpmsResource;
 
 @DefaultDatabase

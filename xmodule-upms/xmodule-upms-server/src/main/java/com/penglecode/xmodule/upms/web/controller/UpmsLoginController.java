@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.penglecode.xmodule.common.security.consts.SecurityApplicationConstants;
 import com.penglecode.xmodule.common.support.AbstractXTreeBuilder;
 import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.support.TreeNodeConverter;
 import com.penglecode.xmodule.common.util.CollectionUtils;
 import com.penglecode.xmodule.common.util.SpringWebMvcUtils;
-import com.penglecode.xmodule.common.web.security.consts.SecurityApplicationConstants;
 import com.penglecode.xmodule.common.web.support.HttpAPIResourceSupport;
 import com.penglecode.xmodule.upms.consts.em.UpmsResourceActionTypeEnum;
 import com.penglecode.xmodule.upms.model.UpmsResource;

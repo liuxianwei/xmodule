@@ -1,4 +1,4 @@
-package com.penglecode.xmodule.common.web.security.consts;
+package com.penglecode.xmodule.common.security.consts;
 
 /**
  * Spring-Security应用程序常量

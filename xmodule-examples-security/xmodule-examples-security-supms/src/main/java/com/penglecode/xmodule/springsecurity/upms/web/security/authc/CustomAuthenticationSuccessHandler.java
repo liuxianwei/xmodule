@@ -17,7 +17,7 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.util.StringUtils;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
-import com.penglecode.xmodule.common.web.security.consts.SecurityApplicationConstants;
+import com.penglecode.xmodule.common.security.consts.SecurityApplicationConstants;
 
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 

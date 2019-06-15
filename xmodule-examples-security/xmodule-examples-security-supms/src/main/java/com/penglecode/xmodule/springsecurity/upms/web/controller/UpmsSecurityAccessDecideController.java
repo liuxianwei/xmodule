@@ -15,10 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.exception.ApplicationRuntimeException;
+import com.penglecode.xmodule.common.security.config.SecurityConfigProperties;
 import com.penglecode.xmodule.common.support.MvvmWebAppConfig;
 import com.penglecode.xmodule.common.util.FileUtils;
 import com.penglecode.xmodule.common.util.ResourceUtils;
-import com.penglecode.xmodule.common.web.security.config.SecurityConfigProperties;
 import com.penglecode.xmodule.common.web.springmvc.view.TextJavascriptView;
 import com.penglecode.xmodule.common.web.support.HttpAPIResourceSupport;
 

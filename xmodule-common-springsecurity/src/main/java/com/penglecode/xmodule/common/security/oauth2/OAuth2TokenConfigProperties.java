@@ -1,4 +1,4 @@
-package com.penglecode.xmodule.common.web.security.oauth2;
+package com.penglecode.xmodule.common.security.oauth2;
 
 public class OAuth2TokenConfigProperties {
 

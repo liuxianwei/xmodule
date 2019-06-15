@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.penglecode.xmodule.common.web.security.consts.SecurityApplicationConstants;
+import com.penglecode.xmodule.common.security.consts.SecurityApplicationConstants;
 import com.penglecode.xmodule.springsecurity.upms.web.security.servlet.SecurityAccessDecideRequest;
 
 public class RestoreSecurityAccessDecideRequestFilter extends OncePerRequestFilter {

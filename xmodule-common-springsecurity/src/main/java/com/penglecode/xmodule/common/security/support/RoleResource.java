@@ -1,4 +1,4 @@
-package com.penglecode.xmodule.common.web.security.support;
+package com.penglecode.xmodule.common.security.support;
 
 import com.penglecode.xmodule.common.support.BaseModel;
 

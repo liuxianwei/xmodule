@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.penglecode.xmodule.common.security.oauth2.OAuth2TokenJackson2Module;
 import com.penglecode.xmodule.common.util.JsonUtils;
-import com.penglecode.xmodule.common.web.security.oauth2.OAuth2TokenJackson2Module;
 import com.penglecode.xmodule.springsecurity.oauth2.boot.OAuth2AuthorizationServerApplication;
 
 

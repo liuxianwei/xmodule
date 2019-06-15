@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.penglecode.xmodule.common.security.oauth2.OAuth2HttpApiResourceSupport;
 import com.penglecode.xmodule.common.support.Result;
-import com.penglecode.xmodule.common.web.security.oauth2.OAuth2HttpApiResourceSupport;
 import com.penglecode.xmodule.springsecurity.upms.model.UpmsUser;
 import com.penglecode.xmodule.springsecurity.upms.service.UpmsUserService;
 

@@ -41,7 +41,6 @@ spring:
                       scope: app
                       authorizedGrantTypes:
                           - client_credentials
-                          - refresh_token
                       resourceIds: 
                           - demo-resource
                       authorities:

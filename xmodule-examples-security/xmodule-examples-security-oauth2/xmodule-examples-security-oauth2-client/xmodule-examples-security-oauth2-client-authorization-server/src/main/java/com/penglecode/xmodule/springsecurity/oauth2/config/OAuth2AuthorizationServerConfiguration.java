@@ -17,11 +17,11 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
+import com.penglecode.xmodule.common.security.oauth2.CustomOAuth2ExceptionRenderer;
+import com.penglecode.xmodule.common.security.oauth2.OAuth2Client;
+import com.penglecode.xmodule.common.security.oauth2.OAuth2ServerConfigProperties;
 import com.penglecode.xmodule.common.util.ArrayUtils;
 import com.penglecode.xmodule.common.util.ReflectionUtils;
-import com.penglecode.xmodule.common.web.security.oauth2.CustomOAuth2ExceptionRenderer;
-import com.penglecode.xmodule.common.web.security.oauth2.OAuth2Client;
-import com.penglecode.xmodule.common.web.security.oauth2.OAuth2ServerConfigProperties;
 
 /**
  * SpringSecurity-OAuth2认证授权服务器配置

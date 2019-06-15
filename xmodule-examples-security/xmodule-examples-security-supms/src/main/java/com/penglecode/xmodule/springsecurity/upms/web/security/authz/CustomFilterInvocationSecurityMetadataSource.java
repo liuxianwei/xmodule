@@ -23,11 +23,11 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import com.penglecode.xmodule.common.security.service.RoleResourceService;
+import com.penglecode.xmodule.common.security.support.RoleResource;
 import com.penglecode.xmodule.common.support.MvvmWebAppConfig;
 import com.penglecode.xmodule.common.util.CollectionUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
-import com.penglecode.xmodule.common.web.security.service.RoleResourceService;
-import com.penglecode.xmodule.common.web.security.support.RoleResource;
 import com.penglecode.xmodule.springsecurity.upms.web.security.support.SecurityPermsSynchronizeEvent;
 
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource, ApplicationListener<SecurityPermsSynchronizeEvent>, InitializingBean {

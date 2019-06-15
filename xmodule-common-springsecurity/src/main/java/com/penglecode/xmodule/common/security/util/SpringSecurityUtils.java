@@ -1,4 +1,4 @@
-package com.penglecode.xmodule.common.web.security.util;
+package com.penglecode.xmodule.common.security.util;
 
 /**
  * spring-security工具类
