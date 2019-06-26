@@ -1,6 +1,6 @@
 package com.penglecode.xmodule.common.util;
 
-import org.apache.commons.codec.binary.Base64;
+import java.util.Base64;
 
 /**
  * 基于Base64的加解密工具类
@@ -31,10 +31,7 @@ public class Base64Utils {
 	 * @return
 	 */
 	public static String encode(byte[] bytes) {
-		Base64 base64 = new Base64();
-		bytes = base64.encode(bytes);
-		String s = new String(bytes);
-		return s;
+		return Base64.getEncoder().encodeToString(bytes);
 	}
 	
 	/**
@@ -47,7 +44,7 @@ public class Base64Utils {
 		if(encodedText == null){
 			return null;
 		}
-		return decode(encodedText.getBytes());
+		return new String(decode(encodedText.getBytes()));
 	}
 	
 	/**
@@ -56,11 +53,8 @@ public class Base64Utils {
 	 * @param encodedText
 	 * @return
 	 */
-	public static String decode(byte[] bytes) {
-		Base64 base64 = new Base64();
-		bytes = base64.decode(bytes);
-		String s = new String(bytes);
-		return s;
+	public static byte[] decode(byte[] bytes) {
+		return Base64.getDecoder().decode(bytes);
 	}
 	
 }

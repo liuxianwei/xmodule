@@ -39,17 +39,19 @@ public class EnabledFilterRegistrationBeanLogger implements ApplicationListener<
 			servletContextInitializerBeans.forEach(sci -> {
 				if(sci instanceof AbstractFilterRegistrationBean) {
 					AbstractFilterRegistrationBean<Filter> filterRegBean = (AbstractFilterRegistrationBean<Filter>) sci;
-					String filterName = ReflectionUtils.getFieldValue(ReflectionUtils.findField(filterRegBean.getClass(), "name"), filterRegBean);
-					if(StringUtils.isEmpty(filterName)) {
-						Filter filter = filterRegBean.getFilter();
-						if(filter != null) {
-							filterName = Introspector.decapitalize(filter.getClass().getSimpleName());
-						} else {
-							filterName = filterRegBean.toString();
+					if(filterRegBean.isEnabled()) {
+						String filterName = ReflectionUtils.getFieldValue(ReflectionUtils.findField(filterRegBean.getClass(), "name"), filterRegBean);
+						if(StringUtils.isEmpty(filterName)) {
+							Filter filter = filterRegBean.getFilter();
+							if(filter != null) {
+								filterName = Introspector.decapitalize(filter.getClass().getSimpleName());
+							} else {
+								filterName = filterRegBean.toString();
+							}
 						}
+						Collection<String> filterUrls = CollectionUtils.defaultIfEmpty(filterRegBean.getUrlPatterns(), Arrays.asList("/*"));
+						LOGGER.info(">>> Register filter: {} urls={}, with order: {}", filterName, filterUrls, filterRegBean.getOrder());
 					}
-					Collection<String> filterUrls = CollectionUtils.defaultIfEmpty(filterRegBean.getUrlPatterns(), Arrays.asList("/*"));
-					LOGGER.info(">>> Register filter: {} urls={}, with order: {}", filterName, filterUrls, filterRegBean.getOrder());
 				}
 			});
 		}
