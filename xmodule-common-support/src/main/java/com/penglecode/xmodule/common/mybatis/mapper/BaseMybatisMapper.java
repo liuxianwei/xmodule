@@ -2,6 +2,7 @@ package com.penglecode.xmodule.common.mybatis.mapper;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
@@ -26,17 +27,11 @@ public interface BaseMybatisMapper<T extends BaseModel<T>> {
 	
 	/**
 	 * 根据ID修改实体的字段
-	 * @param model
+	 * @param id
+	 * @param paramMap
 	 * @return
 	 */
-	public int updateModelById(T model);
-	
-	/**
-	 * 根据ID动态修改实体的字段，即有值的字段会被更新到数据库，无值的字段忽略
-	 * @param model
-	 * @return
-	 */
-	public int dynamicUpdateModelById(T model);
+	public int updateModelById(@Param("id") Serializable id, @Param("paramMap") Map<String,Object> paramMap);
 	
 	/**
 	 * 根据ID删除实体

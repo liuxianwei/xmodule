@@ -4,8 +4,6 @@
 	<!-- 引入配置文件 -->
 	<properties resource="mybatis-codegen-myexample.properties" />
 	<context id="mybatisGenerator" targetRuntime="MyBatis3Simple" defaultModelType="flat">
-		<!-- 数据库类型(方言) -->
-		<property name="dialect" value="MYSQL"/>
 		<!-- 生成的文件编码 -->
 		<property name="javaFileEncoding" value="UTF-8"/>
 		<!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
@@ -15,12 +13,6 @@
     	<plugin type="com.penglecode.xmodule.common.codegen.mybatis.CustomMysqlGeneratorPlugin">
     		<!-- 解决MybatisGenerator设置overwrite=false时仅对Java文件有效,XML文件无效的问题 -->
     		<property name="mergeableXmlMapper" value="false"/>
-    		<!-- 所有Model的Serializable类 -->
-    		<property name="modelSerializableClass" value="com.penglecode.xmodule.common.support.BaseModel"/>
-    		<!-- 所有Mapper接口的基类 -->
-    		<property name="baseMappers" value="com.penglecode.xmodule.common.mybatis.mapper.BaseMybatisMapper"/>
-    		<!-- MapperXML中if标签判断非空的工具类：MybatisUtils.isEmpty(<Object/String/Collection>) -->
-    		<property name="mybatisUtilsClass" value="com.penglecode.xmodule.common.mybatis.MybatisUtils"/>
     	</plugin>
     	
 		<commentGenerator type="com.penglecode.xmodule.common.codegen.mybatis.CustomCommentGenerator">
@@ -64,19 +56,15 @@
 		</javaClientGenerator>
 
 		<!-- ！！！！！！！！！以下需要动态改动，以免覆盖他人代码！！！！！！！！ -->
-
+		
 		<!-- 表名对应生成的实体 -->
 		<table tableName="t_product" domainObjectName="Product" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<!-- 数据模型的名称 -->
 			<property name="modelName" value="商品信息"/>
 			<!-- 指定insertModel的插入字段 -->
 			<property name="insertModelColumns" value="['product_name', 'product_type', 'unit_price', 'inventory', 'main_category_id', 'create_time']"/>
-			<!-- 指定updateModelById的更新字段 -->
-			<property name="updateModelColumns" value="['product_name', 'product_type', 'unit_price', 'inventory', 'main_category_id']"/>
-			<!-- 指定updateModelById是否为动态更新 -->
-			<property name="dynamicUpdateColumn" value="true"/>
 			<!-- Model注释的author -->
-			<property name="modelCommentAuthor" value="PengPeng"/>
+			<property name="modelCommentAuthor" value="Mybatis-Generator"/>
 			<!-- 对应的Mapper接口上的注解 -->
 			<property name="mapperAnnotations" value="com.penglecode.xmodule.common.support.DefaultDatabase"/>
 			<!-- selectModelListByExample查询的where条件列 -->
@@ -88,12 +76,8 @@
 			<property name="modelName" value="商品分类"/>
 			<!-- 指定insertModel的插入字段 -->
 			<property name="insertModelColumns" value="['category_name', 'parent_category_id', 'create_time']"/>
-			<!-- 指定updateModelById的更新字段 -->
-			<property name="updateModelColumns" value="['category_name', 'parent_category_id']"/>
-			<!-- 指定updateModelById是否为动态更新 -->
-			<property name="dynamicUpdateColumn" value="true"/>
 			<!-- Model注释的author -->
-			<property name="modelCommentAuthor" value="PengPeng"/>
+			<property name="modelCommentAuthor" value="Mybatis-Generator"/>
 			<!-- 对应的Mapper接口上的注解 -->
 			<property name="mapperAnnotations" value="com.penglecode.xmodule.common.support.DefaultDatabase"/>
 			<!-- selectModelListByExample查询的where条件列 -->

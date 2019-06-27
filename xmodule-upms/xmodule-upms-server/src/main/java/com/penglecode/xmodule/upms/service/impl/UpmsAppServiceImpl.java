@@ -1,6 +1,7 @@
 package com.penglecode.xmodule.upms.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,7 +107,8 @@ public class UpmsAppServiceImpl implements UpmsAppService {
 		ValidationAssert.notNull(app, "参数不能为空!");
 		ValidationAssert.notNull(app.getAppId(), "应用ID不能为空!");
         try {
-			upmsAppMapper.updateModelById(app);
+        	Map<String,Object> paramMap = app.mapBuilder().withAppName().withAppKey().withAppSecret().withAppWebContextPath().withAppApiContextPath().withDescription().build();
+			upmsAppMapper.updateModelById(app.getAppId(), paramMap);
         } catch (DuplicateKeyException e) {
             BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("APP_NAME"), String.format("对不起,应用名称(%s)已存在!", app.getAppName()));
             throw e;
@@ -117,10 +119,7 @@ public class UpmsAppServiceImpl implements UpmsAppService {
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 	public void updateAppStatus(Long appId, boolean targetStatus) {
 		 ValidationAssert.notNull(appId, "应用ID不能为空!");
-		 UpmsApp app = new UpmsApp();
-		 app.setAppId(appId);
-		 app.setEnabled(targetStatus);
-		 upmsAppMapper.dynamicUpdateModelById(app);
+		 upmsAppMapper.updateModelById(appId, new UpmsApp().mapBuilder().withEnabled(targetStatus).build());
 	}
 
 	@Override

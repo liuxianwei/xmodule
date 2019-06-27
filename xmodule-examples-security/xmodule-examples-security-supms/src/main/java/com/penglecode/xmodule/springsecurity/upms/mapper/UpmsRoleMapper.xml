@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.penglecode.xmodule.springsecurity.upms.mapper.UpmsRoleMapper">
    
+    <!-- Auto-Generation Code Start -->
+
     <insert id="insertModel" keyProperty="roleId" parameterType="UpmsRole" statementType="PREPARED" useGeneratedKeys="true">
         INSERT INTO sa_upms_role(
             role_id,
@@ -24,56 +26,31 @@
    
     <update id="updateModelById" parameterType="UpmsRole" statementType="PREPARED">
         UPDATE sa_upms_role a
-           SET a.role_id = #{roleId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(roleName)">
-               ,a.role_name = #{roleName, jdbcType=VARCHAR}
+           SET a.role_id = #{id, jdbcType=BIGINT}            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'roleName')">
+               ,a.role_name = #{paramMap.roleName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(roleCode)">
-               ,a.role_code = #{roleCode, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'roleCode')">
+               ,a.role_code = #{paramMap.roleCode, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(description)">
-               ,a.description = #{description, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'roleType')">
+               ,a.role_type = #{paramMap.roleType, jdbcType=TINYINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'description')">
+               ,a.description = #{paramMap.description, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createTime')">
+               ,a.create_time = #{paramMap.createTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateBy)">
-               ,a.update_by = #{updateBy, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createBy')">
+               ,a.create_by = #{paramMap.createBy, jdbcType=BIGINT}
             </if>
-         WHERE a.role_id = #{roleId, jdbcType=BIGINT}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="UpmsRole" statementType="PREPARED">
-        UPDATE sa_upms_role a
-           SET a.role_id = #{roleId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(roleName)">
-               ,a.role_name = #{roleName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'updateTime')">
+               ,a.update_time = #{paramMap.updateTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(roleCode)">
-               ,a.role_code = #{roleCode, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'updateBy')">
+               ,a.update_by = #{paramMap.updateBy, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(roleType)">
-               ,a.role_type = #{roleType, jdbcType=TINYINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(description)">
-               ,a.description = #{description, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createBy)">
-               ,a.create_by = #{createBy, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateBy)">
-               ,a.update_by = #{updateBy, jdbcType=BIGINT}
-            </if>
-         WHERE a.role_id = #{roleId, jdbcType=BIGINT}
+         WHERE a.role_id = #{id, jdbcType=BIGINT}
     </update>
    
     <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
@@ -223,8 +200,11 @@
            AND a.role_type = #{example.roleType, jdbcType=TINYINT}
         </if>
     </select>
-    
-    
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
     <select id="selectUserRoleCountByRoleId" parameterType="java.lang.Long" resultType="java.lang.Integer" statementType="PREPARED">
         SELECT count(*)
           FROM sa_upms_role a, sa_upms_user_role b
@@ -269,5 +249,7 @@
     <delete id="deleteRoleResourcesByRoleId" parameterType="java.lang.Long" statementType="PREPARED">
     	DELETE a FROM sa_upms_role_resource a WHERE a.role_id = #{roleId, jdbcType=BIGINT}
     </delete>
-    
+   
+    <!-- Customized Code End -->
+
 </mapper>

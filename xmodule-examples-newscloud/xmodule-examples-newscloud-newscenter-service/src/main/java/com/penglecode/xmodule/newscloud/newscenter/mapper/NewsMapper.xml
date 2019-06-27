@@ -2,79 +2,72 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.penglecode.xmodule.newscloud.newscenter.mapper.NewsMapper">
    
+    <!-- Auto-Generation Code Start -->
+
     <insert id="insertModel" parameterType="News" statementType="PREPARED">
         INSERT INTO nc_news(
             news_id,
             news_title,
             news_tags,
-            publisher_id,
             create_time,
+            create_by,
             news_content
         ) VALUES (
             #{newsId, jdbcType=VARCHAR},
             #{newsTitle, jdbcType=VARCHAR},
             #{newsTags, jdbcType=VARCHAR},
-            #{publisherId, jdbcType=BIGINT},
             #{createTime, jdbcType=VARCHAR},
+            #{createBy, jdbcType=BIGINT},
             #{newsContent, jdbcType=LONGVARCHAR}
         )
     </insert>
    
     <update id="updateModelById" parameterType="News" statementType="PREPARED">
         UPDATE nc_news a
-           SET a.news_id = #{newsId, jdbcType=VARCHAR}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(newsTitle)">
-               ,a.news_title = #{newsTitle, jdbcType=VARCHAR}
+           SET a.news_id = #{id, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'newsTitle')">
+               ,a.news_title = #{paramMap.newsTitle, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(newsTags)">
-               ,a.news_tags = #{newsTags, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'newsTags')">
+               ,a.news_tags = #{paramMap.newsTags, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'publishTime')">
+               ,a.publish_time = #{paramMap.publishTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(newsContent)">
-               ,a.news_content = #{newsContent, jdbcType=LONGVARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'publisherId')">
+               ,a.publisher_id = #{paramMap.publisherId, jdbcType=BIGINT}
             </if>
-         WHERE a.news_id = #{newsId, jdbcType=VARCHAR}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="News" statementType="PREPARED">
-        UPDATE nc_news a
-           SET a.news_id = #{newsId, jdbcType=VARCHAR}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(newsTitle)">
-               ,a.news_title = #{newsTitle, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'auditStatus')">
+               ,a.audit_status = #{paramMap.auditStatus, jdbcType=TINYINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(newsTags)">
-               ,a.news_tags = #{newsTags, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'auditRemark')">
+               ,a.audit_remark = #{paramMap.auditRemark, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(publishTime)">
-               ,a.publish_time = #{publishTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'auditTime')">
+               ,a.audit_time = #{paramMap.auditTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(publisherId)">
-               ,a.publisher_id = #{publisherId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'auditBy')">
+               ,a.audit_by = #{paramMap.auditBy, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(auditStatus)">
-               ,a.audit_status = #{auditStatus, jdbcType=TINYINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'deleted')">
+               ,a.deleted = #{paramMap.deleted, jdbcType=BOOLEAN}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(auditRemark)">
-               ,a.audit_remark = #{auditRemark, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createTime')">
+               ,a.create_time = #{paramMap.createTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(auditTime)">
-               ,a.audit_time = #{auditTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createBy')">
+               ,a.create_by = #{paramMap.createBy, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(deleted)">
-               ,a.deleted = #{deleted, jdbcType=BOOLEAN}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'updateTime')">
+               ,a.update_time = #{paramMap.updateTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'updateBy')">
+               ,a.update_by = #{paramMap.updateBy, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'newsContent')">
+               ,a.news_content = #{paramMap.newsContent, jdbcType=LONGVARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(newsContent)">
-               ,a.news_content = #{newsContent, jdbcType=LONGVARCHAR}
-            </if>
-         WHERE a.news_id = #{newsId, jdbcType=VARCHAR}
+         WHERE a.news_id = #{id, jdbcType=VARCHAR}
     </update>
    
     <delete id="deleteModelById" parameterType="java.lang.String" statementType="PREPARED">
@@ -90,9 +83,12 @@
                a.audit_status	auditStatus,
                a.audit_remark	auditRemark,
                DATE_FORMAT(a.audit_time, '%Y-%m-%d %T')	auditTime,
+               a.audit_by	auditBy,
                a.deleted	deleted,
                DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
                DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy,
                a.news_content	newsContent
           FROM nc_news a
          WHERE a.news_id = #{newsId, jdbcType=VARCHAR}
@@ -107,9 +103,12 @@
                a.audit_status	auditStatus,
                a.audit_remark	auditRemark,
                DATE_FORMAT(a.audit_time, '%Y-%m-%d %T')	auditTime,
+               a.audit_by	auditBy,
                a.deleted	deleted,
                DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
                DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy,
                a.news_content	newsContent
           FROM nc_news a
          WHERE 1=1
@@ -128,6 +127,9 @@
         <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(deleted)">
            AND a.deleted = #{deleted, jdbcType=BOOLEAN}
         </if>
+        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createBy)">
+           AND a.create_by = #{createBy, jdbcType=BIGINT}
+        </if>
 
     </select>
    
@@ -140,9 +142,12 @@
                a.audit_status	auditStatus,
                a.audit_remark	auditRemark,
                DATE_FORMAT(a.audit_time, '%Y-%m-%d %T')	auditTime,
+               a.audit_by	auditBy,
                a.deleted	deleted,
                DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
                DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy,
                a.news_content	newsContent
           FROM nc_news a
          WHERE a.news_id in 
@@ -161,9 +166,12 @@
                a.audit_status	auditStatus,
                a.audit_remark	auditRemark,
                DATE_FORMAT(a.audit_time, '%Y-%m-%d %T')	auditTime,
+               a.audit_by	auditBy,
                a.deleted	deleted,
                DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
                DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy,
                a.news_content	newsContent
           FROM nc_news a
          WHERE 1=1
@@ -185,9 +193,12 @@
                a.audit_status	auditStatus,
                a.audit_remark	auditRemark,
                DATE_FORMAT(a.audit_time, '%Y-%m-%d %T')	auditTime,
+               a.audit_by	auditBy,
                a.deleted	deleted,
                DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
                DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy,
                a.news_content	newsContent
           FROM nc_news a
          WHERE 1=1
@@ -205,6 +216,9 @@
         </if>
         <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.deleted)">
            AND a.deleted = #{example.deleted, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.createBy)">
+           AND a.create_by = #{example.createBy, jdbcType=BIGINT}
         </if>
         <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
          ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
@@ -220,9 +234,12 @@
                a.audit_status	auditStatus,
                a.audit_remark	auditRemark,
                DATE_FORMAT(a.audit_time, '%Y-%m-%d %T')	auditTime,
+               a.audit_by	auditBy,
                a.deleted	deleted,
                DATE_FORMAT(a.create_time, '%Y-%m-%d %T')	createTime,
+               a.create_by	createBy,
                DATE_FORMAT(a.update_time, '%Y-%m-%d %T')	updateTime,
+               a.update_by	updateBy,
                a.news_content	newsContent
           FROM nc_news a
          WHERE 1=1
@@ -240,6 +257,9 @@
         </if>
         <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.deleted)">
            AND a.deleted = #{example.deleted, jdbcType=BOOLEAN}
+        </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.createBy)">
+           AND a.create_by = #{example.createBy, jdbcType=BIGINT}
         </if>
         <if test="sort != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sort.orders)">
          ORDER BY <foreach collection="sort.orders" index="index" item="item" open="" separator="," close="">#{item.property} #{item.direction}</foreach>
@@ -265,13 +285,15 @@
         <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.deleted)">
            AND a.deleted = #{example.deleted, jdbcType=BOOLEAN}
         </if>
+        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.createBy)">
+           AND a.create_by = #{example.createBy, jdbcType=BIGINT}
+        </if>
     </select>
-    
-    
-    <update id="removeNewsById" parameterType="java.lang.String" statementType="PREPARED">
-        UPDATE nc_news a SET a.deleted = 1 WHERE a.news_id = #{newsId, jdbcType=VARCHAR}
-    </update>
-    
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
     <select id="selectNewsListByUserId" parameterType="java.util.Map" resultType="News" statementType="PREPARED">
         SELECT a.news_id	newsId,
                a.news_title	newsTitle,
@@ -298,5 +320,7 @@
          </if>
          ORDER BY a.create_time DESC
     </select>
-    
+   
+    <!-- Customized Code End -->
+
 </mapper>

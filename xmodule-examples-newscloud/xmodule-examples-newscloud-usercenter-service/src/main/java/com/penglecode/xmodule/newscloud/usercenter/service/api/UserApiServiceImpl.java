@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.penglecode.xmodule.common.consts.GlobalConstants;
@@ -81,7 +80,8 @@ public class UserApiServiceImpl extends HttpAPIResourceSupport implements UserAp
 		ValidationAssert.notEmpty(user.getUserId(), "用户ID不能为空!");
 		user.setUpdateTime(DateTimeUtils.formatNow());
 		try {
-			userMapper.updateModelById(user);
+			Map<String,Object> paramMap = user.mapBuilder().withUserIconUrl().withEmail().withBirthday().withSex().withMobilePhone().withNickName().withUpdateTime().build();
+			userMapper.updateModelById(user.getUserId(), paramMap);
 		} catch (DuplicateKeyException e) {
             BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("USER_NAME"), "对不起,该用户名已存在!");
             throw e;
@@ -102,10 +102,7 @@ public class UserApiServiceImpl extends HttpAPIResourceSupport implements UserAp
 	public Result<Object> updateUserStatus(@PathVariable("userId") Long userId, @PathVariable("status") Integer status) {
 		ValidationAssert.notEmpty(userId, "用户ID不能为空!");
 		ValidationAssert.notEmpty(UserStatusEnum.getStatus(status), "用户状态不能为空!");
-		User param = new User();
-		param.setUserId(userId);
-		param.setStatus(status);
-		userMapper.dynamicUpdateModelById(param);
+		userMapper.updateModelById(userId, new User().mapBuilder().withStatus(status).build());
 		return Result.success().message("OK").build();
 	}
 
@@ -116,13 +113,7 @@ public class UserApiServiceImpl extends HttpAPIResourceSupport implements UserAp
 		ValidationAssert.notEmpty(user.getUserId(), "用户ID不能为空!");
 		ValidationAssert.notEmpty(user.getAuthIdcard(), "身份证号码不能为空!");
 		ValidationAssert.notEmpty(user.getAuthRealName(), "真实姓名不能为空!");
-		user.setAuthorized(true);
-		User param = new User();
-		param.setUserId(user.getUserId());
-		param.setAuthorized(true);
-		param.setAuthIdcard(user.getAuthIdcard());
-		param.setAuthRealName(user.getAuthRealName());
-		userMapper.dynamicUpdateModelById(param);
+		userMapper.updateModelById(user.getUserId(), user.mapBuilder().withAuthorized(true).withAuthIdcard().withAuthRealName().build());
 		return Result.success().message("OK").build();
 	}
 

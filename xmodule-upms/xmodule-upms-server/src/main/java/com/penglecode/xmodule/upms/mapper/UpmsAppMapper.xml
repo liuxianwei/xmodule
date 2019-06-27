@@ -2,96 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.penglecode.xmodule.upms.mapper.UpmsAppMapper">
    
+    <!-- Auto-Generation Code Start -->
+
     <insert id="insertModel" keyProperty="appId" parameterType="UpmsApp" statementType="PREPARED" useGeneratedKeys="true">
         INSERT INTO upms_app(
             app_id,
             app_name,
             description,
-            app_type,
             app_key,
             app_secret,
             app_web_context_path,
             app_api_context_path,
-            create_time,
-            create_by
+            create_time
         ) VALUES (
             #{appId, jdbcType=BIGINT},
             #{appName, jdbcType=VARCHAR},
             #{description, jdbcType=VARCHAR},
-            #{appType, jdbcType=TINYINT},
             #{appKey, jdbcType=VARCHAR},
             #{appSecret, jdbcType=VARCHAR},
             #{appWebContextPath, jdbcType=VARCHAR},
             #{appApiContextPath, jdbcType=VARCHAR},
-            #{createTime, jdbcType=VARCHAR},
-            #{createBy, jdbcType=BIGINT}
+            #{createTime, jdbcType=VARCHAR}
         )
     </insert>
    
     <update id="updateModelById" parameterType="UpmsApp" statementType="PREPARED">
         UPDATE upms_app a
-           SET a.app_id = #{appId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appName)">
-               ,a.app_name = #{appName, jdbcType=VARCHAR}
+           SET a.app_id = #{id, jdbcType=BIGINT}            
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'appName')">
+               ,a.app_name = #{paramMap.appName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(description)">
-               ,a.description = #{description, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'description')">
+               ,a.description = #{paramMap.description, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appType)">
-               ,a.app_type = #{appType, jdbcType=TINYINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'appType')">
+               ,a.app_type = #{paramMap.appType, jdbcType=TINYINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appKey)">
-               ,a.app_key = #{appKey, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'appKey')">
+               ,a.app_key = #{paramMap.appKey, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appSecret)">
-               ,a.app_secret = #{appSecret, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'appSecret')">
+               ,a.app_secret = #{paramMap.appSecret, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appWebContextPath)">
-               ,a.app_web_context_path = #{appWebContextPath, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'appWebContextPath')">
+               ,a.app_web_context_path = #{paramMap.appWebContextPath, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appApiContextPath)">
-               ,a.app_api_context_path = #{appApiContextPath, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'appApiContextPath')">
+               ,a.app_api_context_path = #{paramMap.appApiContextPath, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(enabled)">
-               ,a.enabled = #{enabled, jdbcType=BOOLEAN}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'enabled')">
+               ,a.enabled = #{paramMap.enabled, jdbcType=BOOLEAN}
             </if>
-         WHERE a.app_id = #{appId, jdbcType=BIGINT}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="UpmsApp" statementType="PREPARED">
-        UPDATE upms_app a
-           SET a.app_id = #{appId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appName)">
-               ,a.app_name = #{appName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createTime')">
+               ,a.create_time = #{paramMap.createTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(description)">
-               ,a.description = #{description, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createBy')">
+               ,a.create_by = #{paramMap.createBy, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appType)">
-               ,a.app_type = #{appType, jdbcType=TINYINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appKey)">
-               ,a.app_key = #{appKey, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appSecret)">
-               ,a.app_secret = #{appSecret, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appWebContextPath)">
-               ,a.app_web_context_path = #{appWebContextPath, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appApiContextPath)">
-               ,a.app_api_context_path = #{appApiContextPath, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(enabled)">
-               ,a.enabled = #{enabled, jdbcType=BOOLEAN}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createBy)">
-               ,a.create_by = #{createBy, jdbcType=BIGINT}
-            </if>
-         WHERE a.app_id = #{appId, jdbcType=BIGINT}
+         WHERE a.app_id = #{id, jdbcType=BIGINT}
     </update>
    
     <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
@@ -130,9 +98,6 @@
          WHERE 1=1
         <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appName)">
            AND a.app_name like CONCAT('%', #{appName, jdbcType=VARCHAR}, '%')
-        </if>
-        <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appType)">
-           AND a.app_type = #{appType, jdbcType=TINYINT}
         </if>
         <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appKey)">
            AND a.app_key = #{appKey, jdbcType=VARCHAR}
@@ -209,9 +174,6 @@
         <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appName)">
            AND a.app_name like CONCAT('%', #{example.appName, jdbcType=VARCHAR}, '%')
         </if>
-        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appType)">
-           AND a.app_type = #{example.appType, jdbcType=TINYINT}
-        </if>
         <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appKey)">
            AND a.app_key = #{example.appKey, jdbcType=VARCHAR}
         </if>
@@ -246,9 +208,6 @@
         <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appName)">
            AND a.app_name like CONCAT('%', #{example.appName, jdbcType=VARCHAR}, '%')
         </if>
-        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appType)">
-           AND a.app_type = #{example.appType, jdbcType=TINYINT}
-        </if>
         <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appKey)">
            AND a.app_key = #{example.appKey, jdbcType=VARCHAR}
         </if>
@@ -273,9 +232,6 @@
         <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appName)">
            AND a.app_name like CONCAT('%', #{example.appName, jdbcType=VARCHAR}, '%')
         </if>
-        <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appType)">
-           AND a.app_type = #{example.appType, jdbcType=TINYINT}
-        </if>
         <if test="example != null and @com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(example.appKey)">
            AND a.app_key = #{example.appKey, jdbcType=VARCHAR}
         </if>
@@ -289,4 +245,13 @@
            AND a.enabled = #{example.enabled, jdbcType=BOOLEAN}
         </if>
     </select>
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
+   
+   
+    <!-- Customized Code End -->
+
 </mapper>

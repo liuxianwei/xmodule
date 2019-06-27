@@ -1,6 +1,7 @@
 package com.penglecode.xmodule.upms.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +75,8 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		UpmsUser puser = upmsUserMapper.selectModelById(user.getUserId());
 		ValidationAssert.notNull(puser, "该用户已经不存在了!");
 		try {
-			upmsUserMapper.updateModelById(user);
+			Map<String,Object> paramMap = user.mapBuilder().withUserName().withMobilePhone().withNickName().withRealName().withEmail().withUserIcon().withUpdateBy().withUpdateTime().build();
+			upmsUserMapper.updateModelById(user.getUserId(), paramMap);
 		} catch (DuplicateKeyException e) {
             BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("USER_NAME"), "对不起,该用户名已存在!");
             throw e;
@@ -99,10 +101,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
         ValidationAssert.notNull(UpmsUserStatusEnum.getStatus(status), String.format("无法识别的用户状态(status=%s)!", status));
         UpmsUser puser = upmsUserMapper.selectModelById(userId);
         ValidationAssert.notNull(puser, "该用户已经不存在了!");
-        UpmsUser param = new UpmsUser();
-        param.setUserId(userId);
-        param.setStatus(status);
-        upmsUserMapper.dynamicUpdateModelById(param);
+        upmsUserMapper.updateModelById(userId, new UpmsUser().mapBuilder().withStatus(status).build());
 	}
 
 	@Override
@@ -110,10 +109,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
     public void updateLoginTime(Long userId, String lastLoginTime) {
         ValidationAssert.notNull(userId, "用户id不能为空!");
         ValidationAssert.notEmpty(lastLoginTime, "登录时间不能为空!");
-        UpmsUser param = new UpmsUser();
-        param.setUserId(userId);
-        param.setLastLoginTime(lastLoginTime);
-        upmsUserMapper.dynamicUpdateModelById(param);
+        upmsUserMapper.updateModelById(userId, new UpmsUser().mapBuilder().withLastLoginTime(lastLoginTime).build());
     }
 
 	@Override
@@ -130,11 +126,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
             ValidationAssert.notNull(user.getOldpassword(), "旧密码不能为空!");
             ValidationAssert.isTrue(UserPasswordUtils.matches(user.getOldpassword(), puser.getPassword()), "旧密码不正确!");
         }
-        UpmsUser parameter = new UpmsUser();
-        parameter.setUserId(user.getUserId());
-        parameter.setPassword(UserPasswordUtils.encode(user.getPassword()));
-        parameter.setUpdateTime(DateTimeUtils.formatNow());
-        upmsUserMapper.dynamicUpdateModelById(parameter);
+        upmsUserMapper.updateModelById(user.getUserId(), user.mapBuilder().withPassword(UserPasswordUtils.encode(user.getPassword())).withUpdateTime(DateTimeUtils.formatNow()).build());
     }
 
 	@Override

@@ -15,13 +15,13 @@ import java.lang.annotation.*;
 public @interface Model {
 
 	/**
-	 * 模型名称
+	 * 模型名称(用于自动生成代码的相关注释)
 	 * @return
 	 */
 	String name() default "";
 	
 	/**
-	 * 模型别名
+	 * 模型别名(用于Service方法名的生成)
 	 * @return
 	 */
 	String alias() default "";

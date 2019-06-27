@@ -2,6 +2,7 @@ package com.penglecode.xmodule.springsecurity.upms.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -112,7 +113,10 @@ public class UpmsResourceServiceImpl implements UpmsResourceService, RoleResourc
 			if(resource.getIndexPage()) { //作为首页? (一个应用只有一个首页)
 				upmsResourceMapper.resetResourceIndexPage();
 			}
-			upmsResourceMapper.updateModelById(resource);
+			Map<String, Object> paramMap = resource.mapBuilder().withResourceName().withResourceIcon()
+					.withParentResourceId().withHttpMethod().withActionType().withResourceUrl().withSiblingsIndex()
+					.withIndexPage().withUpdateBy().withUpdateTime().build();
+			upmsResourceMapper.updateModelById(resource.getResourceId(), paramMap);
 		} catch(DuplicateKeyException e) {
 			BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("RESOURCE_NAME"), "修改资源失败,该资源名称已经存在!");
 		}

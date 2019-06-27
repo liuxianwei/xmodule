@@ -20,29 +20,16 @@
    
     <update id="updateModelById" parameterType="Category" statementType="PREPARED">
         UPDATE t_category a
-           SET a.category_id = #{categoryId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(categoryName)">
-               ,a.category_name = #{categoryName, jdbcType=VARCHAR}
+           SET a.category_id = #{id, jdbcType=BIGINT}            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'categoryName')">
+               ,a.category_name = #{paramMap.categoryName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(parentCategoryId)">
-               ,a.parent_category_id = #{parentCategoryId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'parentCategoryId')">
+               ,a.parent_category_id = #{paramMap.parentCategoryId, jdbcType=BIGINT}
             </if>
-         WHERE a.category_id = #{categoryId, jdbcType=BIGINT}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="Category" statementType="PREPARED">
-        UPDATE t_category a
-           SET a.category_id = #{categoryId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(categoryName)">
-               ,a.category_name = #{categoryName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createTime')">
+               ,a.create_time = #{paramMap.createTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(parentCategoryId)">
-               ,a.parent_category_id = #{parentCategoryId, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
-            </if>
-         WHERE a.category_id = #{categoryId, jdbcType=BIGINT}
+         WHERE a.category_id = #{id, jdbcType=BIGINT}
     </update>
    
     <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">

@@ -26,47 +26,25 @@
    
     <update id="updateModelById" parameterType="Product" statementType="PREPARED">
         UPDATE t_product a
-           SET a.product_id = #{productId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productName)">
-               ,a.product_name = #{productName, jdbcType=VARCHAR}
+           SET a.product_id = #{id, jdbcType=BIGINT}            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'productName')">
+               ,a.product_name = #{paramMap.productName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productType)">
-               ,a.product_type = #{productType, jdbcType=TINYINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'productType')">
+               ,a.product_type = #{paramMap.productType, jdbcType=TINYINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(unitPrice)">
-               ,a.unit_price = #{unitPrice, jdbcType=DECIMAL}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'unitPrice')">
+               ,a.unit_price = #{paramMap.unitPrice, jdbcType=DECIMAL}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(inventory)">
-               ,a.inventory = #{inventory, jdbcType=INTEGER}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'inventory')">
+               ,a.inventory = #{paramMap.inventory, jdbcType=INTEGER}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mainCategoryId)">
-               ,a.main_category_id = #{mainCategoryId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'mainCategoryId')">
+               ,a.main_category_id = #{paramMap.mainCategoryId, jdbcType=BIGINT}
             </if>
-         WHERE a.product_id = #{productId, jdbcType=BIGINT}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="Product" statementType="PREPARED">
-        UPDATE t_product a
-           SET a.product_id = #{productId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productName)">
-               ,a.product_name = #{productName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createTime')">
+               ,a.create_time = #{paramMap.createTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(productType)">
-               ,a.product_type = #{productType, jdbcType=TINYINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(unitPrice)">
-               ,a.unit_price = #{unitPrice, jdbcType=DECIMAL}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(inventory)">
-               ,a.inventory = #{inventory, jdbcType=INTEGER}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mainCategoryId)">
-               ,a.main_category_id = #{mainCategoryId, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
-            </if>
-         WHERE a.product_id = #{productId, jdbcType=BIGINT}
+         WHERE a.product_id = #{id, jdbcType=BIGINT}
     </update>
    
     <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">

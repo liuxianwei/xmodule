@@ -10,18 +10,12 @@
 		<property name="beginningDelimiter" value="`"/>
     	<property name="endingDelimiter" value="`"/>
     	
-    	<plugin type="com.penglecode.xmodule.common.mybatis.codegen.CustomMysqlGeneratorPlugin">
+    	<plugin type="com.penglecode.xmodule.common.codegen.mybatis.CustomMysqlGeneratorPlugin">
     		<!-- 解决MybatisGenerator设置overwrite=false时仅对Java文件有效,XML文件无效的问题 -->
     		<property name="mergeableXmlMapper" value="false"/>
-    		<!-- 所有Model的Serializable类 -->
-    		<property name="modelSerializableClass" value="com.penglecode.xmodule.common.support.BaseModel"/>
-    		<!-- 所有Mapper接口的基类 -->
-    		<property name="baseMappers" value="com.penglecode.xmodule.common.mybatis.mapper.BaseMybatisMapper"/>
-    		<!-- MapperXML中if标签判断非空的工具类：MybatisUtils.isEmpty(<Object/String/Collection>) -->
-    		<property name="mybatisUtilsClass" value="com.penglecode.xmodule.common.mybatis.MybatisUtils"/>
     	</plugin>
     	
-		<commentGenerator type="com.penglecode.xmodule.common.mybatis.codegen.CustomCommentGenerator">
+		<commentGenerator type="com.penglecode.xmodule.common.codegen.mybatis.CustomCommentGenerator">
 			<!-- 取消默认生成的注释 -->
 			<property name="suppressAllComments" value="true"/>
 		</commentGenerator>
@@ -29,7 +23,7 @@
 		<jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}">
 		</jdbcConnection>
 		<!-- 指定生成的类型为java类型，避免数据库中number等类型字段 -->
-		<javaTypeResolver type="com.penglecode.xmodule.common.mybatis.codegen.CustomJavaTypeResolver">
+		<javaTypeResolver type="com.penglecode.xmodule.common.codegen.mybatis.CustomJavaTypeResolver">
 			<property name="forceBigDecimals" value="false"/>
 			<!-- 数据库date/datetime类型的字段,在Model中定义为String类型 -->
 			<property name="forceDateTimeStampAsString" value="true"/>
@@ -65,18 +59,17 @@
 
 		<!-- 表名对应生成的实体 -->
 		<table tableName="nc_news" domainObjectName="News" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<!-- 数据模型的名称 -->
+			<property name="modelName" value="新闻"/>
 			<!-- 指定insertModel的插入字段 -->
-			<property name="insertModelColumns" value="['news_id', 'news_title', 'news_content', 'news_tags', 'publisher_id', 'create_time']"/>
-			<!-- 指定updateModelById的更新字段 -->
-			<property name="updateModelColumns" value="['news_title', 'news_content', 'news_tags', 'update_time']"/>
-			<!-- 指定updateModelById是否为动态更新 -->
-			<property name="dynamicUpdateColumn" value="true"/>
+			<property name="insertModelColumns" value="['news_id', 'news_title', 'news_content', 'news_tags', 'create_time', 'create_by']"/>
 			<!-- Model注释的author -->
-			<property name="modelCommentAuthor" value="PengPeng"/>
+			<property name="modelCommentAuthor" value="Mybatis-Generator"/>
 			<!-- 对应的Mapper接口上的注解 -->
 			<property name="mapperAnnotations" value="com.penglecode.xmodule.common.support.DefaultDatabase"/>
 			<!-- selectModelListByExample查询的where条件列 -->
-			<property name="exampleQueryWhereColumns" value="{'news_title': 'like' ,'news_tags': 'like', 'publisher_id': 'eq', 'audit_status': 'eq', 'deleted': 'eq'}"/>
-		</table>		
+			<property name="exampleQueryWhereColumns" value="{'news_title': 'like' ,'news_tags': 'like', 'publisher_id': 'eq', 'audit_status': 'eq', 'deleted': 'eq', 'create_by': 'eq'}"/>
+		</table>
+		
 	</context>
 </generatorConfiguration>

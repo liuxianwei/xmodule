@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.penglecode.xmodule.springsecurity.upms.mapper.UpmsResourceMapper">
    
+    <!-- Auto-Generation Code Start -->
+
     <insert id="insertModel" keyProperty="resourceId" parameterType="UpmsResource" statementType="PREPARED" useGeneratedKeys="true">
         INSERT INTO sa_upms_resource(
             resource_id,
@@ -36,83 +38,49 @@
    
     <update id="updateModelById" parameterType="UpmsResource" statementType="PREPARED">
         UPDATE sa_upms_resource a
-           SET a.resource_id = #{resourceId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(resourceName)">
-               ,a.resource_name = #{resourceName, jdbcType=VARCHAR}
+           SET a.resource_id = #{id, jdbcType=BIGINT}            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'resourceName')">
+               ,a.resource_name = #{paramMap.resourceName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(resourceUrl)">
-               ,a.resource_url = #{resourceUrl, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'parentResourceId')">
+               ,a.parent_resource_id = #{paramMap.parentResourceId, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(httpMethod)">
-               ,a.http_method = #{httpMethod, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'appRootResource')">
+               ,a.app_root_resource = #{paramMap.appRootResource, jdbcType=BOOLEAN}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(actionType)">
-               ,a.action_type = #{actionType, jdbcType=TINYINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'resourceUrl')">
+               ,a.resource_url = #{paramMap.resourceUrl, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(siblingsIndex)">
-               ,a.siblings_index = #{siblingsIndex, jdbcType=INTEGER}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'resourceType')">
+               ,a.resource_type = #{paramMap.resourceType, jdbcType=TINYINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(resourceIcon)">
-               ,a.resource_icon = #{resourceIcon, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'httpMethod')">
+               ,a.http_method = #{paramMap.httpMethod, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(indexPage)">
-               ,a.index_page = #{indexPage, jdbcType=BOOLEAN}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'actionType')">
+               ,a.action_type = #{paramMap.actionType, jdbcType=TINYINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'siblingsIndex')">
+               ,a.siblings_index = #{paramMap.siblingsIndex, jdbcType=INTEGER}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateBy)">
-               ,a.update_by = #{updateBy, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'resourceIcon')">
+               ,a.resource_icon = #{paramMap.resourceIcon, jdbcType=VARCHAR}
             </if>
-         WHERE a.resource_id = #{resourceId, jdbcType=BIGINT}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="UpmsResource" statementType="PREPARED">
-        UPDATE sa_upms_resource a
-           SET a.resource_id = #{resourceId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(resourceName)">
-               ,a.resource_name = #{resourceName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'indexPage')">
+               ,a.index_page = #{paramMap.indexPage, jdbcType=BOOLEAN}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(parentResourceId)">
-               ,a.parent_resource_id = #{parentResourceId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createTime')">
+               ,a.create_time = #{paramMap.createTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appRootResource)">
-               ,a.app_root_resource = #{appRootResource, jdbcType=BOOLEAN}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createBy')">
+               ,a.create_by = #{paramMap.createBy, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(resourceUrl)">
-               ,a.resource_url = #{resourceUrl, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'updateTime')">
+               ,a.update_time = #{paramMap.updateTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(resourceType)">
-               ,a.resource_type = #{resourceType, jdbcType=TINYINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'updateBy')">
+               ,a.update_by = #{paramMap.updateBy, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(httpMethod)">
-               ,a.http_method = #{httpMethod, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(actionType)">
-               ,a.action_type = #{actionType, jdbcType=TINYINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(siblingsIndex)">
-               ,a.siblings_index = #{siblingsIndex, jdbcType=INTEGER}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(resourceIcon)">
-               ,a.resource_icon = #{resourceIcon, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(indexPage)">
-               ,a.index_page = #{indexPage, jdbcType=BOOLEAN}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createBy)">
-               ,a.create_by = #{createBy, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateBy)">
-               ,a.update_by = #{updateBy, jdbcType=BIGINT}
-            </if>
-         WHERE a.resource_id = #{resourceId, jdbcType=BIGINT}
+         WHERE a.resource_id = #{id, jdbcType=BIGINT}
     </update>
    
     <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
@@ -346,15 +314,18 @@
            AND a.index_page = #{example.indexPage, jdbcType=BOOLEAN}
         </if>
     </select>
-    
-	
-	 <update id="resetResourceIndexPage" parameterType="java.util.Map" statementType="PREPARED">
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
+    <update id="resetResourceIndexPage" parameterType="java.util.Map" statementType="PREPARED">
         UPDATE sa_upms_resource a
            SET a.index_page = 0
          WHERE 1=1
-     </update>
+    </update>
      
-     <select id="selectChildResourceCountByParentId" parameterType="java.lang.Long" resultType="java.lang.Integer" statementType="PREPARED">
+    <select id="selectChildResourceCountByParentId" parameterType="java.lang.Long" resultType="java.lang.Integer" statementType="PREPARED">
         SELECT count(*)
           FROM sa_upms_resource a
          WHERE a.parent_resource_id = #{parentResourceId, jdbcType=BIGINT}
@@ -404,4 +375,7 @@
 		 WHERE IFNULL(a.resource_url,'') != ''
 		 ORDER BY a.resource_url ASC
      </select>
+   
+    <!-- Customized Code End -->
+
 </mapper>

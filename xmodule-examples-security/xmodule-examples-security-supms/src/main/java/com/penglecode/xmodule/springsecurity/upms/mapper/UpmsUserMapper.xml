@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.penglecode.xmodule.springsecurity.upms.mapper.UpmsUserMapper">
    
+    <!-- Auto-Generation Code Start -->
+
     <insert id="insertModel" keyProperty="userId" parameterType="UpmsUser" statementType="PREPARED" useGeneratedKeys="true">
         INSERT INTO sa_upms_user(
             user_id,
@@ -32,83 +34,52 @@
    
     <update id="updateModelById" parameterType="UpmsUser" statementType="PREPARED">
         UPDATE sa_upms_user a
-           SET a.user_id = #{userId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
-               ,a.user_name = #{userName, jdbcType=VARCHAR}
+           SET a.user_id = #{id, jdbcType=BIGINT}            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'userName')">
+               ,a.user_name = #{paramMap.userName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(realName)">
-               ,a.real_name = #{realName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'realName')">
+               ,a.real_name = #{paramMap.realName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
-               ,a.nick_name = #{nickName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'password')">
+               ,a.password = #{paramMap.password, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
-               ,a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'userType')">
+               ,a.user_type = #{paramMap.userType, jdbcType=TINYINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(email)">
-               ,a.email = #{email, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'nickName')">
+               ,a.nick_name = #{paramMap.nickName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userIcon)">
-               ,a.user_icon = #{userIcon, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'mobilePhone')">
+               ,a.mobile_phone = #{paramMap.mobilePhone, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'email')">
+               ,a.email = #{paramMap.email, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateBy)">
-               ,a.update_by = #{updateBy, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'userIcon')">
+               ,a.user_icon = #{paramMap.userIcon, jdbcType=VARCHAR}
             </if>
-         WHERE a.user_id = #{userId, jdbcType=BIGINT}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="UpmsUser" statementType="PREPARED">
-        UPDATE sa_upms_user a
-           SET a.user_id = #{userId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
-               ,a.user_name = #{userName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'status')">
+               ,a.status = #{paramMap.status, jdbcType=TINYINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(realName)">
-               ,a.real_name = #{realName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'lastLoginTime')">
+               ,a.last_login_time = #{paramMap.lastLoginTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(password)">
-               ,a.password = #{password, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'loginTimes')">
+               ,a.login_times = #{paramMap.loginTimes, jdbcType=INTEGER}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userType)">
-               ,a.user_type = #{userType, jdbcType=TINYINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createTime')">
+               ,a.create_time = #{paramMap.createTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
-               ,a.nick_name = #{nickName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createBy')">
+               ,a.create_by = #{paramMap.createBy, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
-               ,a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'updateTime')">
+               ,a.update_time = #{paramMap.updateTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(email)">
-               ,a.email = #{email, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'updateBy')">
+               ,a.update_by = #{paramMap.updateBy, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userIcon)">
-               ,a.user_icon = #{userIcon, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(status)">
-               ,a.status = #{status, jdbcType=TINYINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(lastLoginTime)">
-               ,a.last_login_time = #{lastLoginTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(loginTimes)">
-               ,a.login_times = #{loginTimes, jdbcType=INTEGER}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createBy)">
-               ,a.create_by = #{createBy, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateBy)">
-               ,a.update_by = #{updateBy, jdbcType=BIGINT}
-            </if>
-         WHERE a.user_id = #{userId, jdbcType=BIGINT}
+         WHERE a.user_id = #{id, jdbcType=BIGINT}
     </update>
    
     <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
@@ -348,8 +319,11 @@
            AND a.status = #{example.status, jdbcType=TINYINT}
         </if>
     </select>
-    
-    
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
     <select id="selectUserRoleListByUserId" parameterType="java.lang.Long" resultType="UpmsRole" statementType="PREPARED">
         SELECT a.role_id	roleId,
                a.role_name	roleName,
@@ -392,5 +366,7 @@
 			#{item, jdbcType=BIGINT}
         </foreach>
 	</delete>
-	
+   
+    <!-- Customized Code End -->
+
 </mapper>

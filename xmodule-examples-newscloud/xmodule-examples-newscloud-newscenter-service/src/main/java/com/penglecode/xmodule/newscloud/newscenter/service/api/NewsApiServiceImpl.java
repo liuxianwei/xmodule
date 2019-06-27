@@ -2,6 +2,7 @@ package com.penglecode.xmodule.newscloud.newscenter.service.api;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import org.apache.ibatis.session.RowBounds;
@@ -55,6 +56,7 @@ public class NewsApiServiceImpl extends HttpAPIResourceSupport implements NewsAp
 		news.setDeleted(Boolean.FALSE);
 		news.setAuditStatus(NewsAuditStatusEnum.AUDIT_WAITING.getStatusCode());
 		news.setCreateTime(DateTimeUtils.formatNow());
+		news.setCreateBy(1L);
 		try {
 			newsMapper.insertModel(news);
 		} catch (DuplicateKeyException e) {
@@ -69,8 +71,10 @@ public class NewsApiServiceImpl extends HttpAPIResourceSupport implements NewsAp
 	public Result<Object> updateNews(News news) {
 		ValidationAssert.notNull(news, "参数不能为空!");
 		news.setUpdateTime(DateTimeUtils.formatNow());
+		news.setUpdateBy(1L);
 		try {
-			newsMapper.updateModelById(news);
+			Map<String,Object> paramMap = news.mapBuilder().withNewsTitle().withNewsTags().withNewsContent().withUpdateBy().withUpdateTime().build();
+			newsMapper.updateModelById(news.getNewsId(), paramMap);
 		} catch (DuplicateKeyException e) {
             BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("NEWS_TITLE"), "对不起,重复的新闻标题!");
             throw e;
@@ -85,7 +89,8 @@ public class NewsApiServiceImpl extends HttpAPIResourceSupport implements NewsAp
 		if(ObjectUtils.defaultIfNull(forceDelete, Boolean.FALSE)) {
 			newsMapper.deleteModelById(newsId);
 		} else {
-			newsMapper.removeNewsById(newsId);
+			Map<String,Object> paramMap = new News().mapBuilder().withDeleted(Boolean.TRUE).build();
+			newsMapper.updateModelById(newsId, paramMap);
 		}
 		return Result.success().message("OK").build();
 	}
@@ -99,7 +104,9 @@ public class NewsApiServiceImpl extends HttpAPIResourceSupport implements NewsAp
 		News parameter = new News();
 		parameter.setNewsId(news.getNewsId());
 		parameter.setPublishTime(news.getPublishTime());
-		newsMapper.dynamicUpdateModelById(parameter);
+		parameter.setPublisherId(1L);
+		Map<String,Object> paramMap = news.mapBuilder().withPublisherId().withPublishTime().build();
+		newsMapper.updateModelById(news.getNewsId(), paramMap);
 		return Result.success().message("OK").build();
 	}
 
@@ -112,10 +119,12 @@ public class NewsApiServiceImpl extends HttpAPIResourceSupport implements NewsAp
 		news.setAuditTime(DateTimeUtils.formatNow());
 		News parameter = new News();
 		parameter.setNewsId(news.getNewsId());
+		parameter.setAuditBy(1L);
 		parameter.setAuditStatus(news.getAuditStatus());
 		parameter.setAuditTime(news.getAuditTime());
 		parameter.setAuditRemark(news.getAuditRemark());
-		newsMapper.dynamicUpdateModelById(parameter);
+		Map<String,Object> paramMap = news.mapBuilder().withAuditBy().withAuditRemark().withAuditStatus().withAuditTime().build();
+		newsMapper.updateModelById(news.getNewsId(), paramMap);
 		return Result.success().message("OK").build();
 	}
 

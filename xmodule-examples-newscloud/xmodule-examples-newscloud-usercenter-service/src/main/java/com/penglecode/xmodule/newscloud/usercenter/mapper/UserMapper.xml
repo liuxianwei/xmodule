@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.penglecode.xmodule.newscloud.usercenter.mapper.UserMapper">
    
+    <!-- Auto-Generation Code Start -->
+
     <insert id="insertModel" keyProperty="userId" parameterType="User" statementType="PREPARED" useGeneratedKeys="true">
         INSERT INTO nc_user(
             user_id,
@@ -28,89 +30,59 @@
    
     <update id="updateModelById" parameterType="User" statementType="PREPARED">
         UPDATE nc_user a
-           SET a.user_id = #{userId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
-               ,a.user_name = #{userName, jdbcType=VARCHAR}
+           SET a.user_id = #{id, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'userName')">
+               ,a.user_name = #{paramMap.userName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
-               ,a.nick_name = #{nickName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'nickName')">
+               ,a.nick_name = #{paramMap.nickName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
-               ,a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'mobilePhone')">
+               ,a.mobile_phone = #{paramMap.mobilePhone, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userIconUrl)">
-               ,a.user_icon_url = #{userIconUrl, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'userIconUrl')">
+               ,a.user_icon_url = #{paramMap.userIconUrl, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(email)">
-               ,a.email = #{email, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'email')">
+               ,a.email = #{paramMap.email, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sex)">
-               ,a.sex = #{sex, jdbcType=CHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'sex')">
+               ,a.sex = #{paramMap.sex, jdbcType=CHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(birthday)">
-               ,a.birthday = #{birthday, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'birthday')">
+               ,a.birthday = #{paramMap.birthday, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'status')">
+               ,a.status = #{paramMap.status, jdbcType=TINYINT}
             </if>
-         WHERE a.user_id = #{userId, jdbcType=BIGINT}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="User" statementType="PREPARED">
-        UPDATE nc_user a
-           SET a.user_id = #{userId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userName)">
-               ,a.user_name = #{userName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'authorized')">
+               ,a.authorized = #{paramMap.authorized, jdbcType=BOOLEAN}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(nickName)">
-               ,a.nick_name = #{nickName, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'authIdcard')">
+               ,a.auth_idcard = #{paramMap.authIdcard, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mobilePhone)">
-               ,a.mobile_phone = #{mobilePhone, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'authRealName')">
+               ,a.auth_real_name = #{paramMap.authRealName, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userIconUrl)">
-               ,a.user_icon_url = #{userIconUrl, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'loginTimes')">
+               ,a.login_times = #{paramMap.loginTimes, jdbcType=INTEGER}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(email)">
-               ,a.email = #{email, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'lastLoginTime')">
+               ,a.last_login_time = #{paramMap.lastLoginTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(sex)">
-               ,a.sex = #{sex, jdbcType=CHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'follows')">
+               ,a.follows = #{paramMap.follows, jdbcType=INTEGER}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(birthday)">
-               ,a.birthday = #{birthday, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'followers')">
+               ,a.followers = #{paramMap.followers, jdbcType=INTEGER}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(status)">
-               ,a.status = #{status, jdbcType=TINYINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createTime')">
+               ,a.create_time = #{paramMap.createTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(authorized)">
-               ,a.authorized = #{authorized, jdbcType=BOOLEAN}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'updateTime')">
+               ,a.update_time = #{paramMap.updateTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(authIdcard)">
-               ,a.auth_idcard = #{authIdcard, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(authRealName)">
-               ,a.auth_real_name = #{authRealName, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(loginTimes)">
-               ,a.login_times = #{loginTimes, jdbcType=INTEGER}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(lastLoginTime)">
-               ,a.last_login_time = #{lastLoginTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(follows)">
-               ,a.follows = #{follows, jdbcType=INTEGER}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followers)">
-               ,a.followers = #{followers, jdbcType=INTEGER}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(updateTime)">
-               ,a.update_time = #{updateTime, jdbcType=VARCHAR}
-            </if>
-         WHERE a.user_id = #{userId, jdbcType=BIGINT}
+         WHERE a.user_id = #{id, jdbcType=BIGINT}
     </update>
    
     <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
@@ -386,9 +358,12 @@
            AND a.auth_real_name like CONCAT('%', #{example.authRealName, jdbcType=VARCHAR}, '%')
         </if>
     </select>
-    
-    
-    <select id="selectUserListByStatus" parameterType="java.util.Map" resultType="User" statementType="PREPARED">
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
+   	<select id="selectUserListByStatus" parameterType="java.util.Map" resultType="User" statementType="PREPARED">
         SELECT a.user_id	userId,
                a.user_name	userName,
                a.nick_name	nickName,
@@ -420,4 +395,7 @@
         </if>
          ORDER BY a.user_id ASC
     </select>
+   
+    <!-- Customized Code End -->
+
 </mapper>

@@ -1,6 +1,7 @@
 package com.penglecode.xmodule.upms.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,8 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 		UpmsRole prole = upmsRoleMapper.selectModelById(role.getRoleId());
 		ValidationAssert.notNull(prole, "该角色已经不存在了!");
 		try {
-			upmsRoleMapper.updateModelById(role);
+			Map<String,Object> paramMap = role.mapBuilder().withRoleName().withRoleCode().withDescription().withUpdateBy().withUpdateTime().build();
+			upmsRoleMapper.updateModelById(role.getRoleId(), paramMap);
 		} catch(DuplicateKeyException e) {
 			BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("ROLE_NAME"), "修改角色失败,该角色名称已经存在!");
 			BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("ROLE_CODE"), "修改角色失败,该角色代码已经存在!");

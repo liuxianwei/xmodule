@@ -29,7 +29,12 @@ public class ${serviceImplClassName} implements ${serviceClassName} {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void update${modelAliasName}(${modelClassName} parameter) {
 		ValidationAssert.notNull(parameter, "参数不能为空");
-		${modelClassNameLower}Mapper.updateModelById(parameter);
+		Map<String, Object> paramMap = parameter.mapBuilder()
+		<#list modelMapWithMethods as withMethod>
+												.${withMethod}()
+		</#list>
+												.build();
+		${modelClassNameLower}Mapper.updateModelById(parameter.${getModelIdMethodName}(), paramMap);
 	}
 
 	@Override

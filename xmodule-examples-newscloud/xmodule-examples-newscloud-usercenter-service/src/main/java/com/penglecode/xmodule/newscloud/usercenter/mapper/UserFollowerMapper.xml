@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.penglecode.xmodule.newscloud.usercenter.mapper.UserFollowerMapper">
    
+    <!-- Auto-Generation Code Start -->
+
     <insert id="insertModel" keyProperty="id" parameterType="UserFollower" statementType="PREPARED" useGeneratedKeys="true">
         INSERT INTO nc_user_follower(
             id,
@@ -19,29 +21,14 @@
     <update id="updateModelById" parameterType="UserFollower" statementType="PREPARED">
         UPDATE nc_user_follower a
            SET a.id = #{id, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userId)">
-               ,a.user_id = #{userId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'userId')">
+               ,a.user_id = #{paramMap.userId, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followerUserId)">
-               ,a.follower_user_id = #{followerUserId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'followerUserId')">
+               ,a.follower_user_id = #{paramMap.followerUserId, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followTime)">
-               ,a.follow_time = #{followTime, jdbcType=VARCHAR}
-            </if>
-         WHERE a.id = #{id, jdbcType=BIGINT}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="UserFollower" statementType="PREPARED">
-        UPDATE nc_user_follower a
-           SET a.id = #{id, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(userId)">
-               ,a.user_id = #{userId, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followerUserId)">
-               ,a.follower_user_id = #{followerUserId, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(followTime)">
-               ,a.follow_time = #{followTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'followTime')">
+               ,a.follow_time = #{paramMap.followTime, jdbcType=VARCHAR}
             </if>
          WHERE a.id = #{id, jdbcType=BIGINT}
     </update>
@@ -151,9 +138,15 @@
            AND a.follower_user_id = #{example.followerUserId, jdbcType=BIGINT}
         </if>
     </select>
-    
-    
-    <delete id="deleteUserFollower" parameterType="java.util.Map" statementType="PREPARED">
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
+   	<delete id="deleteUserFollower" parameterType="java.util.Map" statementType="PREPARED">
         DELETE FROM nc_user_follower WHERE user_id = #{userId, jdbcType=BIGINT} AND follower_user_id = #{followerUserId, jdbcType=BIGINT}
     </delete>
+   
+    <!-- Customized Code End -->
+
 </mapper>

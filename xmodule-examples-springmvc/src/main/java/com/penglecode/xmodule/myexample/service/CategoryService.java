@@ -11,7 +11,7 @@ import com.penglecode.xmodule.myexample.model.Category;
  * 商品分类服务
  * 
  * @author 	AutoGen
- * @date	2019年03月04日 上午 10:44:23
+ * @date	2019年06月27日 下午 13:34:08
  */
 public interface CategoryService {
 

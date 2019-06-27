@@ -379,5 +379,6 @@
 		<module>xmodule-upms</module>
 		<module>xmodule-examples-clickhouse</module>
 		<module>xmodule-examples-springcloud</module>
+		<module>xmodule-examples-mybatis</module>
 	</modules>
 </project>

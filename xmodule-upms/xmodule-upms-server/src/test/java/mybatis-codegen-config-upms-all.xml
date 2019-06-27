@@ -10,18 +10,12 @@
 		<property name="beginningDelimiter" value="`"/>
     	<property name="endingDelimiter" value="`"/>
     	
-    	<plugin type="com.penglecode.xmodule.common.mybatis.codegen.CustomMysqlGeneratorPlugin">
+    	<plugin type="com.penglecode.xmodule.common.codegen.mybatis.CustomMysqlGeneratorPlugin">
     		<!-- 解决MybatisGenerator设置overwrite=false时仅对Java文件有效,XML文件无效的问题 -->
     		<property name="mergeableXmlMapper" value="false"/>
-    		<!-- 所有Model的Serializable类 -->
-    		<property name="modelSerializableClass" value="com.penglecode.xmodule.common.support.BaseModel"/>
-    		<!-- 所有Mapper接口的基类 -->
-    		<property name="baseMappers" value="com.penglecode.xmodule.common.mybatis.mapper.BaseMybatisMapper"/>
-    		<!-- MapperXML中if标签判断非空的工具类：MybatisUtils.isEmpty(<Object/String/Collection>) -->
-    		<property name="mybatisUtilsClass" value="com.penglecode.xmodule.common.mybatis.MybatisUtils"/>
     	</plugin>
     	
-		<commentGenerator type="com.penglecode.xmodule.common.mybatis.codegen.CustomCommentGenerator">
+		<commentGenerator type="com.penglecode.xmodule.common.codegen.mybatis.CustomCommentGenerator">
 			<!-- 取消默认生成的注释 -->
 			<property name="suppressAllComments" value="true"/>
 		</commentGenerator>
@@ -29,7 +23,7 @@
 		<jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}">
 		</jdbcConnection>
 		<!-- 指定生成的类型为java类型，避免数据库中number等类型字段 -->
-		<javaTypeResolver type="com.penglecode.xmodule.common.mybatis.codegen.CustomJavaTypeResolver">
+		<javaTypeResolver type="com.penglecode.xmodule.common.codegen.mybatis.CustomJavaTypeResolver">
 			<property name="forceBigDecimals" value="false"/>
 			<!-- 数据库date/datetime类型的字段,在Model中定义为String类型 -->
 			<property name="forceDateTimeStampAsString" value="true"/>
@@ -62,17 +56,17 @@
 		</javaClientGenerator>
 
 		<!-- ！！！！！！！！！以下需要动态改动，以免覆盖他人代码！！！！！！！！ -->
-
+		
 		<!-- 表名对应生成的实体 -->
 		<table tableName="upms_app" domainObjectName="UpmsApp" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<!-- 数据模型的名称 -->
+			<property name="modelName" value="应用"/>
+			<!-- 数据模型的别名 -->
+			<property name="modelAlias" value="App"/>
 			<!-- 指定insertModel的插入字段 -->
 			<property name="insertModelColumns" value="['app_name', 'description', 'app_key', 'app_secret', 'app_web_context_path', 'app_api_context_path', 'create_time']"/>
-			<!-- 指定updateModelById的更新字段 -->
-			<property name="updateModelColumns" value="['app_name', 'description', 'app_key', 'app_secret', 'app_web_context_path', 'app_api_context_path', 'enabled']"/>
-			<!-- 指定updateModelById是否为动态更新 -->
-			<property name="dynamicUpdateColumn" value="true"/>
 			<!-- Model注释的author -->
-			<property name="modelCommentAuthor" value="PengPeng"/>
+			<property name="modelCommentAuthor" value="Mybatis-Generator"/>
 			<!-- 对应的Mapper接口上的注解 -->
 			<property name="mapperAnnotations" value="com.penglecode.xmodule.common.support.DefaultDatabase"/>
 			<!-- selectModelListByExample查询的where条件列 -->
@@ -80,14 +74,14 @@
 		</table>
 		
 		<table tableName="upms_user" domainObjectName="UpmsUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<!-- 数据模型的名称 -->
+			<property name="modelName" value="应用"/>
+			<!-- 数据模型的别名 -->
+			<property name="modelAlias" value="User"/>
 			<!-- 指定insertModel的插入字段 -->
 			<property name="insertModelColumns" value="['user_name', 'real_name', 'password', 'user_type', 'nick_name', 'mobile_phone', 'email', 'user_icon', 'create_time', 'create_by']"/>
-			<!-- 指定updateModelById的更新字段 -->
-			<property name="updateModelColumns" value="['user_name', 'real_name', 'nick_name', 'mobile_phone', 'email', 'user_icon', 'update_time', 'update_by']"/>
-			<!-- 指定updateModelById是否为动态更新 -->
-			<property name="dynamicUpdateColumn" value="true"/>
 			<!-- Model注释的author -->
-			<property name="modelCommentAuthor" value="PengPeng"/>
+			<property name="modelCommentAuthor" value="Mybatis-Generator"/>
 			<!-- 对应的Mapper接口上的注解 -->
 			<property name="mapperAnnotations" value="com.penglecode.xmodule.common.support.DefaultDatabase"/>
 			<!-- selectModelListByExample查询的where条件列 -->
@@ -95,14 +89,14 @@
 		</table>
 		
 		<table tableName="upms_role" domainObjectName="UpmsRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<!-- 数据模型的名称 -->
+			<property name="modelName" value="角色"/>
+			<!-- 数据模型的别名 -->
+			<property name="modelAlias" value="Role"/>
 			<!-- 指定insertModel的插入字段 -->
 			<property name="insertModelColumns" value="['role_name', 'role_code', 'role_type', 'description', 'app_id', 'create_time', 'create_by']"/>
-			<!-- 指定updateModelById的更新字段 -->
-			<property name="updateModelColumns" value="['role_name', 'role_code', 'description', 'app_id', 'create_time', 'update_time', 'update_by']"/>
-			<!-- 指定updateModelById是否为动态更新 -->
-			<property name="dynamicUpdateColumn" value="true"/>
 			<!-- Model注释的author -->
-			<property name="modelCommentAuthor" value="PengPeng"/>
+			<property name="modelCommentAuthor" value="Mybatis-Generator"/>
 			<!-- 对应的Mapper接口上的注解 -->
 			<property name="mapperAnnotations" value="com.penglecode.xmodule.common.support.DefaultDatabase"/>
 			<!-- selectModelListByExample查询的where条件列 -->
@@ -110,14 +104,14 @@
 		</table>
 		
 		<table tableName="upms_resource" domainObjectName="UpmsResource" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<!-- 数据模型的名称 -->
+			<property name="modelName" value="资源"/>
+			<!-- 数据模型的别名 -->
+			<property name="modelAlias" value="Resource"/>
 			<!-- 指定insertModel的插入字段 -->
 			<property name="insertModelColumns" value="['resource_name', 'parent_resource_id', 'app_root_resource', 'permission_expression', 'resource_url', 'resource_type', 'http_method', 'action_type', 'siblings_index', 'resource_icon', 'index_page', 'app_id', 'create_time', 'create_by']"/>
-			<!-- 指定updateModelById的更新字段 -->
-			<property name="updateModelColumns" value="['resource_name', 'permission_expression', 'resource_url', 'http_method', 'action_type', 'siblings_index', 'resource_icon', 'index_page', 'app_id', 'update_time', 'update_by']"/>
-			<!-- 指定updateModelById是否为动态更新 -->
-			<property name="dynamicUpdateColumn" value="true"/>
 			<!-- Model注释的author -->
-			<property name="modelCommentAuthor" value="PengPeng"/>
+			<property name="modelCommentAuthor" value="Mybatis-Generator"/>
 			<!-- 对应的Mapper接口上的注解 -->
 			<property name="mapperAnnotations" value="com.penglecode.xmodule.common.support.DefaultDatabase"/>
 			<!-- selectModelListByExample查询的where条件列 -->
@@ -125,14 +119,14 @@
 		</table>
 		
 		<table tableName="upms_user_access_log" domainObjectName="UpmsUserAccessLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<!-- 数据模型的名称 -->
+			<property name="modelName" value="用户操作日志"/>
+			<!-- 数据模型的别名 -->
+			<property name="modelAlias" value="UserAccessLog"/>
 			<!-- 指定insertModel的插入字段 -->
 			<property name="insertModelColumns" value="['log_title', 'app_module', 'request_uri', 'http_method', 'mvc_method', 'request_header', 'request_content_type', 'request_content', 'access_user_id', 'access_time', 'client_ip_addr', 'server_ip_addr', 'process_time', 'logging_completed', 'async_request', 'response_content_type', 'response_content', 'app_id', 'create_time']"/>
-			<!-- 指定updateModelById的更新字段 -->
-			<property name="updateModelColumns" value="['log_title', 'app_module', 'request_uri', 'http_method', 'mvc_method', 'request_header', 'request_content_type', 'request_content', 'access_user_id', 'access_time', 'client_ip_addr', 'server_ip_addr', 'process_time', 'logging_completed', 'async_request', 'response_content_type', 'response_content', 'app_id']"/>
-			<!-- 指定updateModelById是否为动态更新 -->
-			<property name="dynamicUpdateColumn" value="true"/>
 			<!-- Model注释的author -->
-			<property name="modelCommentAuthor" value="PengPeng"/>
+			<property name="modelCommentAuthor" value="Mybatis-Generator"/>
 			<!-- 对应的Mapper接口上的注解 -->
 			<property name="mapperAnnotations" value="com.penglecode.xmodule.common.support.DefaultDatabase"/>
 			<!-- selectModelListByExample查询的where条件列 -->

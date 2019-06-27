@@ -68,7 +68,7 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 		UpmsRole prole = upmsRoleMapper.selectModelById(role.getRoleId());
 		ValidationAssert.notNull(prole, "该角色已经不存在了!");
 		try {
-			upmsRoleMapper.updateModelById(role);
+			upmsRoleMapper.updateModelById(role.getRoleId(), role.mapBuilder().withRoleName().withRoleCode().withDescription().withUpdateBy().withUpdateTime().build());
 		} catch(DuplicateKeyException e) {
 			BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("ROLE_NAME"), "修改角色失败,该角色名称已经存在!");
 			BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("ROLE_CODE"), "修改角色失败,该角色代码已经存在!");

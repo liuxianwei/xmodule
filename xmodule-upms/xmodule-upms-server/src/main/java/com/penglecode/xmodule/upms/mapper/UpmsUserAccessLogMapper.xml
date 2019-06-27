@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.penglecode.xmodule.upms.mapper.UpmsUserAccessLogMapper">
    
+    <!-- Auto-Generation Code Start -->
+
     <insert id="insertModel" keyProperty="logId" parameterType="UpmsUserAccessLog" statementType="PREPARED" useGeneratedKeys="true">
         INSERT INTO upms_user_access_log(
             log_id,
@@ -50,125 +52,65 @@
    
     <update id="updateModelById" parameterType="UpmsUserAccessLog" statementType="PREPARED">
         UPDATE upms_user_access_log a
-           SET a.log_id = #{logId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(logTitle)">
-               ,a.log_title = #{logTitle, jdbcType=VARCHAR}
+           SET a.log_id = #{id, jdbcType=BIGINT}            
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'logTitle')">
+               ,a.log_title = #{paramMap.logTitle, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appModule)">
-               ,a.app_module = #{appModule, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'appModule')">
+               ,a.app_module = #{paramMap.appModule, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestUri)">
-               ,a.request_uri = #{requestUri, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'requestUri')">
+               ,a.request_uri = #{paramMap.requestUri, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(httpMethod)">
-               ,a.http_method = #{httpMethod, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'httpMethod')">
+               ,a.http_method = #{paramMap.httpMethod, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mvcMethod)">
-               ,a.mvc_method = #{mvcMethod, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'mvcMethod')">
+               ,a.mvc_method = #{paramMap.mvcMethod, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestHeader)">
-               ,a.request_header = #{requestHeader, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'requestHeader')">
+               ,a.request_header = #{paramMap.requestHeader, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestContentType)">
-               ,a.request_content_type = #{requestContentType, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'requestContentType')">
+               ,a.request_content_type = #{paramMap.requestContentType, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestContent)">
-               ,a.request_content = #{requestContent, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'requestContent')">
+               ,a.request_content = #{paramMap.requestContent, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(accessUserId)">
-               ,a.access_user_id = #{accessUserId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'accessUserId')">
+               ,a.access_user_id = #{paramMap.accessUserId, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(accessTime)">
-               ,a.access_time = #{accessTime, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'accessTime')">
+               ,a.access_time = #{paramMap.accessTime, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(clientIpAddr)">
-               ,a.client_ip_addr = #{clientIpAddr, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'clientIpAddr')">
+               ,a.client_ip_addr = #{paramMap.clientIpAddr, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(serverIpAddr)">
-               ,a.server_ip_addr = #{serverIpAddr, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'serverIpAddr')">
+               ,a.server_ip_addr = #{paramMap.serverIpAddr, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(processTime)">
-               ,a.process_time = #{processTime, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'processTime')">
+               ,a.process_time = #{paramMap.processTime, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(loggingCompleted)">
-               ,a.logging_completed = #{loggingCompleted, jdbcType=BOOLEAN}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'loggingCompleted')">
+               ,a.logging_completed = #{paramMap.loggingCompleted, jdbcType=BOOLEAN}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(asyncRequest)">
-               ,a.async_request = #{asyncRequest, jdbcType=BOOLEAN}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'asyncRequest')">
+               ,a.async_request = #{paramMap.asyncRequest, jdbcType=BOOLEAN}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(responseContentType)">
-               ,a.response_content_type = #{responseContentType, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'responseContentType')">
+               ,a.response_content_type = #{paramMap.responseContentType, jdbcType=VARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appId)">
-               ,a.app_id = #{appId, jdbcType=BIGINT}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'appId')">
+               ,a.app_id = #{paramMap.appId, jdbcType=BIGINT}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(responseContent)">
-               ,a.response_content = #{responseContent, jdbcType=LONGVARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'createTime')">
+               ,a.create_time = #{paramMap.createTime, jdbcType=VARCHAR}
             </if>
-         WHERE a.log_id = #{logId, jdbcType=BIGINT}
-    </update>
-   
-    <update id="dynamicUpdateModelById" parameterType="UpmsUserAccessLog" statementType="PREPARED">
-        UPDATE upms_user_access_log a
-           SET a.log_id = #{logId, jdbcType=BIGINT}
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(logTitle)">
-               ,a.log_title = #{logTitle, jdbcType=VARCHAR}
+            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isContainsParameter(paramMap, 'responseContent')">
+               ,a.response_content = #{paramMap.responseContent, jdbcType=LONGVARCHAR}
             </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appModule)">
-               ,a.app_module = #{appModule, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestUri)">
-               ,a.request_uri = #{requestUri, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(httpMethod)">
-               ,a.http_method = #{httpMethod, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(mvcMethod)">
-               ,a.mvc_method = #{mvcMethod, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestHeader)">
-               ,a.request_header = #{requestHeader, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestContentType)">
-               ,a.request_content_type = #{requestContentType, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(requestContent)">
-               ,a.request_content = #{requestContent, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(accessUserId)">
-               ,a.access_user_id = #{accessUserId, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(accessTime)">
-               ,a.access_time = #{accessTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(clientIpAddr)">
-               ,a.client_ip_addr = #{clientIpAddr, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(serverIpAddr)">
-               ,a.server_ip_addr = #{serverIpAddr, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(processTime)">
-               ,a.process_time = #{processTime, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(loggingCompleted)">
-               ,a.logging_completed = #{loggingCompleted, jdbcType=BOOLEAN}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(asyncRequest)">
-               ,a.async_request = #{asyncRequest, jdbcType=BOOLEAN}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(responseContentType)">
-               ,a.response_content_type = #{responseContentType, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(appId)">
-               ,a.app_id = #{appId, jdbcType=BIGINT}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(createTime)">
-               ,a.create_time = #{createTime, jdbcType=VARCHAR}
-            </if>
-            <if test="@com.penglecode.xmodule.common.mybatis.MybatisUtils@isNotEmpty(responseContent)">
-               ,a.response_content = #{responseContent, jdbcType=LONGVARCHAR}
-            </if>
-         WHERE a.log_id = #{logId, jdbcType=BIGINT}
+         WHERE a.log_id = #{id, jdbcType=BIGINT}
     </update>
    
     <delete id="deleteModelById" parameterType="java.lang.Long" statementType="PREPARED">
@@ -444,4 +386,13 @@
            AND a.app_id = #{example.appId, jdbcType=BIGINT}
         </if>
     </select>
+   
+    <!-- Auto-Generation Code End -->
+
+    <!-- Customized Code Start -->
+
+   
+   
+    <!-- Customized Code End -->
+
 </mapper>

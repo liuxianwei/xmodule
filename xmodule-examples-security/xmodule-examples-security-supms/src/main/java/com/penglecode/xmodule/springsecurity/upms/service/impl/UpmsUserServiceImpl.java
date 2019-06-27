@@ -1,6 +1,7 @@
 package com.penglecode.xmodule.springsecurity.upms.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import org.apache.ibatis.session.RowBounds;
@@ -93,7 +94,9 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		UpmsUser puser = upmsUserMapper.selectModelById(user.getUserId());
 		ValidationAssert.notNull(puser, "该用户已经不存在了!");
 		try {
-			upmsUserMapper.updateModelById(user);
+			Map<String, Object> paramMap = user.mapBuilder().withUserName().withNickName().withMobilePhone().withEmail()
+					.withRealName().withUpdateBy().withUpdateTime().withUserIcon().build();
+			upmsUserMapper.updateModelById(user.getUserId(), paramMap);
 		} catch (DuplicateKeyException e) {
             BusinessAssert.isTrue(!e.getCause().getMessage().toUpperCase().contains("USER_NAME"), "对不起,该用户名已存在!");
             throw e;
@@ -118,10 +121,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
         ValidationAssert.notNull(UpmsUserStatusEnum.getStatus(status), String.format("无法识别的用户状态(status=%s)!", status));
         UpmsUser puser = upmsUserMapper.selectModelById(userId);
         ValidationAssert.notNull(puser, "该用户已经不存在了!");
-        UpmsUser param = new UpmsUser();
-        param.setUserId(userId);
-        param.setStatus(status);
-        upmsUserMapper.updateModelById(param);
+        upmsUserMapper.updateModelById(userId, new UpmsUser().mapBuilder().withStatus(status).build());
 	}
 
 	@Override

@@ -52,5 +52,12 @@ public class MybatisUtils {
         }
         return false;
     }
+    
+    public static boolean isContainsParameter(Map<String,Object> paramMap, String paramName) {
+    	if(paramMap != null) {
+    		return paramMap.containsKey(paramName);
+    	}
+    	return false;
+    }
 
 }

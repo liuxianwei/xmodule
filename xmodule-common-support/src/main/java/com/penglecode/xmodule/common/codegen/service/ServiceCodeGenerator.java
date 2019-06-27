@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.ibatis.session.RowBounds;
@@ -218,9 +221,21 @@ public abstract class ServiceCodeGenerator {
 		serviceCodeParameter.put("modelIdClass", modelIdClass.getName());
 		serviceCodeParameter.put("modelIdClassName", modelIdClass.getSimpleName());
 		
+		Class<?> modelMapBuilderClass = ClassUtils.forName(modelClass.getName() + ".MapBuilder");
+		Method[] modelMethods = modelMapBuilderClass.getDeclaredMethods();
+		List<String> modelMapWithMethods = Stream.of(modelMethods).filter(m -> {
+			return Modifier.isPublic(m.getModifiers()) && m.getName().startsWith("with");
+		}).map(m -> m.getName()).collect(Collectors.toList());
+		serviceCodeParameter.put("modelMapWithMethods", modelMapWithMethods);
+		
+		Field modelIdField = getModelIdField(modelClass);
+		serviceCodeParameter.put("getModelIdMethodName", "get" + StringUtils.firstLetterUpperCase(modelIdField.getName()));
+		
+		
 		//JDK导入类库
 		Set<String> jdkImports = new TreeSet<String>(Comparator.comparing(Function.identity()));
 		jdkImports.add(List.class.getName());
+		jdkImports.add(Map.class.getName());
 		if(!modelIdClass.getName().startsWith("java.lang.")) {
 			jdkImports.add(modelIdClass.getName());
 		}
@@ -299,6 +314,26 @@ public abstract class ServiceCodeGenerator {
 				Id id = AnnotationUtils.getAnnotation(field, Id.class);
 				if(id != null) {
 					value.setValue(field.getType());
+				}
+			}
+		});
+		Assert.notNull(value.getValue(), "No @Id found in model class : " + modelClass.getName());
+		return value.getValue();
+	}
+	
+	/**
+	 * 获取数据模型的ID
+	 * @param modelClass
+	 * @return
+	 */
+	protected Field getModelIdField(Class<?> modelClass) {
+		final ValueHolder<Field> value = new ValueHolder<Field>();
+		ReflectionUtils.doWithFields(modelClass, new ReflectionUtils.FieldCallback() {
+			@Override
+			public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
+				Id id = AnnotationUtils.getAnnotation(field, Id.class);
+				if(id != null) {
+					value.setValue(field);
 				}
 			}
 		});

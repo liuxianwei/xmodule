@@ -11,7 +11,7 @@ import com.penglecode.xmodule.myexample.model.Product;
  * 商品信息服务
  * 
  * @author 	AutoGen
- * @date	2019年03月04日 上午 10:44:21
+ * @date	2019年06月27日 下午 13:34:06
  */
 public interface ProductService {
 

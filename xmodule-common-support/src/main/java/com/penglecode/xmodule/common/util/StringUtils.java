@@ -566,4 +566,16 @@ public class StringUtils {
     	return null;
     }
     
+    /**
+     * 单词首字母大写
+     * @param word
+     * @return
+     */
+    public static String firstLetterUpperCase(String word) {
+    	if(word != null) {
+    		return word.substring(0, 1).toUpperCase() + word.substring(1);
+    	}
+    	return null;
+    }
+    
 }

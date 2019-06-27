@@ -17,8 +17,11 @@ import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
@@ -29,6 +32,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.penglecode.xmodule.common.codegen.Id;
 import com.penglecode.xmodule.common.codegen.Model;
 import com.penglecode.xmodule.common.mybatis.Dialect.Type;
+import com.penglecode.xmodule.common.mybatis.mapper.BaseMybatisMapper;
+import com.penglecode.xmodule.common.mybatis.MybatisUtils;
 import com.penglecode.xmodule.common.support.BaseModel;
 import com.penglecode.xmodule.common.util.ClassUtils;
 import com.penglecode.xmodule.common.util.CollectionUtils;
@@ -50,16 +55,17 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 	
 	protected Type dialect = Type.MYSQL;
 	
-	protected String serializable;
+	protected String modelSerializableClass = BaseModel.class.getName();
 	
-	protected Set<String> baseMappers = new HashSet<String>();
+	protected Set<String> baseMapperClasses = new HashSet<String>();
 	
-	protected String mybatisUtilsClass;
+	protected String mybatisUtilsClass = MybatisUtils.class.getName();
 	
 	protected Boolean mergeableXmlMapper;
 	
 	public CustomMysqlGeneratorPlugin() {
 		super();
+		baseMapperClasses.add(BaseMybatisMapper.class.getName());
 	}
 
 	public boolean validate(List<String> warnings) {
@@ -71,21 +77,14 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		super.setProperties(properties);
 		String dialectName = properties.getProperty("dialect", Type.MYSQL.name());
 		this.dialect = ObjectUtils.defaultIfNull(Type.getType(dialectName), Type.MYSQL);
-		this.serializable = properties.getProperty("modelSerializableClass", "java.io.Serializable");
-		this.mybatisUtilsClass = properties.getProperty("mybatisUtilsClass");
 		this.mergeableXmlMapper = Boolean.valueOf(properties.getProperty("mergeableXmlMapper", "false"));
-		String baseMappers = properties.getProperty("baseMappers");
-		if(!StringUtils.isEmpty(baseMappers)) {
-			for (String baseMapper : baseMappers.split(",")) {
-				this.baseMappers.add(baseMapper);
-			}
-		}
 	}
 	
 	@Override
 	public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-		applyModelAnnotations(topLevelClass, introspectedTable);
-		applyModelSerializableFields(topLevelClass, introspectedTable); //加入 XxxModel implements BaseModel {} 声明
+		addModelAnnotations(topLevelClass, introspectedTable); //加入@Model, @Id注解
+		addModelSerializableFields(topLevelClass, introspectedTable); //加入 XxxModel implements BaseModel {} 声明
+		addModelMapBuilder(topLevelClass, introspectedTable); //加入MapBuilder内部类
 		return true;
 	}
 	
@@ -114,7 +113,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		// 获取实体类
 		FullyQualifiedJavaType entityType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
 		// import接口
-		for (String baseMapper : baseMappers) {
+		for (String baseMapper : baseMapperClasses) {
 			baseMapper = baseMapper.trim();
 			if(!StringUtils.isEmpty(baseMapper)) {
 				interfaze.addImportedType(new FullyQualifiedJavaType(baseMapper));
@@ -151,8 +150,6 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		rootElement.addElement(createInsertModelElement(introspectedTable)); //创建<insert id="insertModel"/>
 		rootElement.addElement(createNewLineElement());
 		rootElement.addElement(createUpdateModelByIdElement(introspectedTable)); //创建<update id="updateModelById"/>
-		rootElement.addElement(createNewLineElement());
-		rootElement.addElement(createDynamicUpdateModelByIdElement(introspectedTable)); //创建<update id="dynamicUpdateModelById"/>
 		rootElement.addElement(createNewLineElement());
 		rootElement.addElement(createDeleteModelByIdElement(introspectedTable)); //创建<delete id="deleteModelById"/>
 		rootElement.addElement(createNewLineElement());
@@ -406,50 +403,15 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
 		List<IntrospectedColumn> updateColumns = new ArrayList<IntrospectedColumn>();
 		
-		String updateModelColumnsJson = introspectedTable.getTableConfiguration().getProperty("updateModelColumns");
-		List<String> updateModelColumns = null;
-		if(!StringUtils.isEmpty(updateModelColumnsJson)) {
-			updateModelColumns = JsonUtils.json2Object(updateModelColumnsJson, new TypeReference<List<String>>() {});
-		}
-		
-		for(IntrospectedColumn column : allColumns) {
-			if(!column.equals(pkColumn)) { //排除pkColumn
-				if(!CollectionUtils.isEmpty(updateModelColumns)) { //指定了更新字段?
-					for(String columnName : updateModelColumns) {
-						if(column.getActualColumnName().toLowerCase().equals(columnName.toLowerCase())) {
-							updateColumns.add(column);
-							break;
-						}
-					}
-				} else { //不指定更新字段，则全字段更新
-					updateColumns.add(column);
-				}
-			}
-		}
-		
-		String dynamicUpdateColumnStr = introspectedTable.getTableConfiguration().getProperty("dynamicUpdateColumn");
-		boolean dynamicUpdateColumn = true;
-		if("false".equals(dynamicUpdateColumnStr)) {
-			dynamicUpdateColumn = false;
-		}
-		
-		return createUpdateModelByIdElement(introspectedTable, "updateModelById", updateColumns, dynamicUpdateColumn);
-	}
-	
-	public XmlElement createDynamicUpdateModelByIdElement(IntrospectedTable introspectedTable) {
-		IntrospectedColumn pkColumn = getPrimaryKeyColumn(introspectedTable, 0);
-		List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
-		List<IntrospectedColumn> updateColumns = new ArrayList<IntrospectedColumn>();
 		for(IntrospectedColumn column : allColumns) {
 			if(!column.equals(pkColumn)) { //排除pkColumn
 				updateColumns.add(column);
 			}
 		}
-		
-		return createUpdateModelByIdElement(introspectedTable, "dynamicUpdateModelById", updateColumns, true);
+		return createUpdateModelByIdElement(introspectedTable, "updateModelById", updateColumns);
 	}
 	
-	protected XmlElement createUpdateModelByIdElement(IntrospectedTable introspectedTable, String statementId, List<IntrospectedColumn> updateColumns, boolean dynamicUpdateColumn) {
+	protected XmlElement createUpdateModelByIdElement(IntrospectedTable introspectedTable, String statementId, List<IntrospectedColumn> updateColumns) {
 		IntrospectedColumn pkColumn = getPrimaryKeyColumn(introspectedTable, 0);
 		
 		CustomXmlElement element = new CustomXmlElement("update");
@@ -457,6 +419,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		element.addAttribute(new Attribute("parameterType", introspectedTable.getTableConfiguration().getDomainObjectName()));
 		element.addAttribute(new Attribute("statementType", "PREPARED"));
 		
+		String modelIdParamName = "id";
 		IntrospectedColumn updateColumn = null;
 		
 		StringBuilder sb = new StringBuilder();
@@ -465,34 +428,27 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		OutputUtilities.newLine(sb);
 		OutputUtilities.javaIndent(sb, 1);
 		OutputUtilities.xmlIndent(sb, 1);
-		sb.append("     SET " + DEFAULT_TABLE_ALIAS_NAME + "." + pkColumn.getActualColumnName().toLowerCase() + " = " + "#{" + pkColumn.getJavaProperty() + ", jdbcType=" + getJdbcTypeName(pkColumn) + "}" );
+		
+		sb.append("     SET " + DEFAULT_TABLE_ALIAS_NAME + "." + pkColumn.getActualColumnName().toLowerCase() + " = " + "#{" + modelIdParamName + ", jdbcType=" + getJdbcTypeName(pkColumn) + "}");
 		OutputUtilities.newLine(sb);
 		for(int i = 0, len = updateColumns.size(); i < len; i++) {
 			updateColumn = updateColumns.get(i);
-			if(dynamicUpdateColumn) {
-				OutputUtilities.javaIndent(sb, 3);
-				if(!StringUtils.isEmpty(mybatisUtilsClass)) {
-					sb.append("<if test=\"@" + mybatisUtilsClass + "@isNotEmpty(" + updateColumn.getJavaProperty() + ")\">");
-				} else {
-					sb.append("<if test=\"" + updateColumn.getJavaProperty() + " != null\">");
-				}
-				OutputUtilities.newLine(sb);
-			}
+			OutputUtilities.javaIndent(sb, 3);
+			sb.append("<if test=\"@" + mybatisUtilsClass + "@isContainsParameter(paramMap, '" + updateColumn.getJavaProperty() + "')\">");
+			OutputUtilities.newLine(sb);
 			
 			OutputUtilities.javaIndent(sb, 1);
 			sb.append("           ");
 			sb.append(",");
-			sb.append(DEFAULT_TABLE_ALIAS_NAME + "." + updateColumn.getActualColumnName().toLowerCase() + " = " + "#{" + updateColumn.getJavaProperty() + ", jdbcType=" + getJdbcTypeName(updateColumn) + "}");
+			sb.append(DEFAULT_TABLE_ALIAS_NAME + "." + updateColumn.getActualColumnName().toLowerCase() + " = " + "#{paramMap." + updateColumn.getJavaProperty() + ", jdbcType=" + getJdbcTypeName(updateColumn) + "}");
 			
 			OutputUtilities.newLine(sb);
 			
-			if(dynamicUpdateColumn) {
-				OutputUtilities.javaIndent(sb, 3);
-				sb.append("</if>");
-				OutputUtilities.newLine(sb);
-			}
+			OutputUtilities.javaIndent(sb, 3);
+			sb.append("</if>");
+			OutputUtilities.newLine(sb);
 		}
-		sb.append("         WHERE " + DEFAULT_TABLE_ALIAS_NAME + "." + pkColumn.getActualColumnName().toLowerCase() + " = " + "#{" + pkColumn.getJavaProperty() + ", jdbcType=" + getJdbcTypeName(pkColumn) + "}");
+		sb.append("         WHERE " + DEFAULT_TABLE_ALIAS_NAME + "." + pkColumn.getActualColumnName().toLowerCase() + " = " + "#{" + modelIdParamName + ", jdbcType=" + getJdbcTypeName(pkColumn) + "}");
 		element.addElement(new TextElement(sb.toString()));
 		return element;
 	}
@@ -590,11 +546,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 				continue;
 			}
 			OutputUtilities.javaIndent(sb, 2);
-			if(!StringUtils.isEmpty(mybatisUtilsClass)) {
-				sb.append("<if test=\"@" + mybatisUtilsClass + "@isNotEmpty(" + column.getJavaProperty() + ")\">");
-			} else {
-				sb.append("<if test=\"" + column.getJavaProperty() + " != null\">");
-			}
+			sb.append("<if test=\"@" + mybatisUtilsClass + "@isNotEmpty(" + column.getJavaProperty() + ")\">");
 			OutputUtilities.newLine(sb);
 			
 			OutputUtilities.javaIndent(sb, 1);
@@ -768,11 +720,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 				continue;
 			}
 			OutputUtilities.javaIndent(sb, 2);
-			if(!StringUtils.isEmpty(mybatisUtilsClass)) {
-				sb.append("<if test=\"example != null and @" + mybatisUtilsClass + "@isNotEmpty(example." + column.getJavaProperty() + ")\">");
-			} else {
-				sb.append("<if test=\"example != null and example." + column.getJavaProperty() + " != null\">");
-			}
+			sb.append("<if test=\"example != null and @" + mybatisUtilsClass + "@isNotEmpty(example." + column.getJavaProperty() + ")\">");
 			OutputUtilities.newLine(sb);
 			
 			OutputUtilities.javaIndent(sb, 1);
@@ -786,11 +734,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		}
 		//IF order by条件
 		OutputUtilities.javaIndent(sb, 2);
-		if(!StringUtils.isEmpty(mybatisUtilsClass)) {
-			sb.append("<if test=\"sort != null and @" + mybatisUtilsClass + "@isNotEmpty(sort.orders)\">");
-		} else {
-			sb.append("<if test=\"sort != null and sort.orders != null\">");
-		}
+		sb.append("<if test=\"sort != null and @" + mybatisUtilsClass + "@isNotEmpty(sort.orders)\">");
 		OutputUtilities.newLine(sb);
 		
 		OutputUtilities.javaIndent(sb, 1);
@@ -838,11 +782,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 			}
 			OutputUtilities.newLine(sb);
 			OutputUtilities.javaIndent(sb, 2);
-			if(!StringUtils.isEmpty(mybatisUtilsClass)) {
-				sb.append("<if test=\"example != null and @" + mybatisUtilsClass + "@isNotEmpty(example." + column.getJavaProperty() + ")\">");
-			} else {
-				sb.append("<if test=\"example != null and example." + column.getJavaProperty() + " != null\">");
-			}
+			sb.append("<if test=\"example != null and @" + mybatisUtilsClass + "@isNotEmpty(example." + column.getJavaProperty() + ")\">");
 			OutputUtilities.newLine(sb);
 			
 			OutputUtilities.javaIndent(sb, 1);
@@ -959,10 +899,16 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		return false;
 	}
 	
-	protected void applyModelAnnotations(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+	protected void addModelAnnotations(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 		String modelName = introspectedTable.getTableConfiguration().getProperty("modelName");
+		String modelAlias = introspectedTable.getTableConfiguration().getProperty("modelAlias");
 		if(!StringUtils.isEmpty(modelName)) {
-			topLevelClass.addAnnotation("@" + Model.class.getSimpleName() + "(name=\"" + modelName + "\")");
+			StringBuilder sb = new StringBuilder("@" + Model.class.getSimpleName() + "(name=\"" + modelName + "\"");
+			if(!StringUtils.isEmpty(modelAlias)) {
+				sb.append(", alias=\"" + modelAlias + "\"");
+			}
+			sb.append(")");
+			topLevelClass.addAnnotation(sb.toString());
 			topLevelClass.addImportedType(new FullyQualifiedJavaType(Model.class.getName()));
 		}
 		IntrospectedColumn pkColumn = getPrimaryKeyColumn(introspectedTable, 0);
@@ -973,9 +919,9 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		});
 	}
 
-	protected void applyModelSerializableFields(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-		String importedType = serializable;
-		String superInterface = serializable;
+	protected void addModelSerializableFields(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+		String importedType = modelSerializableClass;
+		String superInterface = modelSerializableClass;
 		Class<?> clazz = ClassUtils.forName(superInterface);
 		if(clazz.equals(BaseModel.class)) {
 			superInterface = clazz.getSimpleName() + "<" + topLevelClass.getType().getShortName() + ">";
@@ -995,6 +941,73 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		topLevelClass.getFields().add(0, field);
 	}
 
+	protected void addModelMapBuilder(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+		FullyQualifiedJavaType mapBuilderJavaType = new FullyQualifiedJavaType("MapBuilder");
+		FullyQualifiedJavaType modelMapJavaType = new FullyQualifiedJavaType("java.util.Map<String,Object>");
+		topLevelClass.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
+		topLevelClass.addImportedType(new FullyQualifiedJavaType("java.util.LinkedHashMap"));
+		
+		Method mapBuilderMethod = new Method();
+		mapBuilderMethod.setName("mapBuilder");
+		mapBuilderMethod.setVisibility(JavaVisibility.PUBLIC);
+		mapBuilderMethod.setReturnType(mapBuilderJavaType);
+		mapBuilderMethod.addBodyLine("return new MapBuilder();");
+		topLevelClass.addMethod(mapBuilderMethod);
+		
+		InnerClass mapBuilderClass = new InnerClass(mapBuilderJavaType);
+		mapBuilderClass.setVisibility(JavaVisibility.PUBLIC);
+		
+		mapBuilderClass.addJavaDocLine("/**");
+		mapBuilderClass.addJavaDocLine(" * Auto generated by Mybatis Generator");
+		mapBuilderClass.addJavaDocLine(" */");
+		
+		Field modelPropertiesField = new Field();
+		modelPropertiesField.addJavaDocLine(" ");
+		modelPropertiesField.setVisibility(JavaVisibility.PRIVATE);
+		modelPropertiesField.setFinal(true);
+		modelPropertiesField.setInitializationString("new LinkedHashMap<String,Object>()");
+		modelPropertiesField.setName("modelProperties");
+		modelPropertiesField.setType(modelMapJavaType);
+		mapBuilderClass.addField(modelPropertiesField);
+		
+		Method mapBuilderConstructor = new Method();
+		mapBuilderConstructor.setConstructor(true);
+		mapBuilderConstructor.setName("MapBuilder");
+		mapBuilderConstructor.setDefault(true);
+		mapBuilderConstructor.addBodyLine("");
+		mapBuilderClass.addMethod(mapBuilderConstructor);
+		
+		List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
+		for(IntrospectedColumn column : allColumns) {
+			addMapBuilderMethod(topLevelClass, column, mapBuilderClass, mapBuilderJavaType);
+		}
+		
+		Method buildMethod = new Method();
+		buildMethod.setVisibility(JavaVisibility.PUBLIC);
+		buildMethod.setReturnType(modelMapJavaType);
+		buildMethod.setName("build");
+		buildMethod.addBodyLine("return modelProperties;");
+		mapBuilderClass.addMethod(buildMethod);
+		
+		topLevelClass.addInnerClass(mapBuilderClass);
+	}
+	
+	protected void addMapBuilderMethod(TopLevelClass topLevelClass, IntrospectedColumn column, InnerClass mapBuilderClass, FullyQualifiedJavaType mapBuilderJavaType) {
+		String propertyName = column.getJavaProperty();
+		Method mapBuilderMethod = new Method();
+		mapBuilderMethod.setName("with" + StringUtils.firstLetterUpperCase(propertyName));
+		mapBuilderMethod.setVisibility(JavaVisibility.PUBLIC);
+		mapBuilderMethod.setReturnType(mapBuilderJavaType);
+		mapBuilderMethod.addParameter(new Parameter(column.getFullyQualifiedJavaType(), propertyName, true));
+		mapBuilderMethod.addBodyLine("modelProperties.put(\"" + propertyName + "\", BaseModel.first(" + propertyName + ", " + getFieldGetMethodName(topLevelClass, column) + "()));");
+		mapBuilderMethod.addBodyLine("return this;");
+		mapBuilderClass.addMethod(mapBuilderMethod);
+	}
+	
+	protected String getFieldGetMethodName(TopLevelClass topLevelClass, IntrospectedColumn column) {
+		return "get" + StringUtils.firstLetterUpperCase(column.getJavaProperty());
+	}
+	
 	protected IntrospectedColumn getIntrospectedColumnByName(IntrospectedTable introspectedTable, String fieldName) {
 		List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
 		if(allColumns != null) {
