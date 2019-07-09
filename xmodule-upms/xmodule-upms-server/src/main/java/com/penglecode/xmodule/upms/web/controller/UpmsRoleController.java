@@ -3,6 +3,7 @@ package com.penglecode.xmodule.upms.web.controller;
 import static com.penglecode.xmodule.common.consts.ContentType.APPLICATION_JSON;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,7 +136,7 @@ public class UpmsRoleController extends HttpAPIResourceSupport {
 				checkedResourceIds.add(roleResource.getResourceId());
 			}
 		}
-		List<Map<String,Object>> allAppResourceList = resourceTreeBuilder.buildObjectTree(appId, allResourceList, resourceTreeNodeConverter);
+		List<Map<String,Object>> allAppResourceList = resourceTreeBuilder.buildObjectTree(Arrays.asList(appId), allResourceList, resourceTreeNodeConverter);
 		Map<String,Object> dataMap = new HashMap<String,Object>();
 		dataMap.put("allAppResourceList", allAppResourceList);
 		dataMap.put("checkedResourceIds", checkedResourceIds);

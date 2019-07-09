@@ -2,6 +2,7 @@ package com.penglecode.xmodule.upms.web.controller;
 
 import static com.penglecode.xmodule.common.consts.ContentType.APPLICATION_JSON;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public class UpmsResourceController extends HttpAPIResourceSupport {
 			actionType = null;
 		}
 		List<UpmsResource> allResourceList = upmsResourceService.getResourceListByParam(appId, actionType, Boolean.TRUE);
-		List<Map<String,Object>> dataList = resourceTreeBuilder.buildObjectTree(appId, allResourceList, resourceTreeNodeConverter);
+		List<Map<String,Object>> dataList = resourceTreeBuilder.buildObjectTree(Arrays.asList(appId), allResourceList, resourceTreeNodeConverter);
 		return Result.success().message("OK").data(dataList).build();
 	}
 	

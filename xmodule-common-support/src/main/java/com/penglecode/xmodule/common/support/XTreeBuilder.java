@@ -15,20 +15,20 @@ public interface XTreeBuilder<I,T extends Comparable<T>> {
 	
 	/**
 	 * 根据根treeNodeId及全部TreeNode列表来渲染一颗具有父子关系的对象树
-	 * @param rootTreeNodeId
+	 * @param rootTreeNodeIds
 	 * @param allTreeNodeList
 	 * @return
 	 */
-	public List<T> buildObjectTree(I rootTreeNodeId, List<T> allTreeNodeList);
+	public List<T> buildObjectTree(List<I> rootTreeNodeIds, List<T> allTreeNodeList);
 	
 	/**
 	 * 根据根treeNodeId及全部TreeNode列表来渲染一颗具有父子关系的对象树,同时提供对树节点数据类型的转换
-	 * @param rootTreeNodeId
+	 * @param rootTreeNodeIds
 	 * @param allTreeNodeList
 	 * @param treeNodeBuilder
 	 * @return
 	 */
-	public <R> List<R> buildObjectTree(I rootTreeNodeId, List<T> allTreeNodeList, TreeNodeConverter<T,R> treeNodeBuilder);
+	public <R> List<R> buildObjectTree(List<I> rootTreeNodeIds, List<T> allTreeNodeList, TreeNodeConverter<T,R> treeNodeBuilder);
 	
 	public List<T> getDirectChildNodeList(I parentTreeNodeId, List<T> allTreeNodeList);
 	

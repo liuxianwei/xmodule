@@ -3,6 +3,7 @@ package com.penglecode.xmodule.upms.web.controller;
 import static com.penglecode.xmodule.common.consts.ContentType.APPLICATION_JSON;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class UpmsLoginController extends HttpAPIResourceSupport {
 		if(CollectionUtils.isEmpty(userMenuResources)) {
 			userMenuResources = new ArrayList<UpmsResource>();
 		}
-		return resourceTreeBuilder.buildObjectTree(currentClientAccessAppId, userMenuResources, resourceNavMenuNodeConverter);
+		return resourceTreeBuilder.buildObjectTree(Arrays.asList(currentClientAccessAppId), userMenuResources, resourceNavMenuNodeConverter);
 	}
 	
 	/**

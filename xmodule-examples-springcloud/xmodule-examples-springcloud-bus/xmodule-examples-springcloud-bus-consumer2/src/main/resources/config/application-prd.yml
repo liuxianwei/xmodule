@@ -5,7 +5,7 @@ logging:
 #RabbitMQ消息总线配置
 spring:
     rabbitmq:
-        host: 172.16.96.15
+        host: 127.0.0.1
         port: 5672
         username: admin
         password: 123456

@@ -31,7 +31,7 @@ public class SpringCloudBusConfiguration extends AbstractSpringConfiguration {
 	}
 	
 	@Bean
-	@ConditionalOnProperty(name=SPRING_CLOUD_BUS_EXAMPLE_ROLE, havingValue="consumer")
+	//@ConditionalOnProperty(name=SPRING_CLOUD_BUS_EXAMPLE_ROLE, havingValue="consumer")
 	public AppInfoUpdatedRemoteBusEventListener appInfoUpdatedRemoteBusEventListener() {
 		return new AppInfoUpdatedRemoteBusEventListener();
 	}

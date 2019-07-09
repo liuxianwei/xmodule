@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
@@ -38,13 +39,17 @@ public abstract class AbstractXTreeBuilder<I, T extends Comparable<T>> implement
 		this.defaultRootLevel = defaultRootLevel;
 	}
 
-	public List<T> buildObjectTree(I rootTreeNodeId, List<T> allTreeNodeList) {
+	public List<T> buildObjectTree(List<I> rootTreeNodeIds, List<T> allTreeNodeList) {
+		Assert.notEmpty(rootTreeNodeIds, "Parameter 'rootTreeNodeIds' can not be empty!");
+		Assert.notEmpty(allTreeNodeList, "Parameter 'allTreeNodeList' can not be empty!");
 		List<T> rootLevelTreeNodeList = new ArrayList<T>();
-		T rootTreeNode = getTreeNodeById(rootTreeNodeId, allTreeNodeList);
-		if(rootTreeNode != null){
-			rootLevelTreeNodeList.add(rootTreeNode);
-		}else{
-			rootLevelTreeNodeList = getDirectChildNodeList(rootTreeNodeId, allTreeNodeList);
+		for(I rootTreeNodeId : rootTreeNodeIds) {
+			T rootTreeNode = getTreeNodeById(rootTreeNodeId, allTreeNodeList);
+			if(rootTreeNode != null){
+				rootLevelTreeNodeList.add(rootTreeNode);
+			}else{
+				rootLevelTreeNodeList = getDirectChildNodeList(rootTreeNodeId, allTreeNodeList);
+			}
 		}
 		if(!CollectionUtils.isEmpty(rootLevelTreeNodeList)){
 			for(T rootLevelTreeNode : rootLevelTreeNodeList){
@@ -54,8 +59,12 @@ public abstract class AbstractXTreeBuilder<I, T extends Comparable<T>> implement
 		return rootLevelTreeNodeList == null ? new ArrayList<T>() : rootLevelTreeNodeList;
 	}
 
-	public <R> List<R> buildObjectTree(I rootTreeNodeId, List<T> allTreeNodeList, TreeNodeConverter<T, R> treeNodeConverter) {
-		List<T> rootLevelTreeNodeList = buildObjectTree(rootTreeNodeId, allTreeNodeList);
+	public <R> List<R> buildObjectTree(List<I> rootTreeNodeIds, List<T> allTreeNodeList, TreeNodeConverter<T, R> treeNodeConverter) {
+		Assert.notEmpty(rootTreeNodeIds, "Parameter 'rootTreeNodeIds' can not be empty!");
+		Assert.notEmpty(allTreeNodeList, "Parameter 'allTreeNodeList' can not be empty!");
+		Assert.notNull(treeNodeConverter, "Parameter 'treeNodeConverter' can not be null!");
+		
+		List<T> rootLevelTreeNodeList = buildObjectTree(rootTreeNodeIds, allTreeNodeList);
 		List<R> resultTreeNodeList = new ArrayList<R>();
 		if(!CollectionUtils.isEmpty(rootLevelTreeNodeList)){
 			for(T rootLevelTreeNode : rootLevelTreeNodeList){
