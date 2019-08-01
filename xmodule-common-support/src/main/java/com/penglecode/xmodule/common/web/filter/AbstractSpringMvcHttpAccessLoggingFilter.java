@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
@@ -19,6 +20,7 @@ import com.penglecode.xmodule.common.consts.ApplicationConstants;
 import com.penglecode.xmodule.common.util.ArrayUtils;
 import com.penglecode.xmodule.common.util.CollectionUtils;
 import com.penglecode.xmodule.common.util.StringUtils;
+import com.penglecode.xmodule.common.web.support.HttpAccessLogging;
 import com.penglecode.xmodule.common.web.support.MvcResourceMethodMapping;
 
 public abstract class AbstractSpringMvcHttpAccessLoggingFilter extends AbstractHttpAccessLoggingFilter {
@@ -35,13 +37,15 @@ public abstract class AbstractSpringMvcHttpAccessLoggingFilter extends AbstractH
 			for(Map.Entry<?, HandlerMethod> entry : handlerMethods.entrySet()) {
 				HandlerMethod handlerMethod = entry.getValue();
 				Method resourceMethod = handlerMethod.getMethod();
-				Class<?> resourceClass = handlerMethod.getBeanType();
-				RequestMapping classRequestMapping = AnnotatedElementUtils.findMergedAnnotation(resourceClass, RequestMapping.class);
-				RequestMapping methodRequestMapping = AnnotatedElementUtils.findMergedAnnotation(resourceMethod, RequestMapping.class);
-				MvcResourceMethodMapping mvcResourceMethodMapping = resolveMvcResourceMethodMapping(resourceClass, resourceMethod, classRequestMapping, methodRequestMapping);
-				if(mvcResourceMethodMapping != null) {
-					allMvcResourceMethodMappings.add(mvcResourceMethodMapping);
-					LOGGER.info("Add {}", mvcResourceMethodMapping);
+				if(AnnotationUtils.findAnnotation(resourceMethod, HttpAccessLogging.class) != null) {
+					Class<?> resourceClass = handlerMethod.getBeanType();
+					RequestMapping classRequestMapping = AnnotatedElementUtils.findMergedAnnotation(resourceClass, RequestMapping.class);
+					RequestMapping methodRequestMapping = AnnotatedElementUtils.findMergedAnnotation(resourceMethod, RequestMapping.class);
+					MvcResourceMethodMapping mvcResourceMethodMapping = resolveMvcResourceMethodMapping(resourceClass, resourceMethod, classRequestMapping, methodRequestMapping);
+					if(mvcResourceMethodMapping != null) {
+						allMvcResourceMethodMappings.add(mvcResourceMethodMapping);
+						LOGGER.info("Add {}", mvcResourceMethodMapping);
+					}
 				}
 			}
 			setAllMvcResourceMethodMappings(allMvcResourceMethodMappings);
