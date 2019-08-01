@@ -49,7 +49,7 @@ public abstract class AbstractSpringMvcHttpAccessLoggingFilter extends AbstractH
 	}
 	
 	protected MvcResourceMethodMapping resolveMvcResourceMethodMapping(Class<?> resourceClass, Method resourceMethod, RequestMapping classRequestMapping, RequestMapping methodRequestMapping) {
-		String backupMethod = "GET";
+		String backupMethod = "*";
 		String[] mainMethods = null;
 		String[] uriPrefixs = new String[] {""}, uriSuffixs = new String[] {""};
 		if(classRequestMapping != null) {

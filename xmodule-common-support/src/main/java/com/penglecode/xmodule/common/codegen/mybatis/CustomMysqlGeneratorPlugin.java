@@ -741,7 +741,7 @@ public class CustomMysqlGeneratorPlugin extends PluginAdapter {
 		sb.append("     ORDER BY ");
 		
 		sb.append("<foreach collection=\"sort.orders\" index=\"index\" item=\"item\" open=\"\" separator=\",\" close=\"\">");
-		sb.append("#{item.property} #{item.direction}");
+		sb.append("${item.property} ${item.direction}");
 		sb.append("</foreach>");
 		
 		OutputUtilities.newLine(sb);

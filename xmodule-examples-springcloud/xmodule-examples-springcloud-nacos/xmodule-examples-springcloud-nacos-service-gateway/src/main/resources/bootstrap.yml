@@ -17,6 +17,17 @@ spring:
             use404: true
         #网关配置
         gateway:
+            #跨域配置
+            globalcors:
+                corsConfigurations:
+                    '[/**]':
+                        allowedOrigins: "*"
+                        allowedMethods:
+                            - GET
+                            - POST
+                            - PUT
+                            - DELETE
+                        maxAge: 7200
             #基于注册/发现的动态路由配置
             discovery:
                 locator:

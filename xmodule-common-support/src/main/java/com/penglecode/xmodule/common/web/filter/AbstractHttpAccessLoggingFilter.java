@@ -252,7 +252,7 @@ public abstract class AbstractHttpAccessLoggingFilter extends OncePerRequestFilt
 						matched = true;
 					}
 				}
-				matched = matched && requestMethods.contains(method); //请求方法匹配
+				matched = matched && (requestMethods.contains("*") || requestMethods.contains(method)); //请求方法匹配
 				if(matched) {
 					return mvcResourceMethodMapping;
 				}

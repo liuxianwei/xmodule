@@ -3,6 +3,8 @@ package com.penglecode.xmodule.common.util;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -135,7 +137,13 @@ public class DateTimeUtils {
 		}else if((matcher = TIMESTAMP_REGEX_PATTERN.matcher(dateTimeText)).find() && matcher.end() == dateTimeText.length() && pattern.endsWith(suffix)){
 			text = text + ".0";
 		}
-		return LocalDateTime.parse(dateTimeText, DateTimeFormatter.ofPattern(format));
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern(format)
+				.parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+			    .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+			    .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+			    .parseDefaulting(ChronoField.MILLI_OF_SECOND, 0)
+			    .toFormatter();
+		return LocalDateTime.parse(dateTimeText, formatter);
 	}
 	
 	/**
