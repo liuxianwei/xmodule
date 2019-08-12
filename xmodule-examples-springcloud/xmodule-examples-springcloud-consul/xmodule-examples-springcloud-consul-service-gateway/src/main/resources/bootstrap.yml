@@ -1,0 +1,80 @@
+#SpringBoot应用的名称
+spring:
+    application:
+        name: springcloud-consul-gateway
+    #SpringCloud配置
+    cloud:
+        inetutils:
+            preferredNetworks: 
+                - 172.16
+        #Consul服务注册与发现配置
+        consul:
+            enabled: true
+            host: 172.16.95.9
+            port: 8500
+            discovery:
+                register: true
+                serviceName: ${spring.application.name}
+                preferIpAddress: true
+                ipAddress: ${spring.cloud.client.ip-address}
+                instanceId: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+                healthCheckPath: /actuator/health
+                healthCheckInterval: 10s
+        #负载均衡重试配置
+        loadbalancer:
+            retry:
+                enabled: true
+            use404: true
+        #网关配置
+        gateway:
+            #跨域配置
+            globalcors:
+                corsConfigurations:
+                    '[/**]':
+                        allowedOrigins: "*"
+                        allowedMethods:
+                            - GET
+                            - POST
+                            - PUT
+                            - DELETE
+                        maxAge: 7200
+            #基于注册/发现的动态路由配置
+            discovery:
+                locator:
+                    enabled: true
+                    route-id-prefix: consul-
+                    filters:
+                      #默认的最终请求URL重写过滤器
+                      - name: RewritePath
+                        args:
+                            regexp: "'/' + serviceId + '/(?<remaining>.*)'"
+                            replacement: "'/${remaining}'"
+                      #熔断过滤器(must before Retry)
+                      - name: Hystrix
+                        args:
+                            name: "'fallbackCmd'"
+                            fallbackUri: "'forward:/api/fallback'"
+                      #服务重试过滤器
+                      - name: CustomRetry
+                        args: 
+                            retries: "2"
+                            series: "'SERVER_ERROR'"
+                            statuses: "'BAD_GATEWAY,GATEWAY_TIMEOUT,SERVICE_UNAVAILABLE'"
+                            methods: "'GET'"
+
+#Ribbon(负载均衡)配置
+ribbon:
+    ReadTimeout: 10000
+    ConnectTimeout: 10000
+    hystrix:
+        enabled: false
+        
+#Hystrix(熔断|降级)配置
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        #默认的熔断超时时间,默认1000毫秒,需要设大点否则很容易触发熔断
+                        timeoutInMilliseconds: 30000

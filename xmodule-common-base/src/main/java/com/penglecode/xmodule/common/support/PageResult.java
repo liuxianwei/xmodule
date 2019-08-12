@@ -56,7 +56,7 @@ public class PageResult<T> extends Result<T> {
 			return this;
 		}
 		
-		public PageBuilder code(String code) {
+		public PageBuilder code(int code) {
 			return (PageBuilder) super.code(code);
 		}
 		

@@ -1,5 +1,7 @@
 package com.penglecode.xmodule.common.web.springmvc.handler;
 
+import java.nio.charset.Charset;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +11,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 
+import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.exception.ApplicationException;
 import com.penglecode.xmodule.common.util.SpringWebMvcUtils;
 /**
@@ -23,12 +26,22 @@ public abstract class AbstractMvcHandlerExceptionResolver extends AbstractHandle
 	
 	private String defaultExceptionView;
 	
+	private Charset defaultCharset = Charset.forName(GlobalConstants.DEFAULT_CHARSET);
+	
 	public void setDefaultExceptionView(String defaultExceptionView) {
 		this.defaultExceptionView = defaultExceptionView;
 	}
 	
 	public String getDefaultExceptionView() {
 		return defaultExceptionView;
+	}
+
+	public Charset getDefaultCharset() {
+		return defaultCharset;
+	}
+
+	public void setDefaultCharset(Charset defaultCharset) {
+		this.defaultCharset = defaultCharset;
 	}
 
 	protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {

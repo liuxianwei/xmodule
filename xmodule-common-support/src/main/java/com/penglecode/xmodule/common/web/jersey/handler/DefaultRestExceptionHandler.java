@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.penglecode.xmodule.common.consts.ContentType;
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
+import com.penglecode.xmodule.common.support.ExceptionDescriptor;
+import com.penglecode.xmodule.common.support.ExceptionDescriptorResolver;
 import com.penglecode.xmodule.common.support.Result;
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver.ExceptionMetadata;
 
 @Component
 @Provider
@@ -22,7 +22,7 @@ public class DefaultRestExceptionHandler implements ExceptionMapper<Exception> {
 	
 	public Response toResponse(Exception e) {
 		logger.error(e.getMessage(), e);
-		ExceptionMetadata em = ModuleExceptionResolver.resolveException(e);
+		ExceptionDescriptor em = ExceptionDescriptorResolver.resolveException(e);
 		Result<Object> result = Result.failure().code(em.getCode()).message(em.getMessage()).build();
 		int statusCode = 200;
 		if(e instanceof NotFoundException) {

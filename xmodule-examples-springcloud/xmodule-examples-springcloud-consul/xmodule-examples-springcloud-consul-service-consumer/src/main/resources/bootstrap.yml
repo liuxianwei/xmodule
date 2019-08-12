@@ -1,0 +1,42 @@
+#SpringBoot应用的名称
+spring:
+    application:
+        name: springcloud-consul-service-consumer
+    #SpringCloud配置
+    cloud:
+        inetutils:
+            preferredNetworks: 
+                - 172.16
+        #Consul服务注册与发现配置
+        consul:
+            enabled: true
+            host: 172.16.95.9
+            port: 8500
+            discovery:
+                register: false
+                
+#Feign(HttpClient)客户端配置
+feign:
+    httpclient:
+        enabled: true
+        max-connections: 200
+        connection-timeout: 15000
+    hystrix:
+        enabled: true
+
+#Ribbon(负载均衡)配置
+ribbon:
+    ReadTimeout: 10000
+    ConnectTimeout: 10000
+    hystrix:
+        enabled: false
+    
+#Hystrix(熔断|降级)配置
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        #默认的熔断超时时间,默认1000毫秒,需要设大点否则很容易触发熔断
+                        timeoutInMilliseconds: 30000

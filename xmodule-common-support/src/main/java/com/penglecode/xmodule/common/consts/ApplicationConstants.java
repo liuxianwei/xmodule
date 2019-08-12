@@ -2,6 +2,9 @@ package com.penglecode.xmodule.common.consts;
 
 import static com.penglecode.xmodule.common.consts.Constant.defaultOf;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.context.ApplicationContext;
@@ -9,6 +12,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+
+import com.penglecode.xmodule.common.support.NamedThreadFactory;
 
 /**
  * 应用的全局常量,其中包括：Spring上下文对象、Servlet上下文对象、应用的上下文路径、应用系统默认字符集、默认Locale、默认日期格式等常量
@@ -45,6 +50,11 @@ public abstract class ApplicationConstants {
 	 */
 	public static final ResourcePatternResolver RESOURCE_PATTERN_RESOLVER = defaultOf(new PathMatchingResourcePatternResolver());
 
+	/**
+	 * 应用默认的线程池
+	 */
+	public static final Executor DEFAULT_EXECUTOR = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4, new NamedThreadFactory("DEFAULT-EXECUTOR-"));
+	
 	/**
 	 * 应用的上下文路径, e.g. /myapp
 	 */

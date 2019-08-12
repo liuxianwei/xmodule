@@ -16,7 +16,7 @@ server:
     port: 8081
     servlet:
         context-path: /
-        application-display-name: xmodule-examples-springmvc
+        application-display-name: ${spring.application.name}
         session:
             timeout: 1800
     error:
@@ -28,7 +28,6 @@ management:
         port: ${server.port}
     endpoints:
         web:
-            base-path: /admin/actuator
             exposure:
                 include: '*'
     endpoint:
@@ -64,7 +63,7 @@ spring:
 
     #Spring国际化配置
     messages:
-        basename: config/i18/messages
+        basename: config/i18n/messages
         cache-duration: -1
         encoding: UTF-8
     #关闭JMX监控

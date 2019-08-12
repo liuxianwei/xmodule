@@ -19,7 +19,7 @@ public class Result<T> implements DtoModel {
     private boolean success;
 
     /** 结果代码 */
-    private String code;
+    private int code;
     
     /** 消息 */
     private String message;
@@ -30,7 +30,7 @@ public class Result<T> implements DtoModel {
 	Result() {
 	}
 
-	Result(boolean success, String code, String message, T data) {
+	Result(boolean success, int code, String message, T data) {
 		this.success = success;
 		this.code = code;
 		this.message = message;
@@ -52,11 +52,11 @@ public class Result<T> implements DtoModel {
 		this.success = success;
 	}
 
-	public String getCode() {
+	public int getCode() {
 		return code;
 	}
 
-	protected void setCode(String code) {
+	protected void setCode(int code) {
 		this.code = code;
 	}
 
@@ -105,7 +105,7 @@ public class Result<T> implements DtoModel {
 		
 	    private boolean success = true;
 
-	    private String code = GlobalConstants.RESULT_CODE_SUCCESS;
+	    private int code = GlobalConstants.RESULT_CODE_SUCCESS;
 	    
 	    private String message;
 	    
@@ -115,7 +115,7 @@ public class Result<T> implements DtoModel {
 			this.success = success;
 		}
 		
-		public Builder code(String code) {
+		public Builder code(int code) {
 			this.code = code;
 			return this;
 		}

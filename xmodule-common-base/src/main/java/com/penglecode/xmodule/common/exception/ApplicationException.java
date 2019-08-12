@@ -13,7 +13,7 @@ public abstract class ApplicationException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	private String code = GlobalConstants.RESULT_CODE_FAILURE;
+	private String code = String.valueOf(GlobalConstants.RESULT_CODE_FAILURE);
 	
 	public ApplicationException(String message) {
 		super(message);

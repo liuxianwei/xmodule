@@ -61,12 +61,12 @@ public class GlobalConstants {
 	/**
 	 * 返回结果之成功
 	 */
-	public static final String RESULT_CODE_SUCCESS = "200";
+	public static final int RESULT_CODE_SUCCESS = 200;
 
 	/**
 	 * 返回结果之失败
 	 */
-	public static final String RESULT_CODE_FAILURE = "500";
+	public static final int RESULT_CODE_FAILURE = 500;
 
 	/**
 	 * 针对数据库字段,诸如:'是','真','已删除',...等等由数字"1"代表的真值

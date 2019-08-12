@@ -63,7 +63,7 @@ public class ElementUIXUploadController extends HttpAPIResourceSupport {
 		List<String> fileFormats = GlobalConstants.DEFAULT_UPLOAD_IMAGE_FORMATS;
 		pixelDeviation = pixelDeviation == null ? GlobalConstants.DEFAULT_UPLOAD_IMAGE_PIXEL_DEVIATION : pixelDeviation;
 		List<Object> dataList = new ArrayList<Object>();
-		String code = "200";
+		int code = 200;
 		String message = "上传成功!";
 		try {
 			ImagePixel imagePixel = null;
@@ -100,19 +100,19 @@ public class ElementUIXUploadController extends HttpAPIResourceSupport {
 	                        String contentType = file.getContentType().toLowerCase();
 	                        String fileFormat = StringUtils.stripStart(contentType, "image/");
 	                        if(!fileFormats.contains(fileFormat)){
-	                        	code = "500";
+	                        	code = 500;
 	                        	message = String.format("上传文件(%s)必须是格式为：%s的图片文件!", originalFileName, fileFormats);
 	            	        	break;
 	                        }
 	                        if(imagePixel != null){
 	                        	ImagePixel targetImagePixel = ImageUtils.getImagePixel(file.getInputStream());
 	                        	if(imagePixel.getWidth() != null && Math.abs(imagePixel.getWidth() - targetImagePixel.getWidth()) > pixelDeviation){
-	                        		code = "500";
+	                        		code = 500;
 	                        		message = "上传图片像素宽度超出限制!";
 		            	        	break;
 	                        	}
 	                        	if(imagePixel.getHeight() != null && Math.abs(imagePixel.getHeight() - targetImagePixel.getHeight()) > pixelDeviation){
-	                        		code = "500";
+	                        		code = 500;
 	                        		message = "上传图片像素高度超出限制!";
 		            	        	break;
 	                        	}
@@ -139,12 +139,12 @@ public class ElementUIXUploadController extends HttpAPIResourceSupport {
 	                LOGGER.info(">>> Upload file cost time : {} ms", (end - start));
 	            }
 	        }else{
-	        	code = "500";
+	        	code = 500;
 	        	message = "请求中未发现有文件上传!";
 	        }
 		} catch (Throwable e) {
 			LOGGER.error(e.getMessage(), e);
-			code = "500";
+			code = 500;
 			message = String.format("上传图片出现未知错误!(错误信息：%s)", e.getMessage());
 		}
 		Object data = null;
@@ -167,7 +167,7 @@ public class ElementUIXUploadController extends HttpAPIResourceSupport {
 	public Object uploadFile(HttpServletRequest request, HttpServletResponse response, Boolean multiple, String formatLimit) {
 		List<String> fileFormats = null;
 		List<Object> dataList = new ArrayList<Object>();
-		String code = "200";
+		int code = 200;
 		String message = "上传成功!";
 		try {
 			if(!StringUtils.isEmpty(formatLimit)){
@@ -199,7 +199,7 @@ public class ElementUIXUploadController extends HttpAPIResourceSupport {
 	                        LOGGER.info(">>> Upload original file name : " + originalFileName);
 	                        String fileFormat = FileUtils.getFileFormat(originalFileName);
 	                        if(fileFormats != null && !fileFormats.contains(fileFormat)){
-	                        	code = "500";
+	                        	code = 500;
 	            	        	message = String.format("上传文件(%s)必须是：%s格式的文件!", originalFileName, fileFormats);
 	            	        	break;
 	                        }
@@ -225,12 +225,12 @@ public class ElementUIXUploadController extends HttpAPIResourceSupport {
 	                LOGGER.info(">>> Upload file cost time : {} ms", (end - start));
 	            }
 	        }else{
-	        	code = "500";
+	        	code = 500;
 	        	message = "请求中未发现有文件上传!";
 	        }
 		} catch (Throwable e) {
 			LOGGER.error(e.getMessage(), e);
-			code = "500";
+			code = 500;
 			message = String.format("上传图片出现未知错误!(错误信息：%s)", e.getMessage());
 		}
 		Object data = null;
@@ -264,10 +264,10 @@ public class ElementUIXUploadController extends HttpAPIResourceSupport {
 		return Result.success().message(message).build();
 	}
 	
-	protected Object createResult(String code, String message, Object data) {
+	protected Object createResult(int code, String message, Object data) {
 		Result<Object> result = null;
 		Builder builder = null;
-		if("200".equals(code)) {
+		if(code == 200) {
 			builder = Result.success();
 		} else {
 			builder = Result.failure();

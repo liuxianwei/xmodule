@@ -16,11 +16,11 @@ public class HystrixFallbackResults {
 	public static final HttpStatus DEFAULT_FALLBACK_STATUS = HttpStatus.SERVICE_UNAVAILABLE;
 	
 	public static <T> Result<T> defaultFallbackResult() {
-		return Result.failure().code(String.valueOf(DEFAULT_FALLBACK_STATUS.value())).message(String.format("请求失败: %s", DEFAULT_FALLBACK_STATUS.getReasonPhrase())).build();
+		return Result.failure().code(DEFAULT_FALLBACK_STATUS.value()).message(String.format("请求失败: %s", DEFAULT_FALLBACK_STATUS.getReasonPhrase())).build();
 	}
 	
 	public static <T> PageResult<T> defaultFallbackPageResult() {
-		return PageResult.failure().code(String.valueOf(DEFAULT_FALLBACK_STATUS.value())).message(String.format("请求失败: %s", DEFAULT_FALLBACK_STATUS.getReasonPhrase())).build();
+		return PageResult.failure().code(DEFAULT_FALLBACK_STATUS.value()).message(String.format("请求失败: %s", DEFAULT_FALLBACK_STATUS.getReasonPhrase())).build();
 	}
 	
 }

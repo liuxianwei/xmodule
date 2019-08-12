@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule-examples-springcloud</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-springcloud-consul</artifactId>
+	<packaging>pom</packaging>
+	<name>xmodule-examples-springcloud-consul</name>
+	<description>基于consul中间件的服务注册与发现、服务动态配置等应用</description>
+	<modules>
+		<module>
+			xmodule-examples-springcloud-consul-service-api
+		</module>
+		<module>
+			xmodule-examples-springcloud-consul-service-producer
+		</module>
+		<module>
+			xmodule-examples-springcloud-consul-service-gateway
+		</module>
+		<module>
+			xmodule-examples-springcloud-consul-service-consumer
+		</module>
+		<module>
+			xmodule-examples-springcloud-consul-config-admin
+		</module>
+	</modules>
+</project>

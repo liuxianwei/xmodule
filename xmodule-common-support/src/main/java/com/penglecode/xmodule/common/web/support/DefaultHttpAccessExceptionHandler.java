@@ -7,8 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver.ExceptionMetadata;
+import com.penglecode.xmodule.common.support.ExceptionDescriptor;
+import com.penglecode.xmodule.common.support.ExceptionDescriptorResolver;
 import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.util.WebUtils;
 
@@ -23,7 +23,7 @@ public class DefaultHttpAccessExceptionHandler extends AbstractHttpAccessExcepti
 	@Override
 	protected ResponseEntity<?> createResponseEntity(HttpServletRequest request, HttpServletResponse response,
 			Exception exception, Object attachment) throws Exception {
-		ExceptionMetadata exceptionMetadata = ModuleExceptionResolver.resolveException(exception);
+		ExceptionDescriptor exceptionMetadata = ExceptionDescriptorResolver.resolveException(exception);
 		Result<Object> result = Result.failure().code(exceptionMetadata.getCode()).message(exceptionMetadata.getMessage()).build();
 		HttpHeaders headers = WebUtils.getHeaders(request);
 		return new ResponseEntity<Object>(result, headers, HttpStatus.OK);

@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
+import com.penglecode.xmodule.common.support.ExceptionDescriptorResolver;
 import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.util.StringUtils;
 
@@ -42,7 +42,7 @@ public class OAuth2ExceptionResponseBodyHandler implements ResponseBodyAdvice<Ob
 				String message = null, exMessage = null;
 				OAuth2Exception oauth2Exception = (OAuth2Exception) ex;
 				if(oauth2Exception.getHttpErrorCode() == HttpStatus.INTERNAL_SERVER_ERROR.value() && oauth2Exception.getCause() != null) { //500，服务器内部错误
-					exMessage = ModuleExceptionResolver.resolveException(oauth2Exception.getCause()).getMessage();
+					exMessage = ExceptionDescriptorResolver.resolveException(oauth2Exception.getCause()).getMessage();
 					message = oauth2ErrorMessageSource.getErrorMessage(oauth2Exception.getOAuth2ErrorCode(), new Object[] {exMessage});
 				} else {
 					exMessage = oauth2Exception.getMessage();
@@ -50,7 +50,7 @@ public class OAuth2ExceptionResponseBodyHandler implements ResponseBodyAdvice<Ob
 				}
 				message = StringUtils.defaultIfEmpty(message, exMessage);
 				code = oauth2Exception.getHttpErrorCode();
-				return Result.failure().code(String.valueOf(code)).message(message).build();
+				return Result.failure().code(code).message(message).build();
 			}
 		}
 		return body;

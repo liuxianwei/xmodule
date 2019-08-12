@@ -20,6 +20,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>xmodule-examples-newscloud-newscenter-api</finalName>
+		<finalName>xmodule-examples-springcloud-nacos-service-api</finalName>
 	</build>
 </project>

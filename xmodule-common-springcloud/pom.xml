@@ -42,6 +42,12 @@
 			<groupId>io.github.openfeign</groupId>
 			<artifactId>feign-httpclient</artifactId>
 		</dependency>
+		
+		<!-- spring-cloud-starter-consul-config -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-config</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

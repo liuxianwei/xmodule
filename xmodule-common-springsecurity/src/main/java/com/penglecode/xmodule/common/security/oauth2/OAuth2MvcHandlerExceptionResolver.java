@@ -10,8 +10,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver.ExceptionMetadata;
+import com.penglecode.xmodule.common.support.ExceptionDescriptor;
+import com.penglecode.xmodule.common.support.ExceptionDescriptorResolver;
 import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.util.StringUtils;
 import com.penglecode.xmodule.common.web.springmvc.handler.DefaultMvcHandlerExceptionResolver;
@@ -35,7 +35,7 @@ public class OAuth2MvcHandlerExceptionResolver extends DefaultMvcHandlerExceptio
 			String exMessage = null;
 			OAuth2Exception oauth2Exception = (OAuth2Exception) ex;
 			if(oauth2Exception.getHttpErrorCode() == HttpStatus.INTERNAL_SERVER_ERROR.value() && oauth2Exception.getCause() != null) { //500，服务器内部错误
-				exMessage = ModuleExceptionResolver.resolveException(oauth2Exception.getCause()).getMessage();
+				exMessage = ExceptionDescriptorResolver.resolveException(oauth2Exception.getCause()).getMessage();
 				message = oauth2ErrorMessageSource.getErrorMessage(oauth2Exception.getOAuth2ErrorCode(), new Object[] {exMessage});
 			} else {
 				exMessage = oauth2Exception.getMessage();
@@ -53,10 +53,10 @@ public class OAuth2MvcHandlerExceptionResolver extends DefaultMvcHandlerExceptio
 			message = StringUtils.defaultIfEmpty(message, String.format("Missing Http Request Parameter: %s", requestException.getParameterName()));
 			code = HttpStatus.BAD_REQUEST.value();
 		} else {
-			ExceptionMetadata em = ModuleExceptionResolver.resolveException(ex);
+			ExceptionDescriptor em = ExceptionDescriptorResolver.resolveException(ex);
 			message = em.getMessage();
 		}
-		result = Result.failure().code(String.valueOf(code)).message(message).build();
+		result = Result.failure().code(code).message(message).build();
 		response.setStatus(code);
 		MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
 		jsonView.setExtractValueFromSingleKeyModel(true);

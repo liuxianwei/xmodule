@@ -31,7 +31,7 @@ public class UpmsSecurityController extends HttpAPIResourceSupport {
 		Integer status = HttpStatus.UNAUTHORIZED.value();
 		response.setStatus(status);
 		String redirectUrl = securityConfigProperties.getLoginUrl();
-		return Result.failure().code(status.toString()).message("Unauthenticated").data(redirectUrl).build();
+		return Result.failure().code(status).message("Unauthenticated").data(redirectUrl).build();
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class UpmsSecurityController extends HttpAPIResourceSupport {
 	public Object unauthorized(HttpServletRequest request, HttpServletResponse response) {
 		Integer status = HttpStatus.FORBIDDEN.value();
 		response.setStatus(status);
-		return Result.failure().code(status.toString()).message("Unauthorized").data(null).build();
+		return Result.failure().code(status).message("Unauthorized").data(null).build();
 	}
 	
 }

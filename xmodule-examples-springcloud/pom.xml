@@ -13,5 +13,6 @@
 	<modules>
 		<module>xmodule-examples-springcloud-bus</module>
 		<module>xmodule-examples-springcloud-nacos</module>
+		<module>xmodule-examples-springcloud-consul</module>
 	</modules>
 </project>

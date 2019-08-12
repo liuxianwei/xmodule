@@ -1,0 +1,21 @@
+#SpringBoot应用的名称
+spring:
+    application:
+        name: springcloud-consul-config-admin
+    #SpringCloud配置
+    cloud:
+        inetutils:
+            preferredNetworks: 
+                - 172.16
+        #Consul服务注册与发现配置
+        consul:
+            enabled: true
+            host: 172.16.95.9
+            port: 8500
+            config:
+                enabled: true
+                #以下三项联合配置对应的consul配置文件key为:config/${spring.application.name}/application-(dev|prd).(yml|yaml|properties)
+                prefix: config/${spring.application.name}
+                defaultContext: application
+                profileSeparator: '-'
+                format: FILES

@@ -50,7 +50,7 @@ public class ApplicationStatusController extends HttpAPIResourceSupport {
 		String instanceId = getEnvironment().getProperty("eureka.instance.instanceId");
 		if(controllableHealthIndicator != null) {
 			LOGGER.info(">>> 强制设置应用实例{}的health状态为UP", appName + "@" + instanceId);
-			controllableHealthIndicator.setForceHealthDown(Boolean.FALSE);
+			controllableHealthIndicator.setForceAppOffline(Boolean.FALSE);
 			return Result.success().message("OK").data("UP").build();
 		} else {
 			return Result.success().message("Current HealthIndicator instance is unsupported!").build();
@@ -70,7 +70,7 @@ public class ApplicationStatusController extends HttpAPIResourceSupport {
 		String instanceId = getEnvironment().getProperty("eureka.instance.instanceId");
 		if(controllableHealthIndicator != null) {
 			LOGGER.info(">>> 强制设置应用实例{}的health状态为DOWN", appName + "@" + instanceId);
-			controllableHealthIndicator.setForceHealthDown(Boolean.TRUE);
+			controllableHealthIndicator.setForceAppOffline(Boolean.TRUE);
 			return Result.success().message("OK").data("DOWN").build();
 		} else {
 			return Result.success().message("Current HealthIndicator instance is unsupported!").build();

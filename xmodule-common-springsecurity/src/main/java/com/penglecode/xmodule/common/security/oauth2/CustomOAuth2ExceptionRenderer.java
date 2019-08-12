@@ -13,7 +13,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
+import com.penglecode.xmodule.common.support.ExceptionDescriptorResolver;
 import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.util.StringUtils;
 import com.penglecode.xmodule.common.web.support.AbstractHttpAccessExceptionHandler;
@@ -45,7 +45,7 @@ public class CustomOAuth2ExceptionRenderer extends AbstractHttpAccessExceptionHa
 			String exMessage = null;
 			OAuth2Exception oauth2Exception = (OAuth2Exception) responseEntity.getBody();
 			if(oauth2Exception.getHttpErrorCode() == HttpStatus.INTERNAL_SERVER_ERROR.value() && oauth2Exception.getCause() != null) { //500，服务器内部错误
-				exMessage = ModuleExceptionResolver.resolveException(oauth2Exception.getCause()).getMessage();
+				exMessage = ExceptionDescriptorResolver.resolveException(oauth2Exception.getCause()).getMessage();
 				message = oauth2ErrorMessageSource.getErrorMessage(oauth2Exception.getOAuth2ErrorCode(), new Object[] {exMessage});
 			} else {
 				exMessage = oauth2Exception.getMessage();
@@ -65,7 +65,7 @@ public class CustomOAuth2ExceptionRenderer extends AbstractHttpAccessExceptionHa
 		} else {
 			message = responseEntity.getBody() == null ? "unkown error" : responseEntity.getBody().toString();
 		}
-		Result<Object> result = Result.failure().code(String.valueOf(code)).message(message).build();
+		Result<Object> result = Result.failure().code(code).message(message).build();
 		response.setStatus(code);
 		return new ResponseEntity<Object>(result, responseEntity.getHeaders(), responseEntity.getStatusCode());
 	}

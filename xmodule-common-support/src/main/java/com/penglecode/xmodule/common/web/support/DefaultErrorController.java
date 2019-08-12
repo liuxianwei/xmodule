@@ -19,9 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver.ExceptionMetadata;
+import com.penglecode.xmodule.common.support.ExceptionDescriptor;
+import com.penglecode.xmodule.common.support.ExceptionDescriptorResolver;
 
+/**
+ * 默认的SpringMVC异常处理Controller
+ * 
+ * @author 	pengpeng
+ * @date	2019年8月8日 下午2:17:24
+ */
 public class DefaultErrorController extends BasicErrorController {
 
 	private final ErrorAttributes errorAttributes;
@@ -57,10 +63,10 @@ public class DefaultErrorController extends BasicErrorController {
 		
 		Map<String, Object> body = new LinkedHashMap<String,Object>();
 		Throwable exception = (Throwable) defaultErrorAttributes.get("exception");
-		String code = String.valueOf(status.value());
+		int code = status.value();
 		String message = (String) defaultErrorAttributes.get("error");
 		if(exception != null) {
-			ExceptionMetadata em = ModuleExceptionResolver.resolveException(exception);
+			ExceptionDescriptor em = ExceptionDescriptorResolver.resolveException(exception);
 			code = em.getCode();
 			message = em.getMessage();
 		}

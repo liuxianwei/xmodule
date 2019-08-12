@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.penglecode.xmodule.common.consts.GlobalConstants;
 import com.penglecode.xmodule.common.security.config.SecurityConfigProperties;
 import com.penglecode.xmodule.common.security.consts.SecurityApplicationConstants;
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver;
-import com.penglecode.xmodule.common.support.ModuleExceptionResolver.ExceptionMetadata;
+import com.penglecode.xmodule.common.support.ExceptionDescriptor;
+import com.penglecode.xmodule.common.support.ExceptionDescriptorResolver;
 import com.penglecode.xmodule.common.support.MvvmWebAppConfig;
 import com.penglecode.xmodule.common.support.Result;
 import com.penglecode.xmodule.common.web.support.HttpAPIResourceSupport;
@@ -46,9 +46,9 @@ public class UpmsLoginController extends HttpAPIResourceSupport {
 	public Object loginFailure(HttpServletRequest request, HttpServletResponse response) {
 		Exception exception = getSessionAttribute(request, WebAttributes.AUTHENTICATION_EXCEPTION);
 		String message = "未知错误!";
-		String code = "500";
+		int code = 500;
 		if(exception != null) {
-			ExceptionMetadata em = ModuleExceptionResolver.resolveException(exception);
+			ExceptionDescriptor em = ExceptionDescriptorResolver.resolveException(exception);
 			message = em.getMessage();
 			code = em.getCode();
 		}
@@ -67,7 +67,7 @@ public class UpmsLoginController extends HttpAPIResourceSupport {
 		LoginUser loginUser = getSessionAttribute(request, GlobalConstants.UPMS_LOGIN_USER_SESSION_KEY);
 		LOGGER.info(">>> 登录成功! loginUser = {}", loginUser);
 		String redirectUrl = getRequestAttribute(request, SecurityApplicationConstants.SAVED_REQUEST_URL_KEY);
-		return Result.success().code("200").message("OK").data(redirectUrl).build();
+		return Result.success().code(200).message("OK").data(redirectUrl).build();
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class UpmsLoginController extends HttpAPIResourceSupport {
 			loginUserMap = loginUser.asMap();
 		}
 		LOGGER.info(">>> 获取登录用户信息! loginUser = {}", loginUserMap);
-		return Result.success().code("200").message("OK").data(loginUserMap).build();
+		return Result.success().code(200).message("OK").data(loginUserMap).build();
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class UpmsLoginController extends HttpAPIResourceSupport {
 	public Object logoutSuccess(HttpServletRequest request, HttpServletResponse response) {
 		String redirectUrl = getLoginUrl();
 		LOGGER.info(">>> 退出成功! Redirect to target url : {}", redirectUrl);
-		return Result.success().code("200").message("OK").data(redirectUrl).build();
+		return Result.success().code(200).message("OK").data(redirectUrl).build();
 	}
 	
 	protected String getLoginUrl() {
