@@ -10,10 +10,11 @@ spring:
         #Consul服务注册与发现配置
         consul:
             enabled: true
-            host: 172.16.95.9
+            host: 172.16.96.57
             port: 8500
             discovery:
                 register: true
+                queryPassing: true
                 serviceName: ${spring.application.name}
                 preferIpAddress: true
                 ipAddress: ${spring.cloud.client.ip-address}

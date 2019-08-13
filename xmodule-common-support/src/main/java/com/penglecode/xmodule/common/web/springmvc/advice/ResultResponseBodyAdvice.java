@@ -1,5 +1,6 @@
 package com.penglecode.xmodule.common.web.springmvc.advice;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import com.penglecode.xmodule.common.support.Result;
  * @date	2019年8月6日 下午2:36:54
  */
 @ControllerAdvice
+@ConditionalOnClass(ResponseBodyAdvice.class)
 public class ResultResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
 	@Override
