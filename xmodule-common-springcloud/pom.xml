@@ -9,7 +9,7 @@
 	<artifactId>xmodule-common-springcloud</artifactId>
 	<name>xmodule-common-springcloud</name>
 	<description>公共的SpringCloud支持模块</description>
-
+	
 	<dependencies>
 		<!-- xmodule-common-base -->
 		<dependency>
@@ -47,9 +47,10 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-consul-config</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
-
+	
 	<build>
 		<finalName>xmodule-common-springcloud</finalName>
 	</build>

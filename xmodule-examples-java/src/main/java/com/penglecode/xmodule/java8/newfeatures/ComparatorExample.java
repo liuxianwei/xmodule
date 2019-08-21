@@ -39,9 +39,50 @@ public class ComparatorExample {
 		ALL_STUDENTSCORE_LIST.forEach(System.out::println);
 	}
 	
+	/**
+	 * 排序，且考虑属性值为null的情况
+	 */
+	public static void compare3() {
+		List<User> userList = new ArrayList<User>();
+		userList.add(new User("zhangsan"));
+		userList.add(new User("lisi"));
+		userList.add(new User(null));
+		userList.add(new User("wangwu"));
+		userList.add(new User("hanliu"));
+		
+		//以下两种写法等效
+		userList.stream().sorted(Comparator.comparing(User::getName, Comparator.nullsLast(Comparator.naturalOrder()))).forEach(System.out::println);
+		
+		//userList.stream().sorted((o1, o2) -> Objects.compare(o1.getName(), o2.getName(), Comparator.nullsLast(Comparator.naturalOrder()))).forEach(System.out::println);
+	}
+	
 	public static void main(String[] args) {
 		//compare1();
 		compare2();
 	}
 
+	public static class User {
+		
+		private String name;
+
+		public User(String name) {
+			super();
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String toString() {
+			return "User [name=" + name + "]";
+		}
+		
+	}
+	
 }

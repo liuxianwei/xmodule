@@ -1,15 +1,20 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.penglecode</groupId>
-    <artifactId>xmodule-examples-springcloud-consul</artifactId>
-    <version>1.0.0</version>
-  </parent>
-  <artifactId>xmodule-examples-springcloud-consul-service-gateway</artifactId>
-  <name>xmodule-examples-springcloud-consul-service-gateway</name>
-  <description>基于consul的微服务注册与发现示例之：服务网关</description>
-  
-  <dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.penglecode</groupId>
+		<artifactId>xmodule-examples-springcloud-consul</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>xmodule-examples-springcloud-consul-service-gateway</artifactId>
+	<name>xmodule-examples-springcloud-consul-service-gateway</name>
+	<description>基于consul的微服务注册与发现示例之：服务网关</description>
+
+	<properties>
+		<spring-cloud-consul.version>2.1.0.RELEASE</spring-cloud-consul.version>
+	</properties>
+
+	<dependencies>
 		<!-- xmodule-common-base -->
 		<dependency>
 			<groupId>com.penglecode</groupId>
@@ -94,7 +99,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- spring-boot-starter-security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -106,18 +111,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- spring-cloud-starter-gateway -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.springframework.cloud</groupId>
-		    <artifactId>spring-cloud-gateway-core</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gateway-core</artifactId>
 		</dependency>
-		
+
 		<!-- spring-boot-starter-webflux -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -129,25 +134,32 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- spring-cloud-starter-consul-discovery -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 		</dependency>
 
+		<!-- spring-cloud-starter-consul-cluster -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-cluster</artifactId>
+			<version>${spring-cloud-consul.version}</version>
+		</dependency>
+
 		<!-- spring-cloud-starter-netflix-ribbon -->
 		<dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-        </dependency>
-		
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+		</dependency>
+
 		<!-- spring-cloud-starter-netflix-hystrix -->
 		<dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
-		
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+
 		<!-- spring-retry -->
 		<dependency>
 			<groupId>org.springframework.retry</groupId>

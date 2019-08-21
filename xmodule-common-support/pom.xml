@@ -65,6 +65,12 @@
 			</exclusions>
 		</dependency>
 		
+		<!-- spring-retry -->
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+		</dependency>
+		
 		<!-- logging -->
 		<!-- slf4j -->
 		<dependency>

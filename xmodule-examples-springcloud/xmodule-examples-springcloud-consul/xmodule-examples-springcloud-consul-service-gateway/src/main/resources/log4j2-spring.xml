@@ -31,6 +31,7 @@
 		<logger name="reactor.netty.http.server.AccessLog" level="INFO"/>
 		<logger name="org.springframework.cloud.gateway" level="TRACE"/>
 		<logger name="org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter" level="ERROR"/>
+		<logger name="org.springframework.cloud.consul" level="TRACE"/>
 		
 		
 		<logger name="com.penglecode.xmodule.common.util.ClassScanningUtils" level="OFF"/>

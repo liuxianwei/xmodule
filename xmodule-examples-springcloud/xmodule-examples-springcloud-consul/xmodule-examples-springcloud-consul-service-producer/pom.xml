@@ -10,6 +10,10 @@
 	<name>xmodule-examples-springcloud-consul-service-producer</name>
 	<description>基于consul的微服务注册与发现示例之：服务生产者</description>
 
+	<properties>
+		<spring-cloud-consul.version>2.1.0.RELEASE</spring-cloud-consul.version>
+	</properties>
+
 	<dependencies>
 		<!-- xmodule-common-base -->
 		<dependency>
@@ -58,6 +62,13 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-consul-all</artifactId>
+		</dependency>
+		
+		<!-- spring-cloud-starter-consul-cluster -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-cluster</artifactId>
+			<version>${spring-cloud-consul.version}</version>
 		</dependency>
 
 		<!-- xmodule-examples-springcloud-consul-service-api -->
