@@ -8,9 +8,6 @@ spring:
         inetutils:
             preferredNetworks: 
                 - 172.16
-        config:
-            discovery:
-                enabled: false
         #Consul服务注册与发现配置
         consul:
             enabled: true

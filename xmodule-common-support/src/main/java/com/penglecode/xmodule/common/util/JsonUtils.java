@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import com.penglecode.xmodule.common.support.CustomObjectMapper;
 
 public class JsonUtils {
@@ -41,7 +42,10 @@ public class JsonUtils {
 	 */
 	public static String object2Json(ObjectMapper objectMapper, Object object) {
 		try {
-			return objectMapper.writeValueAsString(object);
+			if(object != null) {
+				return objectMapper.writeValueAsString(object);
+			}
+			return null;
 		} catch (JsonProcessingException e) {
 			throw new JacksonJsonException(e);
 		}
@@ -68,7 +72,10 @@ public class JsonUtils {
 	 */
 	public static <T> T json2Object(ObjectMapper objectMapper, String json, Class<T> clazz) {
 		try {
-			return objectMapper.readValue(json, clazz);
+			if(!StringUtils.isEmpty(json)) {
+				return objectMapper.readValue(json, clazz);
+			}
+			return null;
 		} catch (Exception e) {
 			throw new JacksonJsonException(e);
 		}
@@ -99,7 +106,10 @@ public class JsonUtils {
 	 */
 	public static <T> T json2Object(ObjectMapper objectMapper, String json, TypeReference<T> typeReference) {
 		try {
-			return objectMapper.readValue(json, typeReference);
+			if(!StringUtils.isEmpty(json)) {
+				return objectMapper.readValue(json, typeReference);
+			}
+			return null;
 		} catch (Exception e) {
 			throw new JacksonJsonException(e);
 		}
